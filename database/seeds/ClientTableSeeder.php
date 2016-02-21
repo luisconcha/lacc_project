@@ -23,7 +23,7 @@ class ClientTableSeeder extends Seeder
 		 */
 		public function run()
 		{
-				\LACC\Models\Client::truncate();
-				factory( \LACC\Models\Client::class, 10 )->create();
+				\LACC\Entities\Client::truncate();
+				factory( \LACC\Entities\Client::class, 10 )->create();
 		}
 }

@@ -15,12 +15,21 @@ namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use LACC\Models\Client;
 use LACC\Http\Requests;
-use LACC\Http\Controllers\Controller;
+use LACC\Repositories\ClientRepository;
 
 class ClientController extends Controller
 {
+		/**
+		 * @var ClientRepository
+		 */
+		private $repository;
+
+		public function __construct( ClientRepository $repository )
+		{
+				$this->repository = $repository;
+		}
+
 		/**
 		 * Display a listing of the resource.
 		 *
@@ -28,7 +37,7 @@ class ClientController extends Controller
 		 */
 		public function index()
 		{
-				return \LACC\Models\Client::all();
+				return $this->repository->all();
 		}
 
 		/**
@@ -40,7 +49,7 @@ class ClientController extends Controller
 		 */
 		public function store( Request $request )
 		{
-				return Client::create( $request->all() );
+				return $this->repository->create( $request->all() );
 		}
 
 		/**
@@ -52,7 +61,7 @@ class ClientController extends Controller
 		 */
 		public function show( $id )
 		{
-				return Client::find( $id );
+				return $this->repository->find( $id );
 		}
 
 		/**
@@ -65,7 +74,7 @@ class ClientController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				Client::find( $id )->update( $request->all() );
+				$this->repository->find( $id )->update( $request->all() );
 				return response()->json( [ 'message' => 'Cliente atualizado com sucesso!' ] );
 		}
 
@@ -78,7 +87,7 @@ class ClientController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				Client::findOrFail( $id )->delete();
+				$this->repository->find( $id )->delete();
 				return response()->json( [ 'message' => 'Cliente deletado com sucesso!' ] );
 		}
 }

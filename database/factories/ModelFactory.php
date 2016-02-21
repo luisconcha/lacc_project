@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define( LACC\Models\User::class, function ( Faker\Generator $faker ) {
+$factory->define( LACC\Entities\User::class, function ( Faker\Generator $faker ) {
 		return [
 				'name'           => $faker->name,
 				'email'          => $faker->email,
@@ -20,7 +20,7 @@ $factory->define( LACC\Models\User::class, function ( Faker\Generator $faker ) {
 		];
 } );
 
-$factory->define( LACC\Models\Client::class, function ( Faker\Generator $faker ) {
+$factory->define( LACC\Entities\Client::class, function ( Faker\Generator $faker ) {
 		return [
 				'name'        => $faker->name,
 				'responsible' => $faker->name,

@@ -146,6 +146,7 @@ return [
 				LACC\Providers\AuthServiceProvider::class,
 				LACC\Providers\EventServiceProvider::class,
 				LACC\Providers\RouteServiceProvider::class,
+				LACC\Providers\LACCRepositoryProvider::class,
 
 		],
 
