@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 
 use LACC\Http\Requests;
 use LACC\Repositories\ClientRepository;
+use LACC\Services\ClientService;
 
 class ClientController extends Controller
 {
@@ -24,10 +25,15 @@ class ClientController extends Controller
 		 * @var ClientRepository
 		 */
 		private $repository;
+		/**
+		 * @var ClientService
+		 */
+		private $service;
 
-		public function __construct( ClientRepository $repository )
+		public function __construct( ClientRepository $repository, ClientService $service )
 		{
 				$this->repository = $repository;
+				$this->service    = $service;
 		}
 
 		/**
@@ -49,7 +55,7 @@ class ClientController extends Controller
 		 */
 		public function store( Request $request )
 		{
-				return $this->repository->create( $request->all() );
+				return $this->service->create( $request->all() );
 		}
 
 		/**
@@ -74,8 +80,7 @@ class ClientController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				$this->repository->find( $id )->update( $request->all() );
-				return response()->json( [ 'message' => 'Cliente atualizado com sucesso!' ] );
+				return $this->service->update( $request->all(), $id);
 		}
 
 		/**
@@ -87,7 +92,14 @@ class ClientController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				$this->repository->find( $id )->delete();
-				return response()->json( [ 'message' => 'Cliente deletado com sucesso!' ] );
+				try{
+						$dataClient = $this->service->searchById($id);
+						if( $dataClient['success'] ) {
+								$this->repository->delete( $id );
+								return response()->json( [ 'message' => 'Cliente deletado com sucesso!' ] );
+						}
+				}catch (\Exception $e){
+						return response()->json( [ 'message' => $e->getMessage() ] );
+				}
 		}
 }
