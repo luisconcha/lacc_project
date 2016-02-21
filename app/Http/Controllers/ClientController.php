@@ -15,7 +15,7 @@ namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use LACC\Client;
+use LACC\Models\Client;
 use LACC\Http\Requests;
 use LACC\Http\Controllers\Controller;
 
@@ -28,7 +28,7 @@ class ClientController extends Controller
 		 */
 		public function index()
 		{
-				return \LACC\Client::all();
+				return \LACC\Models\Client::all();
 		}
 
 		/**

@@ -10,7 +10,7 @@
  * Copyright: 2016
  */
 
-namespace LACC;
+namespace LACC\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
