@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: LACC
+        psr4_prefix: LACC
+        src_path: app
