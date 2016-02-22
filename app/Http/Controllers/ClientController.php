@@ -67,7 +67,7 @@ class ClientController extends Controller
 		 */
 		public function show( $id )
 		{
-				return $this->repository->find( $id );
+				return $this->service->searchById( $id );
 		}
 
 		/**
