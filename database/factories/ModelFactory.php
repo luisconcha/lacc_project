@@ -30,3 +30,15 @@ $factory->define( LACC\Entities\Client::class, function ( Faker\Generator $faker
 				'obs'         => $faker->sentence(),
 		];
 } );
+
+$factory->define( LACC\Entities\Project::class, function ( Faker\Generator $faker ) {
+		return [
+				'owner_id'    => $faker->numberBetween( 1, 3 ),
+				'client_id'   => $faker->numberBetween( 1, 10 ),
+				'name'        => $faker->word,
+				'description' => $faker->paragraph(),
+				'progress'    => $faker->numberBetween( 0, 100 ),
+				'status'      => $faker->numberBetween( 0, 2 ),
+				'due_date'    => $faker->dateTimeBetween( 'tomorrow', '+1 year' ),
+		];
+} );
