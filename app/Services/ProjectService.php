@@ -36,6 +36,15 @@ class ProjectService
 				$this->validator  = $validator;
 		}
 
+		public function all()
+		{
+				return response()->json( $this->repository->with( [
+						'owner',
+						'client',
+				] )->all() );
+
+		}
+
 		public function create( array $data )
 		{
 				try {
