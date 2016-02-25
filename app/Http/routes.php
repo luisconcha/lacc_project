@@ -26,6 +26,7 @@ Route::group( [ 'prefix' => 'client' ], function () {
 
 Route::group( [ 'prefix' => 'project' ], function () {
 		Route::get( '', 'ProjectController@index' );
+		Route::post( '', 'ProjectController@store' );
 } );
 
 

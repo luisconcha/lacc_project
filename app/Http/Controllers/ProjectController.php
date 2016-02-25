@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use LACC\Http\Requests;
 use LACC\Http\Controllers\Controller;
 use LACC\Repositories\ProjectRepository;
-use LACC\Services\ClientService;
 use LACC\Services\ProjectService;
 
 class ProjectController extends Controller
@@ -21,7 +20,7 @@ class ProjectController extends Controller
 		 */
 		protected $service;
 
-		public function __construct( ProjectRepository $repository, ClientService $service )
+		public function __construct( ProjectRepository $repository, ProjectService $service )
 		{
 				$this->repository = $repository;
 				$this->service    = $service;
@@ -38,16 +37,6 @@ class ProjectController extends Controller
 		}
 
 		/**
-		 * Show the form for creating a new resource.
-		 *
-		 * @return \Illuminate\Http\Response
-		 */
-		public function create()
-		{
-				//
-		}
-
-		/**
 		 * Store a newly created resource in storage.
 		 *
 		 * @param  \Illuminate\Http\Request $request
@@ -56,7 +45,7 @@ class ProjectController extends Controller
 		 */
 		public function store( Request $request )
 		{
-				//
+				return $this->service->create( $request->all() );
 		}
 
 		/**
