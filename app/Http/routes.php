@@ -29,6 +29,7 @@ Route::group( [ 'prefix' => 'project' ], function () {
 		Route::post( '', 'ProjectController@store' );
 		Route::get( '{id}', 'ProjectController@show' );
 		Route::put( '{id}', 'ProjectController@update' );
+		Route::delete( '{id}', 'ProjectController@destroy' );
 } );
 
 

@@ -82,6 +82,20 @@ class ProjectController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				//
+				try {
+						$dataProject = $this->service->searchById( $id );
+
+						if ( $dataProject[ 'success' ] ) {
+								$this->repository->delete( $id );
+
+								return response()->json( [
+										'message' => 'Projeto deletado com sucesso!',
+								] );
+						}
+				} catch ( \Exception $e ) {
+						return response()->json( [
+								'message' => $e->getMessage(),
+						] );
+				}
 		}
 }
