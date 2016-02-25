@@ -12,14 +12,12 @@
 
 namespace LACC\Services;
 
-
-use Illuminate\Contracts\Validation\ValidationException;
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ProjectService
+class ProjectService extends BaseService
 {
 		/**
 		 * @var ProjectRepository
@@ -45,48 +43,4 @@ class ProjectService
 
 		}
 
-		public function create( array $data )
-		{
-				try {
-						$this->validator->with( $data )->passesOrFail( ValidatorInterface::RULE_CREATE );
-						return $this->repository->create( $data );
-				} catch ( ValidatorException $e ) {
-						return [
-								'error'   => true,
-								'message' => $e->getMessageBag(),
-						];
-				}
-		}
-
-		public function update( array $data, $id )
-		{
-				try {
-
-						$this->validator->with( $data )->setId( $id )->passesOrFail( ValidatorInterface::RULE_UPDATE );
-
-						return response()->json( [
-								$this->repository->update( $data, $id ),
-						] );
-				} catch ( ValidationException $e ) {
-						return response()->json( [
-								'error'   => true,
-								'message' => $e->getMessage(),
-						] );
-				}
-		}
-
-		public function searchById( $id )
-		{
-				try {
-						return [
-								'success' => true,
-								'data'    => $this->repository->find( $id ),
-						];
-				} catch ( \Exception $e ) {
-						return [
-								'success' => false,
-								'data'    => "Projecto com ID: {$id} não localizado na base de dados",
-						];
-				}
-		}
 }
