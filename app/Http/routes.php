@@ -16,10 +16,30 @@ Route::get( '/', function () {
 } );
 
 Route::group( [ 'prefix' => 'client' ], function () {
-        Route::get( '', 'ClientController@index' );
-        Route::post( '', 'ClientController@store' );
-        Route::get( '{id}', 'ClientController@show' );
-        Route::put( '{id}', 'ClientController@update' );
-        Route::delete( '{id}', 'ClientController@destroy' );
+		Route::get( '', 'ClientController@index' );
+		Route::post( '', 'ClientController@store' );
+		Route::get( '{id}', 'ClientController@show' );
+		Route::put( '{id}', 'ClientController@update' );
+		Route::delete( '{id}', 'ClientController@destroy' );
 
+} );
+
+Route::group( [ 'prefix' => 'project' ], function () {
+		Route::get( '', 'ProjectController@index' );
+} );
+
+
+/*****************************
+ *  TESTE UNITÁRIOS
+ *****************************/
+Route::get( '/ola', function () {
+		return 'Olá mundo!';
+} );
+
+//Desabilitar o CSRF para funcionar o teste (arquivo Kernel) mais neste curso já foi desabilitado
+Route::post( '/post', function ( \Illuminate\Http\Request $request ) {
+		$name  = $request->name;
+		$idade = $request->idade;
+		$email = $request->email;
+		return response()->json( compact( 'name', 'idade', 'email' ) );
 } );
