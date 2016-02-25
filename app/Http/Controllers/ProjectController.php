@@ -57,19 +57,7 @@ class ProjectController extends Controller
 		 */
 		public function show( $id )
 		{
-				//
-		}
-
-		/**
-		 * Show the form for editing the specified resource.
-		 *
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
-		 */
-		public function edit( $id )
-		{
-				//
+				return $this->service->searchById( $id );
 		}
 
 		/**
@@ -82,7 +70,7 @@ class ProjectController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				//
+				return $this->service->update( $request->all(), $id );
 		}
 
 		/**
