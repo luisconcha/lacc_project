@@ -33,6 +33,9 @@ class ProjectService extends BaseService
 				$this->validator  = $validator;
 		}
 
+		/**
+		 * @return \Illuminate\Http\JsonResponse
+		 */
 		public function all()
 		{
 				return response()->json( $this->repository->with( [
@@ -41,6 +44,15 @@ class ProjectService extends BaseService
 				] )->all() );
 		}
 
+		/*********************************************************
+		 *     M E M B R O S  D O  P R O J E T O                 *
+		 *********************************************************/
+		/**
+		 * @param $idProject
+		 * @param $idUser
+		 *
+		 * @return array|\Illuminate\Http\JsonResponse
+		 */
 		public function addMember( $idProject, $idUser )
 		{
 				try {
@@ -57,6 +69,11 @@ class ProjectService extends BaseService
 				}
 		}
 
+		/**
+		 * @param $idProject
+		 *
+		 * @return \Illuminate\Http\JsonResponse
+		 */
 		public function showMembers( $idProject )
 		{
 				try {
@@ -70,11 +87,40 @@ class ProjectService extends BaseService
 				}
 		}
 
+		/**
+		 * @param $idProject
+		 * @param $userId
+		 *
+		 * @return \Illuminate\Http\JsonResponse
+		 */
 		public function removeMember( $idProject, $userId )
 		{
 				try {
 						return response()->json( [
-								$this->repository->find( $idProject )->members()->detach($userId),
+								$this->repository->find( $idProject )->members()->detach( $userId ),
+						] );
+				} catch ( \Exception $e ) {
+						return response()->json( [
+								'success' => false,
+								'message' => 'Error: ' . $e->getMessage() ] );
+				}
+		}
+
+		public function isMember( $idProject, $userId )
+		{
+				try {
+						$isMember = $this->repository->find( $idProject )->members()->find( $userId );
+
+						if ( !$isMember ) {
+								return response()->json( [
+										'success' => true,
+										'message' => "O Usuário com ID: {$userId} não é membro deste projeto!",
+								] );
+						}
+
+						return response()->json( [
+								'success' => true,
+								'message' => "O usuário: {$isMember->name} é membro deste projeto!",
 						] );
 				} catch ( \Exception $e ) {
 						return response()->json( [

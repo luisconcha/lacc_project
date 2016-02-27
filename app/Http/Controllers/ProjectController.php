@@ -97,6 +97,11 @@ class ProjectController extends Controller
 				}
 		}
 
+		/*********************************************************
+		 *     M E M B R O S  D O  P R O J E T O                 *
+		 *********************************************************/
+
+
 		public function showMembers( $idProject )
 		{
 				return $this->service->showMembers( $idProject );
@@ -108,8 +113,13 @@ class ProjectController extends Controller
 				return $this->service->addMember( $idProject, $userId );
 		}
 
-		public function removeMember($idProject, $userId)
+		public function removeMember( $idProject, $userId )
 		{
 				return $this->service->removeMember( $idProject, $userId );
+		}
+
+		public function isMember( $idProject, $userId )
+		{
+				return $this->service->isMember( $idProject, $userId );
 		}
 }
