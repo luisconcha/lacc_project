@@ -42,3 +42,11 @@ $factory->define( LACC\Entities\Project::class, function ( Faker\Generator $fake
 				'due_date'    => $faker->dateTimeBetween( 'tomorrow', '+1 year' ),
 		];
 } );
+
+$factory->define( LACC\Entities\ProjectNote::class, function ( Faker\Generator $faker ) {
+		return [
+				'project_id' => $faker->numberBetween( 1, 10 ),
+				'title'      => $faker->word(),
+				'note'       => $faker->paragraph(),
+		];
+} );

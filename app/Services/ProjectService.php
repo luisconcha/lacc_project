@@ -14,8 +14,6 @@ namespace LACC\Services;
 
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService extends BaseService
 {
@@ -42,5 +40,4 @@ class ProjectService extends BaseService
 				] )->all() );
 
 		}
-
 }

@@ -1,24 +1,35 @@
 <?php
+/**
+ * File: ProjectNoteController.php
+ * Created by: Luis Alberto Concha Curay.
+ * Email: luisconchacuray@gmail.com
+ * Language: PHP
+ * Date: 21/02/16
+ * Time: 12:37
+ * Project: lacc_project
+ * Copyright: 2016
+ */
+
 
 namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
 use LACC\Http\Requests;
-use LACC\Repositories\ProjectRepository;
-use LACC\Services\ProjectService;
+use LACC\Repositories\ProjectNoteRepository;
+use LACC\Services\ProjectNoteService;
 
-class ProjectController extends Controller
+class ProjectNoteController extends Controller
 {
 		/**
-		 * @var ProjectRepository
+		 * @var ProjectNoteRepository
 		 */
 		protected $repository;
 		/**
-		 * @var ProjectService
+		 * @var ProjectNoteService
 		 */
 		protected $service;
 
-		public function __construct( ProjectRepository $repository, ProjectService $service )
+		public function __construct( ProjectNoteRepository $repository, ProjectNoteService $service )
 		{
 				$this->repository = $repository;
 				$this->service    = $service;
@@ -29,9 +40,9 @@ class ProjectController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index()
+		public function index( $id )
 		{
-				return $this->service->all();
+				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
@@ -53,9 +64,9 @@ class ProjectController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function show( $id )
+		public function show( $noteId )
 		{
-				return $this->service->searchById( $id );
+				return $this->service->searchNoteById( $noteId );
 		}
 
 		/**
@@ -66,9 +77,9 @@ class ProjectController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update( Request $request, $id )
+		public function update( Request $request, $noteId )
 		{
-				return $this->service->update( $request->all(), $id );
+				return $this->service->update( $request->all(), $noteId );
 		}
 
 		/**
@@ -81,13 +92,13 @@ class ProjectController extends Controller
 		public function destroy( $id )
 		{
 				try {
-						$dataProject = $this->service->searchById( $id );
+						$dataProject = $this->service->searchNoteById( $id );
 
 						if ( $dataProject[ 'success' ] ) {
 								$this->repository->delete( $id );
 
 								return response()->json( [
-										'message' => 'Projeto deletado com sucesso!',
+										'message' => 'Nota deletada com sucesso!',
 								] );
 						}
 				} catch ( \Exception $e ) {

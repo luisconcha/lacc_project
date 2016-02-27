@@ -1,0 +1,67 @@
+<?php
+/**
+ * File: ProjectNoteService.php
+ * Created by: Luis Alberto Concha Curay.
+ * Email: luisconchacuray@gmail.com
+ * Language: PHP
+ * Date: 24/02/16
+ * Time: 20:55
+ * Project: lacc_project
+ * Copyright: 2016
+ */
+
+namespace LACC\Services;
+
+use LACC\Repositories\ProjectNoteRepository;
+use LACC\Validators\ProjectNoteValidator;
+use Prettus\Validator\Contracts\ValidatorInterface;
+
+class ProjectNoteService extends BaseService
+{
+		/**
+		 * @var ProjectNoteRepository
+		 */
+		protected $repository;
+		/**
+		 * @var ProjectNoteValidator
+		 */
+		protected $validator;
+
+		public function __construct( ProjectNoteRepository $repository, ProjectNoteValidator $validator )
+		{
+				$this->repository = $repository;
+				$this->validator  = $validator;
+		}
+
+		public function update( array $data, $id )
+		{
+				try {
+
+						$this->validator->with( $data )->setId( $id )->passesOrFail( ValidatorInterface::RULE_UPDATE );
+
+						return response()->json( [
+								$this->repository->update( $data, $id ),
+						] );
+				} catch ( ValidationException $e ) {
+						return response()->json( [
+								'error'   => true,
+								'message' => $e->getMessage(),
+						] );
+				}
+		}
+
+		public function searchNoteById( $noteId )
+		{
+				try {
+						return [
+								'success' => true,
+								'data'    => $this->repository->findWhere( [ 'id' => $noteId ] ),
+						];
+				} catch ( \Exception $e ) {
+						return [
+								'success' => false,
+								'data'    => "Dado com ID: {$noteId} não localizado na base de dados",
+						];
+				}
+		}
+}

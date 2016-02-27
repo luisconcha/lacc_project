@@ -19,7 +19,6 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Project extends Model implements Transformable
 {
 		use TransformableTrait;
-
 		protected $fillable = [
 				'owner_id',
 				'client_id',
@@ -32,11 +31,16 @@ class Project extends Model implements Transformable
 
 		public function owner()
 		{
-				return $this->belongsTo( User::class,'owner_id');
+				return $this->belongsTo( User::class, 'owner_id' );
 		}
 
 		public function client()
 		{
 				return $this->belongsTo( Client::class );
+		}
+
+		public function notes()
+		{
+				return $this->hasMany( ProjectNote::class );
 		}
 }

@@ -11,7 +11,7 @@ class UserTableSeeder extends Seeder
 		 */
 		public function run()
 		{
-				\LACC\Entities\User::truncate();
+				//\LACC\Entities\User::truncate();
 
 				factory( 'LACC\Entities\User' )->create(
 						[

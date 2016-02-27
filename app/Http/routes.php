@@ -15,23 +15,34 @@ Route::get( '/', function () {
 		return view( 'welcome' );
 } );
 
+Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
 Route::group( [ 'prefix' => 'client' ], function () {
-		Route::get( '', 'ClientController@index' );
-		Route::post( '', 'ClientController@store' );
-		Route::get( '{id}', 'ClientController@show' );
-		Route::put( '{id}', 'ClientController@update' );
-		Route::delete( '{id}', 'ClientController@destroy' );
+		Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
+		Route::get( '/{id}', [ 'as' => 'client.show', 'uses' => 'ClientController@show' ] );
+		Route::put( '/{id}', [ 'as' => 'client.update', 'uses' => 'ClientController@update' ] );
+		Route::delete( '/{id}', [ 'as' => 'client.delete', 'uses' => 'ClientController@destroy' ] );
 
 } );
 
+Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
 Route::group( [ 'prefix' => 'project' ], function () {
-		Route::get( '', 'ProjectController@index' );
-		Route::post( '', 'ProjectController@store' );
-		Route::get( '{id}', 'ProjectController@show' );
-		Route::put( '{id}', 'ProjectController@update' );
-		Route::delete( '{id}', 'ProjectController@destroy' );
-} );
 
+		//Rota para as notas
+		Route::get( '{id}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
+		Route::group( [ 'prefix' => 'note' ], function () {
+				Route::post( '/', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
+				Route::get( '/{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
+				Route::put( '/{noteId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
+				Route::delete( '/{noteId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
+
+		} );
+
+
+		Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
+		Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
+		Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
+		Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
+} );
 
 /*****************************
  *  TESTE UNITÁRIOS
