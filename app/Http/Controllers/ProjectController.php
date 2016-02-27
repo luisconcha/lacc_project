@@ -101,4 +101,15 @@ class ProjectController extends Controller
 		{
 				return $this->service->showMembers( $idProject );
 		}
+
+		public function addMember( $idProject, Request $request )
+		{
+				$userId = $request->get( 'user_id' );
+				return $this->service->addMember( $idProject, $userId );
+		}
+
+		public function removeMember($idProject, $userId)
+		{
+				return $this->service->removeMember( $idProject, $userId );
+		}
 }

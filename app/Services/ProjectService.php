@@ -69,4 +69,17 @@ class ProjectService extends BaseService
 								'message' => 'Error: ' . $e->getMessage() ] );
 				}
 		}
+
+		public function removeMember( $idProject, $userId )
+		{
+				try {
+						return response()->json( [
+								$this->repository->find( $idProject )->members()->detach($userId),
+						] );
+				} catch ( \Exception $e ) {
+						return response()->json( [
+								'success' => false,
+								'message' => 'Error: ' . $e->getMessage() ] );
+				}
+		}
 }

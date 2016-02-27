@@ -49,7 +49,8 @@ Route::group( [ 'prefix' => 'project' ], function () {
 		//Rotas para members
 		Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
 		Route::group( [ 'prefix' => 'member' ], function () {
-
+				Route::post( '{idProject}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
+				Route::delete( '{idProject}/member/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
 		} );
 
 
