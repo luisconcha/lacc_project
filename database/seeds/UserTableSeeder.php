@@ -22,6 +22,6 @@ class UserTableSeeder extends Seeder
 						]
 				);
 
-				factory(\LACC\Entities\User::class, 2)->create();
+				factory(\LACC\Entities\User::class, 5)->create();
 		}
 }

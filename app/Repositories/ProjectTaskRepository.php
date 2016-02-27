@@ -21,5 +21,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface ProjectTaskRepository extends RepositoryInterface
 {
-    //
+		//
 }

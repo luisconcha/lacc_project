@@ -42,5 +42,10 @@ class LACCRepositoryProvider extends ServiceProvider
 						\LACC\Repositories\ProjectTaskRepository::class,
 						\LACC\Repositories\ProjectTaskRepositoryEloquent::class
 				);
+
+				$this->app->bind(
+						\LACC\Repositories\ProjectMembersRepository::class,
+						\LACC\Repositories\ProjectMembersRepositoryEloquent::class
+				);
 		}
 }

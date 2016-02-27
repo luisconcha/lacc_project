@@ -45,7 +45,7 @@ $factory->define( LACC\Entities\Project::class, function ( Faker\Generator $fake
 
 $factory->define( LACC\Entities\ProjectNote::class, function ( Faker\Generator $faker ) {
 		return [
-				'project_id' => $faker->numberBetween( 1, 10 ),
+				'project_id' => $faker->numberBetween( 1, 20 ),
 				'title'      => $faker->word(),
 				'note'       => $faker->paragraph(),
 		];
@@ -58,5 +58,12 @@ $factory->define( LACC\Entities\ProjectTask::class, function ( Faker\Generator $
 				'start_date' => $faker->dateTimeBetween( 'Y-m-d', 'now' ),
 				'due_date'   => $faker->dateTimeBetween( 'Y-m-d', '+2 month' ),
 				'status'     => $faker->numberBetween( 0, 2 ),
+		];
+} );
+
+$factory->define( LACC\Entities\ProjectMembers::class, function ( Faker\Generator $faker ) {
+		return [
+				'project_id' => $faker->numberBetween( 1, 20 ),
+				'user_id'    => $faker->numberBetween( 1, 5 ),
 		];
 } );

@@ -12,6 +12,6 @@ class ProjectTableSeeder extends Seeder
 		public function run()
 		{
 				//\LACC\Entities\Project::truncate();
-				factory( \LACC\Entities\Project::class, 10 )->create();
+				factory( \LACC\Entities\Project::class, 20 )->create();
 		}
 }
