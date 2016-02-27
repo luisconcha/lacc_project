@@ -12,6 +12,7 @@
 
 namespace LACC\Services;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
 
@@ -38,6 +39,34 @@ class ProjectService extends BaseService
 						'owner',
 						'client',
 				] )->all() );
+		}
 
+		public function addMember( $idProject, $idUser )
+		{
+				try {
+						$this->repository->find( $idProject )->members()->attach( $idUser );
+						return response()->json( [
+								'success' => true,
+								'message' => "O membrom com ID {$idUser} foi add com sucesso!",
+						] );
+				} catch ( \Exception $e ) {
+						return [
+								'success' => false,
+								'data'    => "Membro com ID: {$idUser} não localizado na base de dados",
+						];
+				}
+		}
+
+		public function showMembers( $idProject )
+		{
+				try {
+						return response()->json( [
+								$this->repository->find( $idProject )->members->all(),
+						] );
+				} catch ( \Exception $e ) {
+						return response()->json( [
+								'success' => false,
+								'message' => 'Error: ' . $e->getMessage() ] );
+				}
 		}
 }

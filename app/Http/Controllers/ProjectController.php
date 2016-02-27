@@ -96,4 +96,9 @@ class ProjectController extends Controller
 						] );
 				}
 		}
+
+		public function showMembers( $idProject )
+		{
+				return $this->service->showMembers( $idProject );
+		}
 }

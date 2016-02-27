@@ -46,6 +46,12 @@ Route::group( [ 'prefix' => 'project' ], function () {
 				Route::delete( '/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
 		} );
 
+		//Rotas para members
+		Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
+		Route::group( [ 'prefix' => 'member' ], function () {
+
+		} );
+
 
 		Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
 		Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
