@@ -37,6 +37,9 @@ Route::group( [ 'prefix' => 'project' ], function () {
 
 		} );
 
+		//Rotas para a tasks
+		Route::get( '{id}/tasks', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
+
 
 		Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
 		Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
