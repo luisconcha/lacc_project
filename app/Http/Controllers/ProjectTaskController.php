@@ -21,7 +21,7 @@ use LACC\Services\ProjectTaskService;
 class ProjectTaskController extends Controller
 {
 		/**
-		 * @var ProjectTaskRe
+		 * @var ProjectTaskRepository
 		 */
 		protected $repository;
 		/**
@@ -29,11 +29,10 @@ class ProjectTaskController extends Controller
 		 */
 		protected $service;
 
-
-		public function __construct( ProjectTaskRepository $taskRepository ,ProjectTaskService $service )
+		public function __construct( ProjectTaskRepository $taskRepository, ProjectTaskService $service )
 		{
 				$this->repository = $taskRepository;
-				$this->service = $service;
+				$this->service    = $service;
 		}
 
 		/**
@@ -47,16 +46,6 @@ class ProjectTaskController extends Controller
 		}
 
 		/**
-		 * Show the form for creating a new resource.
-		 *
-		 * @return \Illuminate\Http\Response
-		 */
-		public function create()
-		{
-				//
-		}
-
-		/**
 		 * Store a newly created resource in storage.
 		 *
 		 * @param  \Illuminate\Http\Request $request
@@ -65,7 +54,7 @@ class ProjectTaskController extends Controller
 		 */
 		public function store( Request $request )
 		{
-				//
+				return $this->service->create( $request->all() );
 		}
 
 		/**
@@ -77,19 +66,7 @@ class ProjectTaskController extends Controller
 		 */
 		public function show( $id )
 		{
-				//
-		}
-
-		/**
-		 * Show the form for editing the specified resource.
-		 *
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
-		 */
-		public function edit( $id )
-		{
-				//
+				return $this->service->searchById( $id );
 		}
 
 		/**
@@ -100,9 +77,9 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update( Request $request, $id )
+		public function update( Request $request, $taskId )
 		{
-				//
+				return $this->service->update( $request->all(), $taskId );
 		}
 
 		/**
@@ -114,6 +91,18 @@ class ProjectTaskController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				//
+				try {
+						$dataTask = $this->service->searchById( $id );
+						if ( $dataTask[ 'success' ] ) {
+								$this->repository->delete( $id );
+								return response()->json( [
+										'message' => 'Tarefa deletada com sucesso!',
+								] );
+						}
+				} catch ( \Exception $e ) {
+						return response()->json( [
+								'message' => $e->getMessage(),
+						] );
+				}
 		}
 }

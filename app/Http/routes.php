@@ -39,6 +39,12 @@ Route::group( [ 'prefix' => 'project' ], function () {
 
 		//Rotas para a tasks
 		Route::get( '{id}/tasks', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
+		Route::group( [ 'prefix' => 'task' ], function () {
+				Route::post( '/', [ 'as' => 'project.task.create', 'uses' => 'ProjectTaskController@store' ] );
+				Route::get( '/{taskId}', [ 'as' => 'project.task.show', 'uses' => 'ProjectTaskController@show' ] );
+				Route::put( '/{taskId}', [ 'as' => 'project.task.update', 'uses' => 'ProjectTaskController@update' ] );
+				Route::delete( '/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
+		} );
 
 
 		Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
