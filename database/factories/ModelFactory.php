@@ -50,3 +50,13 @@ $factory->define( LACC\Entities\ProjectNote::class, function ( Faker\Generator $
 				'note'       => $faker->paragraph(),
 		];
 } );
+
+$factory->define( LACC\Entities\ProjectTask::class, function ( Faker\Generator $faker ) {
+		return [
+				'name'       => $faker->word(),
+				'project_id' => $faker->numberBetween( 1, 10 ),
+				'start_date' => $faker->dateTimeBetween( 'Y-m-d', 'now' ),
+				'due_date'   => $faker->dateTimeBetween( 'Y-m-d', '+2 month' ),
+				'status'     => $faker->numberBetween( 0, 2 ),
+		];
+} );
