@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => LACC\User::class,
+    'model' => LACC\Entities\User::class,
 
     /*
     |--------------------------------------------------------------------------

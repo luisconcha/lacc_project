@@ -113,7 +113,7 @@ class ProjectService extends BaseService
 
 						if ( !$isMember ) {
 								return response()->json( [
-										'success' => true,
+										'success' => false,
 										'message' => "O Usuário com ID: {$userId} não é membro deste projeto!",
 								] );
 						}

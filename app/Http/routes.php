@@ -15,51 +15,58 @@ Route::get( '/', function () {
 		return view( 'welcome' );
 } );
 
-Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
-Route::group( [ 'prefix' => 'client' ], function () {
-		Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
-		Route::get( '/{id}', [ 'as' => 'client.show', 'uses' => 'ClientController@show' ] );
-		Route::put( '/{id}', [ 'as' => 'client.update', 'uses' => 'ClientController@update' ] );
-		Route::delete( '/{id}', [ 'as' => 'client.delete', 'uses' => 'ClientController@destroy' ] );
-
+Route::post( 'oauth/access_token', function () {
+		return Response::json( Authorizer::issueAccessToken() );
 } );
 
-Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
-Route::group( [ 'prefix' => 'project' ], function () {
-
-		//Rota para as notas
-		Route::get( '{id}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
-		Route::group( [ 'prefix' => 'note' ], function () {
-				Route::post( '/', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
-				Route::get( '/{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
-				Route::put( '/{noteId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
-				Route::delete( '/{noteId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
+Route::group( [ 'middleware' => 'oauth' ], function () {
+		Route::get( '/clients', [ 'middleware' => 'oauth', 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
+		Route::group( [ 'prefix' => 'client' ], function () {
+				Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
+				Route::get( '/{id}', [ 'as' => 'client.show', 'uses' => 'ClientController@show' ] );
+				Route::put( '/{id}', [ 'as' => 'client.update', 'uses' => 'ClientController@update' ] );
+				Route::delete( '/{id}', [ 'as' => 'client.delete', 'uses' => 'ClientController@destroy' ] );
 
 		} );
 
-		//Rotas para a tasks
-		Route::get( '{id}/tasks', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
-		Route::group( [ 'prefix' => 'task' ], function () {
-				Route::post( '/', [ 'as' => 'project.task.create', 'uses' => 'ProjectTaskController@store' ] );
-				Route::get( '/{taskId}', [ 'as' => 'project.task.show', 'uses' => 'ProjectTaskController@show' ] );
-				Route::put( '/{taskId}', [ 'as' => 'project.task.update', 'uses' => 'ProjectTaskController@update' ] );
-				Route::delete( '/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
+		Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
+		Route::group( [ 'prefix' => 'project' ], function () {
+
+				//Rota para as notas
+				Route::get( '{id}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
+				Route::group( [ 'prefix' => 'note' ], function () {
+						Route::post( '/', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
+						Route::get( '/{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
+						Route::put( '/{noteId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
+						Route::delete( '/{noteId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
+
+				} );
+
+				//Rotas para a tasks
+				Route::get( '{id}/tasks', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
+				Route::group( [ 'prefix' => 'task' ], function () {
+						Route::post( '/', [ 'as' => 'project.task.create', 'uses' => 'ProjectTaskController@store' ] );
+						Route::get( '/{taskId}', [ 'as' => 'project.task.show', 'uses' => 'ProjectTaskController@show' ] );
+						Route::put( '/{taskId}', [ 'as' => 'project.task.update', 'uses' => 'ProjectTaskController@update' ] );
+						Route::delete( '/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
+				} );
+
+				//Rotas para members
+				Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
+				Route::group( [ 'prefix' => 'member' ], function () {
+						Route::post( 'project/{idProject}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
+						Route::delete( 'project/{idProject}/user/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
+						Route::get( 'project/{idProject}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
+				} );
+
+
+				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
+				Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
+				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
+				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 		} );
-
-		//Rotas para members
-		Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
-		Route::group( [ 'prefix' => 'member' ], function () {
-				Route::post( 'project/{idProject}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
-				Route::delete( 'project/{idProject}/user/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
-				Route::get( 'project/{idProject}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
-		} );
-
-
-		Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
-		Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
-		Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
-		Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 } );
+
 
 /*****************************
  *  TESTE UNITÁRIOS
