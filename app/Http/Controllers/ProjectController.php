@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use LACC\Http\Requests;
 use LACC\Repositories\ProjectRepository;
 use LACC\Services\ProjectService;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectController extends Controller
 {
@@ -31,7 +32,9 @@ class ProjectController extends Controller
 		 */
 		public function index()
 		{
-				return $this->service->all();
+				$ownerId = Authorizer::getResourceOwnerId();
+
+				return $this->repository->findWhere( [ 'owner_id' => $ownerId ] );
 		}
 
 		/**
@@ -55,6 +58,10 @@ class ProjectController extends Controller
 		 */
 		public function show( $id )
 		{
+				if ( $this->checkProjectOwner( $id ) == false ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->searchById( $id );
 		}
 
@@ -68,6 +75,10 @@ class ProjectController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
+				if ( $this->checkProjectOwner( $id ) == false ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->update( $request->all(), $id );
 		}
 
@@ -80,6 +91,10 @@ class ProjectController extends Controller
 		 */
 		public function destroy( $id )
 		{
+				if ( $this->checkProjectOwner( $id ) == false ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				try {
 						$dataProject = $this->service->searchById( $id );
 
@@ -121,5 +136,14 @@ class ProjectController extends Controller
 		public function isMember( $idProject, $userId )
 		{
 				return $this->service->isMember( $idProject, $userId );
+		}
+
+		/******************/
+		private function checkProjectOwner( $projectId )
+		{
+				$userId = Authorizer::getResourceOwnerId();
+
+				return $this->repository->isOwner( $projectId, $userId );
+
 		}
 }

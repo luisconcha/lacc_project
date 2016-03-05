@@ -20,7 +20,7 @@ Route::post( 'oauth/access_token', function () {
 } );
 
 Route::group( [ 'middleware' => 'oauth' ], function () {
-		Route::get( '/clients', [ 'middleware' => 'oauth', 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
+		Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
 		Route::group( [ 'prefix' => 'client' ], function () {
 				Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
 				Route::get( '/{id}', [ 'as' => 'client.show', 'uses' => 'ClientController@show' ] );
@@ -30,6 +30,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 		} );
 
 		Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
+
 		Route::group( [ 'prefix' => 'project' ], function () {
 
 				//Rota para as notas
@@ -65,6 +66,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
 				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 		} );
+
 } );
 
 
