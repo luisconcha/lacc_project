@@ -67,3 +67,7 @@ $factory->define( LACC\Entities\ProjectMembers::class, function ( Faker\Generato
 				'user_id'    => $faker->numberBetween( 1, 5 ),
 		];
 } );
+
+$factory->define( LACC\Entities\OAuthClients::class, function ( Faker\Generator $faker ) {
+		return [];
+} );
