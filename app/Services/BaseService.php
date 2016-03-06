@@ -54,10 +54,7 @@ class BaseService
 		public function searchById( $id )
 		{
 				try {
-						return [
-								'success' => true,
-								'data'    => $this->repository->find( $id ),
-						];
+						return $this->repository->find( $id );
 				} catch ( \Exception $e ) {
 						return [
 								'success' => false,

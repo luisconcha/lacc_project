@@ -13,6 +13,7 @@
 namespace LACC\Repositories;
 
 use LACC\Entities\Project;
+use LACC\Presenters\ProjectPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 
 class ProjectRepositoryEloquent extends BaseRepository implements ProjectRepository
@@ -42,5 +43,10 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 				endforeach;
 
 				return false;
+		}
+
+		public function presenter()
+		{
+				return ProjectPresenter::class;
 		}
 }
