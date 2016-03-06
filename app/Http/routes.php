@@ -62,6 +62,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 
 				//Rota para arquivos
 				Route::post( '{id}/file', [ 'as' => 'project.file.add', 'uses' => 'ProjectFileController@store' ] );
+				Route::delete( '{id}/file/{idFile}', [ 'as' => 'project.file.delete', 'uses' => 'ProjectFileController@destroy' ] );
 
 
 				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );

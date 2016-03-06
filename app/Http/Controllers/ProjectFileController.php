@@ -74,7 +74,7 @@ class ProjectFileController extends Controller
 				try {
 						$this->fileValidator->with( $data )->passesOrFail();
 
-						$this->service->createFile( $data );
+						return $this->service->createFile( $data );
 				} catch ( ValidatorException $e ) {
 						return response()->json( [
 								'error'   => true,
@@ -110,11 +110,12 @@ class ProjectFileController extends Controller
 		/**
 		 * Remove the specified resource from storage.
 		 *
-		 * @param  int $id
+		 * @param  int $projectId $idFile
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function destroy( $id )
+		public function destroy( $projectId, $idFile )
 		{
+				return $this->service->deleteFile( $projectId, $idFile );
 		}
 }

@@ -19,7 +19,6 @@ use LACC\Validators\ProjectFileValidator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
 
-use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService extends BaseService
 {
@@ -168,12 +167,41 @@ class ProjectService extends BaseService
 								$this->filesystem->get( $data[ 'file' ] )
 						);
 
+						return response()->json( [
+								'success' => true,
+								'message' => 'Arquivo anexado com sucesso!',
+						] );
+
 				} catch ( \Exception $e ) {
 						return [
 								'success' => false,
 								'message' => 'Error: ' . $e->getMessage(),
 						];
 				}
+		}
 
+		public function deleteFile( $projectId, $idFile )
+		{
+				$files           = $this->repository->skipPresenter()->find( $projectId )->files;
+				$removeFilePasta = array();
+
+				foreach ( $files as $k => $file ):
+						$path = $file->id . '.' . $file->extension;
+
+						if ( $file->id == $idFile ):
+								$file->delete( $file->id );
+								$removeFilePasta[] = $path;
+						endif;
+
+				endforeach;
+
+				if ( count( $removeFilePasta ) ):
+						if ( $this->storage->delete( $removeFilePasta ) ):
+								return response()->json( [
+										'success' => true,
+										'message' => 'Arquivo deletado com sucesso no repositorio de arquivos e no BD',
+								] );
+						endif;
+				endif;
 		}
 }
