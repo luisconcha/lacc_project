@@ -60,6 +60,9 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 						Route::get( 'project/{idProject}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
 				} );
 
+				//Rota para arquivos
+				Route::post( '{id}/file', [ 'as' => 'project.file.add', 'uses' => 'ProjectFileController@store' ] );
+
 
 				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
 				Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );

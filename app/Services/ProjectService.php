@@ -12,9 +12,11 @@
 
 namespace LACC\Services;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
+
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Factory as Storage;
 
 class ProjectService extends BaseService
 {
@@ -26,11 +28,21 @@ class ProjectService extends BaseService
 		 * @var ProjectValidator
 		 */
 		protected $validator;
+		/**
+		 * @var Filesystem
+		 */
+		protected $filesystem;
+		/**
+		 * @var Storage
+		 */
+		protected $storage;
 
-		public function __construct( ProjectRepository $repository, ProjectValidator $validator )
+		public function __construct( ProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage )
 		{
 				$this->repository = $repository;
 				$this->validator  = $validator;
+				$this->filesystem = $filesystem;
+				$this->storage    = $storage;
 		}
 
 		/**
@@ -127,5 +139,28 @@ class ProjectService extends BaseService
 								'success' => false,
 								'message' => 'Error: ' . $e->getMessage() ] );
 				}
+		}
+
+		/*********************************************************
+		 *     F I L E S  D O  P R O J E T O                 *
+		 *********************************************************/
+
+		public function createFile( array $data )
+		{
+				try {
+						$project     = $this->repository->skipPresenter()->find( $data[ 'project_id' ] );
+						$projectFile = $project->files()->create( $data );
+
+						$this->storage->put(
+								$projectFile->id . '.' . $data[ 'extension' ],
+								$this->filesystem->get( $data[ 'file' ] )
+						);
+				} catch ( \Exception $e ) {
+						return [
+								'success' => false,
+								'message' => 'Error: ' . $e->getMessage(),
+						];
+				}
+
 		}
 }
