@@ -3,12 +3,10 @@
 namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use LACC\Http\Requests;
 use LACC\Repositories\ProjectRepository;
 use LACC\Services\ProjectService;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use LACC\Validators\ProjectFileValidator;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectFileController extends Controller
 {
@@ -20,11 +18,16 @@ class ProjectFileController extends Controller
 		 * @var ProjectService
 		 */
 		protected $service;
+		/**
+		 * @var ProjectFileValidator
+		 */
+		protected $fileValidator;
 
-		public function __construct( ProjectRepository $repository, ProjectService $service )
+		public function __construct( ProjectRepository $repository, ProjectService $service, ProjectFileValidator $fileValidator )
 		{
-				$this->repository = $repository;
-				$this->service    = $service;
+				$this->repository    = $repository;
+				$this->service       = $service;
+				$this->fileValidator = $fileValidator;
 		}
 
 		/**
@@ -46,21 +49,38 @@ class ProjectFileController extends Controller
 		 */
 		public function store( Request $request )
 		{
-				$file        = $request->file( 'file' );
-				$extension   = $file->getClientOriginalExtension();
-				$nomeArquivo = str_replace( ' ', '_', $request->name );
+				if ( is_null( $request->file( 'file' ) ) ) :
+						return response()->json( [
+								'success' => false,
+								'message' => 'Por favor, anexe um arquivo para upload!',
+						] );
+				else:
+						$file      = $request->file( 'file' );
+						$extension = $file->getClientOriginalExtension();
+				endif;
+
+				$name        = $request->name;
 				$description = $request->description;
 				$projectId   = $request->project_id;
 
 				$data = [
 						'file'        => $file,
 						'extension'   => $extension,
-						'name'        => $nomeArquivo,
+						'name'        => $name,
 						'description' => $description,
 						'project_id'  => $projectId,
 				];
 
-				$this->service->createFile( $data );
+				try {
+						$this->fileValidator->with( $data )->passesOrFail();
+
+						$this->service->createFile( $data );
+				} catch ( ValidatorException $e ) {
+						return response()->json( [
+								'error'   => true,
+								'message' => $e->getMessageBag(),
+						] );
+				}
 		}
 
 		/**

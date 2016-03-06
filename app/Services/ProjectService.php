@@ -14,9 +14,12 @@ namespace LACC\Services;
 
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
+use LACC\Validators\ProjectFileValidator;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
+
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService extends BaseService
 {
@@ -29,6 +32,10 @@ class ProjectService extends BaseService
 		 */
 		protected $validator;
 		/**
+		 * @var ProjectFileValidator
+		 */
+		protected $validatorFiles;
+		/**
 		 * @var Filesystem
 		 */
 		protected $filesystem;
@@ -37,12 +44,17 @@ class ProjectService extends BaseService
 		 */
 		protected $storage;
 
-		public function __construct( ProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage )
+		public function __construct( ProjectRepository $repository,
+		                             ProjectValidator $validator,
+		                             Filesystem $filesystem,
+		                             Storage $storage,
+		                             ProjectFileValidator $projectFileValidator )
 		{
-				$this->repository = $repository;
-				$this->validator  = $validator;
-				$this->filesystem = $filesystem;
-				$this->storage    = $storage;
+				$this->repository     = $repository;
+				$this->validator      = $validator;
+				$this->filesystem     = $filesystem;
+				$this->storage        = $storage;
+				$this->validatorFiles = $projectFileValidator;
 		}
 
 		/**
@@ -155,6 +167,7 @@ class ProjectService extends BaseService
 								$projectFile->id . '.' . $data[ 'extension' ],
 								$this->filesystem->get( $data[ 'file' ] )
 						);
+
 				} catch ( \Exception $e ) {
 						return [
 								'success' => false,
