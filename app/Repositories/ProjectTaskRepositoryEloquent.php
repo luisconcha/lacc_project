@@ -12,6 +12,7 @@
  */
 namespace LACC\Repositories;
 
+use LACC\Presenters\ProjectTaskPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use LACC\Repositories\ProjectTaskRepository;
@@ -39,5 +40,10 @@ class ProjectTaskRepositoryEloquent extends BaseRepository implements ProjectTas
 		public function boot()
 		{
 				$this->pushCriteria( app( RequestCriteria::class ) );
+		}
+
+		public function presenter()
+		{
+				return ProjectTaskPresenter::class;
 		}
 }

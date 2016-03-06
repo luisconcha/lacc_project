@@ -40,9 +40,10 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index()
+		public function index( $id )
 		{
-				return $this->service->all();
+//				return $this->service->all();
+				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
