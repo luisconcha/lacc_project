@@ -34,12 +34,12 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 		Route::group( [ 'prefix' => 'project' ], function () {
 
 				//Rota para as notas
-				Route::get( '{id}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
+				Route::get( '{projectId}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
 				Route::group( [ 'prefix' => 'note' ], function () {
-						Route::post( '/', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
-						Route::get( '/{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
-						Route::put( '/{noteId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
-						Route::delete( '/{noteId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
+						Route::post( '/{projectId}', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
+						Route::get( '/{noteId}/{projectId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
+						Route::put( '/{noteId}/{projectId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
+						Route::delete( '/{noteId}/{projectId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
 
 				} );
 

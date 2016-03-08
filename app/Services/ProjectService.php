@@ -224,7 +224,7 @@ class ProjectService extends BaseService
 
 		public function checkProjectPermissions( $projectId )
 		{
-				if ( $this->checkProjectOwner( $projectId ) or $this->checkProjectMember( $projectId ) ) :
+				if ( $this->checkProjectOwner( $projectId ) || $this->checkProjectMember( $projectId ) ) :
 						return true;
 				endif;
 

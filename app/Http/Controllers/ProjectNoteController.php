@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use LACC\Http\Requests;
 use LACC\Repositories\ProjectNoteRepository;
 use LACC\Services\ProjectNoteService;
+use LACC\Services\ProjectService;
 
 class ProjectNoteController extends Controller
 {
@@ -28,11 +29,18 @@ class ProjectNoteController extends Controller
 		 * @var ProjectNoteService
 		 */
 		protected $service;
+		/**
+		 * @var ProjectService
+		 */
+		protected $projectService;
 
-		public function __construct( ProjectNoteRepository $repository, ProjectNoteService $service )
+		public function __construct( ProjectNoteRepository $repository,
+		                             ProjectNoteService $service,
+		                             ProjectService $projectService )
 		{
-				$this->repository = $repository;
-				$this->service    = $service;
+				$this->repository     = $repository;
+				$this->service        = $service;
+				$this->projectService = $projectService;
 		}
 
 		/**
@@ -40,8 +48,14 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index( $id )
+		public function index( $id, Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
@@ -54,6 +68,12 @@ class ProjectNoteController extends Controller
 		 */
 		public function store( Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->create( $request->all() );
 		}
 
@@ -64,8 +84,14 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function show( $noteId )
+		public function show( $noteId, Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->searchNoteById( $noteId );
 		}
 
@@ -79,6 +105,13 @@ class ProjectNoteController extends Controller
 		 */
 		public function update( Request $request, $noteId )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
+
 				return $this->service->update( $request->all(), $noteId );
 		}
 
@@ -89,8 +122,15 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function destroy( $id )
+		public function destroy( Request $request, $id )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
+
 				try {
 						$dataProject = $this->service->searchNoteById( $id );
 
