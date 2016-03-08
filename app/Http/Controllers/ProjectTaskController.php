@@ -16,6 +16,7 @@ namespace LACC\Http\Controllers;
 use Illuminate\Http\Request;
 use LACC\Http\Requests;
 use LACC\Repositories\ProjectTaskRepository;
+use LACC\Services\ProjectService;
 use LACC\Services\ProjectTaskService;
 
 class ProjectTaskController extends Controller
@@ -28,11 +29,16 @@ class ProjectTaskController extends Controller
 		 * @var ProjectTaskService
 		 */
 		protected $service;
+		/**
+		 * @var ProjectService
+		 */
+		protected $projectService;
 
-		public function __construct( ProjectTaskRepository $taskRepository, ProjectTaskService $service )
+		public function __construct( ProjectTaskRepository $taskRepository, ProjectTaskService $service, ProjectService $projectService )
 		{
 				$this->repository = $taskRepository;
 				$this->service    = $service;
+				$this->projectService = $projectService;
 		}
 
 		/**
@@ -43,6 +49,10 @@ class ProjectTaskController extends Controller
 		public function index( $id )
 		{
 //				return $this->service->all();
+				if ( !$this->projectService->checkProjectPermissions( $id ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
@@ -55,6 +65,12 @@ class ProjectTaskController extends Controller
 		 */
 		public function store( Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->create( $request->all() );
 		}
 
@@ -65,8 +81,14 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function show( $id )
+		public function show( $id, Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->searchById( $id );
 		}
 
@@ -80,6 +102,12 @@ class ProjectTaskController extends Controller
 		 */
 		public function update( Request $request, $taskId )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				return $this->service->update( $request->all(), $taskId );
 		}
 
@@ -90,8 +118,14 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function destroy( $id )
+		public function destroy( $id, Request $request )
 		{
+				$projectId = $request->projectId;
+
+				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+						return [ 'error' => 'Access Forbidden' ];
+				endif;
+
 				try {
 						$dataTask = $this->service->searchById( $id );
 						if ( $dataTask[ 'success' ] ) {

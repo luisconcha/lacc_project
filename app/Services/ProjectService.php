@@ -18,6 +18,7 @@ use LACC\Validators\ProjectFileValidator;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 
 class ProjectService extends BaseService
@@ -203,5 +204,39 @@ class ProjectService extends BaseService
 								] );
 						endif;
 				endif;
+		}
+
+
+
+
+
+
+
+
+
+
+
+		public function checkProjectOwner( $projectId )
+		{
+				$userId = Authorizer::getResourceOwnerId();
+
+				return $this->repository->isOwner( $projectId, $userId );
+
+		}
+
+		public function checkProjectMember( $projectId )
+		{
+				$userId = Authorizer::getResourceOwnerId();
+
+				return $this->repository->hasMember( $projectId, $userId );
+		}
+
+		public function checkProjectPermissions( $projectId )
+		{
+				if ( $this->checkProjectOwner( $projectId ) or $this->checkProjectMember( $projectId ) ) :
+						return true;
+				endif;
+
+				return false;
 		}
 }
