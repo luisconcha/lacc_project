@@ -34,10 +34,12 @@ class ProjectTaskController extends Controller
 		 */
 		protected $projectService;
 
-		public function __construct( ProjectTaskRepository $taskRepository, ProjectTaskService $service, ProjectService $projectService )
+		public function __construct( ProjectTaskRepository $taskRepository,
+		                             ProjectTaskService $service,
+		                             ProjectService $projectService )
 		{
-				$this->repository = $taskRepository;
-				$this->service    = $service;
+				$this->repository     = $taskRepository;
+				$this->service        = $service;
 				$this->projectService = $projectService;
 		}
 
