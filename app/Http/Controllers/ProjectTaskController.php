@@ -130,11 +130,13 @@ class ProjectTaskController extends Controller
 
 				try {
 						$dataTask = $this->service->searchById( $id );
-						if ( $dataTask[ 'success' ] ) {
+
+						if ( $dataTask ) {
 								$this->repository->delete( $id );
 								return response()->json( [
 										'message' => 'Tarefa deletada com sucesso!',
 								] );
+
 						}
 				} catch ( \Exception $e ) {
 						return response()->json( [

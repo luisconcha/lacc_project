@@ -94,7 +94,7 @@ class ClientController extends Controller
 		{
 				try{
 						$dataClient = $this->service->searchById($id);
-						if( $dataClient['success'] ) {
+						if( $dataClient ) {
 								$this->repository->delete( $id );
 								return response()->json( [ 'message' => 'Cliente deletado com sucesso!' ] );
 						}

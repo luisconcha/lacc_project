@@ -94,7 +94,7 @@ class ProjectNoteController extends Controller
 				try {
 						$dataProject = $this->service->searchNoteById( $id );
 
-						if ( $dataProject[ 'success' ] ) {
+						if ( $dataProject ) {
 								$this->repository->delete( $id );
 
 								return response()->json( [

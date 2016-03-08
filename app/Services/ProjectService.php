@@ -207,15 +207,6 @@ class ProjectService extends BaseService
 		}
 
 
-
-
-
-
-
-
-
-
-
 		public function checkProjectOwner( $projectId )
 		{
 				$userId = Authorizer::getResourceOwnerId();
