@@ -1,0 +1,36 @@
+{
+  "name": "lacc_project - FrontEnd",
+  "description": "Gerenciador de projetos com Laravel e Angular",
+  "main": "",
+  "authors": [
+    "Luis Alberto Concha Curay <luisconchacuray@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Luis",
+    "Concha",
+    "Laravel",
+    "Angular",
+    "Projetos"
+  ],
+  "homepage": "https://github.com/luisconcha/lacc_project",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-route": "1.5.x",
+    "angular-resource": "1.5.x",
+    "angular-animate": "1.5.x",
+    "angular-messages": "1.5.x",
+    "angular-bootstrap": "1.2.4",
+    "angular-strap": "2.3.7",
+    "bootstrap": "3.3.5"
+  }
+}
