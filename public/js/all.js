@@ -440,4 +440,5 @@ angular.$$uibTooltipCss=!0}),angular.module("ui.bootstrap.timepicker").run(funct
 'use strict';angular.module('mgcrea.ngStrap.navbar',[]).provider('$navbar',function(){var t=this.defaults={activeClass:'active',routeAttr:'data-match-route',strict:!1};this.$get=function(){return{defaults:t}}}).directive('bsNavbar',['$window','$location','$navbar',function(t,a,r){var e=r.defaults;return{restrict:'A',link:function(t,r,n,i){var c=angular.copy(e);angular.forEach(Object.keys(e),function(t){angular.isDefined(n[t])&&(c[t]=n[t])}),t.$watch(function(){return a.path()},function(t,a){var e=r[0].querySelectorAll('li['+c.routeAttr+']');angular.forEach(e,function(a){var r=angular.element(a),e=r.attr(c.routeAttr).replace('/','\\/');c.strict&&(e='^'+e+'$');var n=new RegExp(e,'i');n.test(t)?r.addClass(c.activeClass):r.removeClass(c.activeClass)})})}}}]);
 //# sourceMappingURL=navbar.min.js.map
 
+<h1>LUIS</h1>
 //# sourceMappingURL=all.js.map
