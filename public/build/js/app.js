@@ -1,7 +1,10 @@
-var app = angular.module( 'app', [ 'ngRoute', 'angular-oauth2', 'app.controllers' ] );
+var app = angular.module( 'app', [ 'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services' ] );
 
 angular.module( 'app.controllers', [ 'ngMessages', 'angular-oauth2' ] );
 
+/**
+ * Modulo para serviços RestFull
+ */
 angular.module( 'app.services', [ 'ngResource' ] );
 
 /**
@@ -21,8 +24,8 @@ app.provider( 'appConfig', function () {
 } );
 
 app.config( [
-    '$routeProvider', 'OAuthProvider', 'appConfigProvider',
-    function ( $routeProvider, OAuthProvider, appConfigProvider ) {
+    '$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
+    function ( $routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider ) {
         $routeProvider
             .when( '/login', {
                 templateUrl: 'build/views/login.html',
@@ -34,7 +37,7 @@ app.config( [
             } )
             .when('/clients', {
                 templateUrl: 'build/views/client/list.html',
-                controller: ''
+                controller: 'ClientListController'
             });
 
         OAuthProvider.configure( {
@@ -42,6 +45,13 @@ app.config( [
             clientId: 'appid1',
             clientSecret: 'secret',
             grantPath: 'oauth/access_token'
+        } );
+
+        OAuthTokenProvider.configure( {
+            name: 'token',
+            options: {
+                secure: false
+            }
         } );
     } ] );
 
