@@ -21,7 +21,7 @@ Route::post( 'oauth/access_token', function () {
 
 Route::group( [ 'middleware' => 'oauth' ], function () {
 		Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
-		Route::group( [ 'prefix' => 'client' ], function () {
+		Route::group( [ 'prefix' => 'clients' ], function () {
 				Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
 				Route::get( '/{id}', [ 'as' => 'client.show', 'uses' => 'ClientController@show' ] );
 				Route::put( '/{id}', [ 'as' => 'client.update', 'uses' => 'ClientController@update' ] );
