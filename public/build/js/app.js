@@ -1,25 +1,49 @@
 var app = angular.module( 'app', [ 'ngRoute', 'angular-oauth2', 'app.controllers' ] );
 
-angular.module( 'app.controllers', ['ngMessages', 'angular-oauth2' ] );
+angular.module( 'app.controllers', [ 'ngMessages', 'angular-oauth2' ] );
 
-app.config( [ '$routeProvider', 'OAuthProvider', function ( $routeProvider, OAuthProvider ) {
-    $routeProvider
-        .when( '/login', {
-            templateUrl: 'build/views/login.html',
-            controller: 'LoginController'
-        } )
-        .when( '/home', {
-            templateUrl: 'build/views/home.html',
-            controller: 'HomeController'
+angular.module( 'app.services', [ 'ngResource' ] );
+
+/**
+ * Serviço que fornece a URL do projeto
+ */
+app.provider( 'appConfig', function () {
+    var config = {
+        baseUrl: 'http://project.dev'
+    }
+
+    return {
+        config: config,
+        $get: function () {
+            return config;
+        }
+    }
+} );
+
+app.config( [
+    '$routeProvider', 'OAuthProvider', 'appConfigProvider',
+    function ( $routeProvider, OAuthProvider, appConfigProvider ) {
+        $routeProvider
+            .when( '/login', {
+                templateUrl: 'build/views/login.html',
+                controller: 'LoginController'
+            } )
+            .when( '/home', {
+                templateUrl: 'build/views/home.html',
+                controller: 'HomeController'
+            } )
+            .when('/clients', {
+                templateUrl: 'build/views/client/list.html',
+                controller: ''
+            });
+
+        OAuthProvider.configure( {
+            baseUrl: appConfigProvider.config.baseUrl,
+            clientId: 'appid1',
+            clientSecret: 'secret',
+            grantPath: 'oauth/access_token'
         } );
-
-    OAuthProvider.configure( {
-        baseUrl: 'http://project.dev',
-        clientId: 'appid1',
-        clientSecret: '$2y$10$x2EYCZE3eQbvOx2F7lTID.IdtOgdIst7M',
-        grantPath: 'oauth/access_token'
-    } );
-} ] );
+    } ] );
 
 app.run( [ '$rootScope', '$window', 'OAuth', function ( $rootScope, $window, OAuth ) {
     $rootScope.$on( 'oauth:error', function ( event, rejection ) {
