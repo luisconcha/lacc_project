@@ -3,6 +3,9 @@ angular.module( 'app.services' )
         return $resource( appConfig.baseUrl + '/clients/:id', { id: '@id' }, {
             update: {
                 method: 'PUT'
+            },
+            remove: {
+                method: 'DELETE'
             }
         } );
     } ] );
