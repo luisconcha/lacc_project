@@ -39,8 +39,8 @@ class ProjectTransformer extends TransformerAbstract
 				return $this->collection( $project->members, new ProjectMemberTransformer() );
 		}
 
-		public function includeClients( Project $project )
-		{
-				return $this->collection( $project->client, new ClientTransformer() );
-		}
+		// public function includeClients( Project $project )
+		// {
+		// 		return $this->collection( $project->client, new ClientTransformer() );
+		// }
 }
