@@ -4,12 +4,12 @@ var elixir     = require( 'laravel-elixir' ),
     gulp       = require( 'gulp' );
 
 var config = {
-    assets_path: './resources/assets',
-    build_path: './public/build'
+    assets_path: "./resources/assets",
+    build_path: "./public/build"
 };
 
-config.bower_path = config.assets_path + '/../bower_components';
-config.build_path_js = config.build_path + '/js';
+config.bower_path           = config.assets_path + '/../bower_components';
+config.build_path_js        = config.build_path + '/js';
 config.build_vendor_path_js = config.build_path_js + '/vendor';
 
 config.vendor_path_js = [
@@ -27,20 +27,21 @@ config.vendor_path_js = [
     config.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
 ];
 
-config.build_path_css = config.build_path + '/css';
+config.build_path_css        = config.build_path + '/css';
 config.build_vendor_path_css = config.build_path_css + '/vendor';
-config.vendor_path_css = [
+config.vendor_path_css       = [
     config.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
     config.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
 ];
 
 config.build_path_html = config.build_path + '/views';
 
-gulp.task( 'copy-html', function(){
-     gulp.src( [
-         config.assets_path + '/js/views/**/*.html'
-     ] )
-         .pipe( gulp.dest( config.build_path_html ) )
+gulp.task( 'copy-html', function () {
+    gulp.src( [
+        config.assets_path + '/js/views/**/*.html'
+    ] )
+        .pipe( gulp.dest( config.build_path_html ) )
+        .pipe( liveReload() );
 } );
 
 gulp.task( 'copy-styles', function () {

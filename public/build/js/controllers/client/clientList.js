@@ -1,4 +1,7 @@
+
 angular.module( 'app.controllers' )
     .controller( 'ClientListController', [ '$scope', 'Client', function ( $scope, Client ) {
-        $scope.clients = Client.get();
+        Client.get( {}, function ( data ) {
+            $scope.clients = data;
+        } );
     } ] );
