@@ -6,6 +6,7 @@ angular.module( 'app.controllers' )
         $scope.save = function () {
             if( $scope.form.$valid ) {
                 $scope.client.$save().then( function () {
+                    swal("Cadastro!", "O cliente foi cadastrado com sucesso!.", "success");
                     $location.path( '/clients' );
                 } );
             }

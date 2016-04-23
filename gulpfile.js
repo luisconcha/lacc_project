@@ -25,13 +25,21 @@ config.vendor_path_js = [
     config.bower_path + '/angular-cookies/angular-cookies.min.js',
     config.bower_path + '/query-string/query-string.js',
     config.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
+    config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.min.js',
 ];
 
 config.build_path_css        = config.build_path + '/css';
 config.build_vendor_path_css = config.build_path_css + '/vendor';
+config.build_style_path_css  = config.build_path_css + '/style';
+
 config.vendor_path_css       = [
     config.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
     config.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
+    config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.css',
+];
+
+config.style_path_css       = [
+    config.build_path_css + '/style.css',
 ];
 
 config.build_path_html = config.build_path + '/views';
@@ -54,6 +62,10 @@ gulp.task( 'copy-styles', function () {
     gulp.src( config.vendor_path_css )
         .pipe( gulp.dest( config.build_vendor_path_css ) )
         .pipe( liveReload() );
+
+    gulp.src( config.style_path_css )
+       .pipe( gulp.dest( config.build_style_path_css ) )
+       .pipe( liveReload() );
 } );
 
 gulp.task( 'copy-scripts', function () {

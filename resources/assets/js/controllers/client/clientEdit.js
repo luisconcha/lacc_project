@@ -17,6 +17,7 @@ angular.module( 'app.controllers' )
                 if ( $scope.form.$valid ) {
                     //console.info($scope.client);
                     Client.update( { id: $scope.client.id }, $scope.client, function () {
+                        swal("Alterado!", "O cliente foi alterado com sucesso!.", "success");
                         $location.path( '/clients' );
                     } );
                 }

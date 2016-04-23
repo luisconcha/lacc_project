@@ -9,6 +9,8 @@
     @if(Config::get('app.debug'))
         <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap.min.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap-theme.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/vendor/sweet-alert.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/style.css')}}"/>
     @else
         <link rel="stylesheet" href="{{elixir('css/all.css')}}"/>
         @endif
@@ -77,6 +79,7 @@
     <script src="{{asset('build/js/vendor/angular-cookies.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/query-string.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-oauth2.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/sweet-alert.min.js')}}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
