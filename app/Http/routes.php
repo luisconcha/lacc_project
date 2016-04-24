@@ -9,6 +9,11 @@ Route::post( 'oauth/access_token', function () {
 } );
 
 Route::group( [ 'middleware' => 'oauth' ], function () {
+
+		//Rota para os usuarios
+		Route::get( '/user/authenticated', [ 'as' => 'user.authenticated', 'uses' => 'UserController@authenticated' ] );
+
+		//Rota para os clientes
 		Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
 		Route::group( [ 'prefix' => 'clients' ], function () {
 				Route::post( '/', [ 'as' => 'client.create', 'uses' => 'ClientController@store' ] );
