@@ -39,9 +39,8 @@ class BaseService
 
 						$this->validator->with( $data )->setId( $id )->passesOrFail( ValidatorInterface::RULE_UPDATE );
 
-						return response()->json( [
-								$this->repository->update( $data, $id ),
-						] );
+						return $this->repository->update( $data, $id );
+						
 				} catch ( ValidationException $e ) {
 						return response()->json( [
 								'error'   => true,

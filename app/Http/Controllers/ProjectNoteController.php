@@ -55,8 +55,9 @@ class ProjectNoteController extends Controller
 				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
-
+				
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
+			
 		}
 
 		/**

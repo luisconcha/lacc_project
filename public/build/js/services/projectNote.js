@@ -18,7 +18,7 @@ angular.module( 'app.services' )
             update: {
                 method: 'PUT',
                 url: '/project/notes/:id/notes/:idNote',
-                isArray: true
+                //isArray: true
             },
             remove: {
                 method: 'DELETE',

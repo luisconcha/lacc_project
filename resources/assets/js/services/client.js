@@ -5,6 +5,9 @@ angular.module( 'app.services' )
                 method: 'PUT',
                 isArray: true
             },
+            update: {
+                method: 'PUT',
+            },
             remove: {
                 method: 'DELETE'
             }
