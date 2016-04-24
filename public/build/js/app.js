@@ -43,6 +43,10 @@ app.config( [
                 templateUrl: 'build/views/client/new.html',
                 controller: 'ClientNewController'
             } )
+            .when('/clients/:id/show', {
+                templateUrl: 'build/views/client/show.html',
+                controller: 'ClientShowController'
+            })
             .when( '/clients/:id/edit',{
                 templateUrl: 'build/views/client/edit.html',
                 controller: 'ClientEditController'
