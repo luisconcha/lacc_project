@@ -2,6 +2,7 @@
 
 namespace LACC\Transformers;
 
+use LACC\Entities\Project;
 use LACC\Entities\ProjectNote;
 use League\Fractal\TransformerAbstract;
 
@@ -12,7 +13,9 @@ use League\Fractal\TransformerAbstract;
  */
 class ProjectNoteTransformer extends TransformerAbstract
 {
-		protected $defaultIncludes = [ ];
+		protected $availableIncludes = [
+				'project',
+		];
 
 		/**
 		 * Transform the \ProjectTask entity
@@ -24,10 +27,18 @@ class ProjectNoteTransformer extends TransformerAbstract
 		public function transform( ProjectNote $data )
 		{
 				return [
-						'id'         => (int)$data->id,
-						'project_id' => (int)$data->project_id,
-						'title'      => $data->title,
-						'note'       => $data->note,
+						'id'             => (int)$data->id,
+						'title'          => $data->title,
+						'note'           => $data->note,
+						'data_criacao'   => $data->created_at,
+						'data_alteracao' => $data->updated_at,
+						'project_id'     => (int)$data->project_id,
+						'project_name'   => $data->project->name,
 				];
+		}
+
+		public function includeProject( Project $project )
+		{
+				return $this->collection( $project->project, new ProjectMemberTransformer() );
 		}
 }

@@ -18,7 +18,17 @@
 
 /*END Stylos para a busca*/
 
+/*Estilos para listagem */
 .tr-result-search td{
     padding-top: 20px !important;
     background: rgba(245, 241, 241, 0.39);
 }
+
+/*Estilos para as Notas do projeto*/
+.name-project-in-note{
+    font-size: 15px;
+}
+.span-detail-note{
+    margin-right: 20px;
+}
+/* END Estilos para as Notas do projeto*/

@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 Route::get( '/', function () {
 		return view( 'app' );
 } );
@@ -35,12 +24,11 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 
 				//Rota para as notas
 				Route::get( '{projectId}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
-				Route::group( [ 'prefix' => 'note' ], function () {
-						Route::post( '/{projectId}', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
-						Route::get( '/{noteId}/{projectId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
-						Route::put( '/{noteId}/{projectId}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
-						Route::delete( '/{noteId}/{projectId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
-
+				Route::group( [ 'prefix' => 'notes' ], function () {
+						Route::post( '{projectId}', [ 'as' => 'project.note.create', 'uses' => 'ProjectNoteController@store' ] );
+						Route::get( '{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
+						Route::put( '/{projectId}/notes/{idNote}', [ 'as' => 'project.note.update', 'uses' => 'ProjectNoteController@update' ] );
+						Route::delete( '/{projectId}/notes/{idNote}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
 				} );
 
 				//Rotas para a tasks

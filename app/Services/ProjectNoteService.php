@@ -53,10 +53,10 @@ class ProjectNoteService extends BaseService
 		public function searchNoteById( $noteId )
 		{
 				try {
-						return [
-								'success' => true,
-								'data'    => $this->repository->findWhere( [ 'id' => $noteId ] ),
-						];
+						return response()->json(
+								$this->repository->with( [ 'project' ] )
+										->find( $noteId )
+						);
 				} catch ( \Exception $e ) {
 						return [
 								'success' => false,

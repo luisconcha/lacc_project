@@ -85,13 +85,21 @@
     <script src="{{asset('build/js/app.js')}}"></script>
     <script src="{{asset('build/js/controllers/login.js')}}"></script>
     <script src="{{asset('build/js/controllers/home.js')}}"></script>
+
     <script src="{{asset('build/js/controllers/client/clientList.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientNew.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientEdit.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientRemove.js')}}"></script>
 
+    <script src="{{asset('build/js/controllers/project-note/projectNoteList.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-note/projectNoteNew.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-note/projectNoteEdit.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-note/projectNoteRemove.js')}}"></script> 
+    <script src="{{asset('build/js/controllers/project-note/projectNoteShow.js')}}"></script>
+   
     <!--SERVICES -->
     <script src="{{asset('build/js/services/client.js')}}"></script>
+    <script src="{{asset('build/js/services/projectNote.js')}}"></script>
 @else
     <script src="{{elixir('js/all.js')}}"></script>
 @endif

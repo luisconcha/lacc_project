@@ -86,8 +86,7 @@ class ProjectNoteController extends Controller
 		 */
 		public function show( $noteId, Request $request )
 		{
-				$projectId = $request->projectId;
-
+				$projectId = $request->id;
 				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
@@ -103,11 +102,9 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update( Request $request, $noteId )
+		public function update( Request $request, $idProjetc, $noteId )
 		{
-				$projectId = $request->projectId;
-
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+				if ( !$this->projectService->checkProjectPermissions( $idProjetc ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
 
@@ -122,20 +119,18 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function destroy( Request $request, $id )
+		public function destroy( Request $request, $idProjetc, $idNote )
 		{
-				$projectId = $request->projectId;
-
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+				if ( !$this->projectService->checkProjectPermissions( $idProjetc ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
 
 
 				try {
-						$dataProject = $this->service->searchNoteById( $id );
+						$dataProject = $this->service->searchNoteById( $idProjetc );
 
 						if ( $dataProject ) {
-								$this->repository->delete( $id );
+								$this->repository->delete( $idNote );
 
 								return response()->json( [
 										'message' => 'Nota deletada com sucesso!',
