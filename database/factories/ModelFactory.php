@@ -57,7 +57,7 @@ $factory->define( LACC\Entities\ProjectTask::class, function ( Faker\Generator $
 				'project_id' => $faker->numberBetween( 1, 10 ),
 				'start_date' => $faker->dateTimeBetween( 'Y-m-d', 'now' ),
 				'due_date'   => $faker->dateTimeBetween( 'Y-m-d', '+2 month' ),
-				'status'     => $faker->numberBetween( 0, 2 ),
+				'status'     => $faker->numberBetween( 0, 1 ),
 		];
 } );
 
