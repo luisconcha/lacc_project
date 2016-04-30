@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Listagem de Projetos</div>
+                <div class="panel-body">
+                    <form class="frm-search">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <a ng-href="#/projects/new" class="btn btn-primary">New Project</a>
+                            </span>
+                            <input ng-model="filtro"
+                                   ng-model-options="{debounce: 300}"
+                                   type="text" class="form-control"
+                                   placeholder="Qual projeto deseja visualiza?">
+                        </div>
+                    </form>
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name project</th>
+                            <th>Owner</th>
+                            <th>Client</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Dt Vencimento</th>
+                            <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="p in projectFilter = ( projects | filter:filtro )" class="painel-search-animado">
+                            <td>{{p.name_project}}</td>
+                            <td>{{p.owner_name}}</td>
+                            <td>{{p.client_name}}</td>
+                            <td>{{p.progress}}</td>
+                            <td>
+                                <span ng-if="p.status == 0" class="label label-danger">Inativo</span>
+                                <span ng-if="p.status == 1" class="label label-success">Ativo</span>
+                            </td>
+                            <td>{{p.due_date | dataBr}}</td>
+                            <td>
+                                <a ng-href="#/project/{{p.project_id}}/edit">Edit</a> |
+                                <a ng-href="#/project/{{p.project_id}}/remove">Remove</a>
+                            </td>
+                        </tr>
+                        <tr class="tr-result-search">
+                            <td colspan="7">
+                               Foram encontrados
+                                <span class="label label-pill label-success">{{projectFilter.length}}</span> de
+                                <span class="label label-pill label-primary">{{projects.length}}</span>  registros.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

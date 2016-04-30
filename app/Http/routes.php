@@ -22,10 +22,15 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				Route::delete( '/{id}', [ 'as' => 'client.delete', 'uses' => 'ClientController@destroy' ] );
 
 		} );
-
+		//Rota lista projetos
 		Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
 
 		Route::group( [ 'prefix' => 'project' ], function () {
+				//Rota para os projetos
+				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
+				Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
+				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
+				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 
 				//Rota para as notas
 				Route::get( '{projectId}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
@@ -56,12 +61,6 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				//Rota para arquivos
 				Route::post( '{id}/file', [ 'as' => 'project.file.add', 'uses' => 'ProjectFileController@store' ] );
 				Route::delete( '{id}/file/{idFile}', [ 'as' => 'project.file.delete', 'uses' => 'ProjectFileController@destroy' ] );
-
-
-				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
-				Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );
-				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
-				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 		} );
 
 } );

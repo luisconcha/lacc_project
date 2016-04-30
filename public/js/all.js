@@ -636,40 +636,48 @@ app.run( [ '$rootScope', '$window', 'OAuth', function ( $rootScope, $window, OAu
     } );
 } ] );
 angular.module( 'app.controllers' )
-    .controller( 'HomeController', [ '$scope', function ( $scope ) {
-
+    .controller( 'HomeController', [ '$scope', '$cookies', function ( $scope, $cookies ) {
+            $scope.user_name = $cookies.getObject( 'user' ).user_name;
     } ] );
 angular.module( 'app.controllers' )
-    .controller( 'LoginController', [ '$scope', '$location', 'OAuth', function ( $scope, $location, OAuth ) {
-        $scope.user = {
-            username: '',
-            'password': ''
-        };
+    .controller( 'LoginController',
+    [ '$scope', '$location', '$cookies', 'User', 'OAuth',
+        function ( $scope, $location, $cookies, User, OAuth ) {
+            $scope.user = {
+                username: '',
+                password: ''
+            };
 
-        $scope.error = {
-            message: '',
-            error: false
-        }
+            $scope.error = {
+                message: '',
+                error: false
+            };
 
-        $scope.login = function () {
-            if ( $scope.form.$valid ) {
+            $scope.login = function () {
+                if ( $scope.form.$valid ) {
+                    OAuth.getAccessToken( $scope.user ).then( function () {
 
-                OAuth.getAccessToken( $scope.user ).then( function () {
-                    $location.path( 'home' );
-                }, function ( data ) {
-                    console.error(data);
-                    $scope.error.error = true;
-                    $scope.error.message = data.data.error_description
-                } );
-            }
-        }
-    } ] );
+                        User.authenticated( {}, {}, function ( data ) {
+                            $cookies.putObject( 'user', data.data );
+                            $location.path( 'home' );
+                        } );
+
+                    }, function ( data ) {
+                        $scope.error.error   = true;
+                        $scope.error.message = data.data.error_description
+                    } );
+                }
+            };
+        } ] );
 angular.module( 'app.services' )
     .service( 'Client', [ '$resource', 'appConfig', function ( $resource, appConfig ) {
         return $resource( appConfig.baseUrl + '/clients/:id', { id: '@id' }, {
             update: {
                 method: 'PUT',
                 isArray: true
+            },
+            update: {
+                method: 'PUT',
             },
             remove: {
                 method: 'DELETE'
@@ -696,7 +704,7 @@ angular.module( 'app.services' )
             update: {
                 method: 'PUT',
                 url: '/project/notes/:id/notes/:idNote',
-                isArray: true
+                //isArray: true
             },
             remove: {
                 method: 'DELETE',
@@ -704,6 +712,15 @@ angular.module( 'app.services' )
             }
         } );
 
+    } ] );
+angular.module( 'app.services' )
+    .service( 'User', [ '$resource', 'appConfig', function ( $resource, appConfig ) {
+        return $resource( appConfig.baseUrl + '/user', {}, {
+            authenticated: {
+                url: appConfig.baseUrl + '/user/authenticated',
+                method: 'GET'
+            }
+        } );
     } ] );
 angular.module( 'app.controllers' )
     .controller( 'ClientEditController',
