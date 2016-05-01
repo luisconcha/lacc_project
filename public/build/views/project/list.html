@@ -34,8 +34,10 @@
                             <td>{{p.client_name}}</td>
                             <td>{{p.progress}}</td>
                             <td>
-                                <span ng-if="p.status == 0" class="label label-danger">Inativo</span>
-                                <span ng-if="p.status == 1" class="label label-success">Ativo</span>
+                                <span ng-if="p.status == 0" class="label label-default">Não iniciado</span>
+                                <span ng-if="p.status == 1" class="label label-info">Em andamento</span>
+                                <span ng-if="p.status == 2" class="label label-success">Finalizado</span>
+                                <span ng-if="p.status == 3" class="label label-danger">Cancelado</span>
                             </td>
                             <td>{{p.due_date | dataBr}}</td>
                             <td>
@@ -45,7 +47,7 @@
                         </tr>
                         <tr class="tr-result-search">
                             <td colspan="7">
-                               Foram encontrados
+                                Foram encontrados
                                 <span class="label label-pill label-success">{{projectFilter.length}}</span> de
                                 <span class="label label-pill label-primary">{{projects.length}}</span>  registros.
                             </td>

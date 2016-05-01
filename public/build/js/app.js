@@ -1,6 +1,6 @@
 var app = angular.module( 'app', [ 'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters' ] );
 
-angular.module( 'app.controllers', [ 'ngMessages', 'angular-oauth2','ngAnimate' ] );
+angular.module( 'app.controllers', [ 'ngMessages', 'angular-oauth2', 'ngAnimate' ] );
 angular.module( 'app.filters', [] );
 
 /**
@@ -13,8 +13,16 @@ angular.module( 'app.services', [ 'ngResource' ] );
  */
 app.provider( 'appConfig', function () {
     var config = {
-        baseUrl: 'http://project.dev'
-    }
+        baseUrl: 'http://project.dev',
+        project: {
+            status: [
+                { value: '0', label: 'Não iniciado' },
+                { value: '1', label: 'Iniciado' },
+                { value: '2', label: 'Finalizado' },
+                { value: '3', label: 'Cancelado' }
+            ]
+        }
+    };
 
     return {
         config: config,
@@ -25,8 +33,12 @@ app.provider( 'appConfig', function () {
 } );
 
 app.config( [
-    '$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
-    function ( $routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider ) {
+    '$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
+    function ( $routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider ) {
+
+        $httpProvider.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=utf-8';
+        $httpProvider.defaults.headers.put[ 'Content-Type' ]  = 'application/x-www-form-urlencoded;charset=utf-8';
+
         $routeProvider
         /********* Rota Login *********/
             .when( '/login', {
@@ -40,19 +52,19 @@ app.config( [
             } )
 
         /********* Rota Clients *********/
-            .when('/clients', {
+            .when( '/clients', {
                 templateUrl: 'build/views/client/list.html',
                 controller: 'ClientListController'
-            })
-            .when( '/clients/new',{
+            } )
+            .when( '/clients/new', {
                 templateUrl: 'build/views/client/new.html',
                 controller: 'ClientNewController'
             } )
-            .when('/clients/:id/show', {
+            .when( '/clients/:id/show', {
                 templateUrl: 'build/views/client/show.html',
                 controller: 'ClientShowController'
-            })
-            .when( '/clients/:id/edit',{
+            } )
+            .when( '/clients/:id/edit', {
                 templateUrl: 'build/views/client/edit.html',
                 controller: 'ClientEditController'
             } )
@@ -80,26 +92,26 @@ app.config( [
             } )
 
         /********* Rota Projects Notes *********/
-            .when('/project/:id/notes', {
+            .when( '/project/:id/notes', {
                 templateUrl: 'build/views/project-note/list.html',
                 controller: 'ProjectNoteListController'
-            })
-            .when('/project/:id/notes/new', {
+            } )
+            .when( '/project/:id/notes/new', {
                 templateUrl: 'build/views/project-note/new.html',
                 controller: 'ProjectNoteNewController'
-            })
-            .when('/project/:id/notes/:idNote/show', {
+            } )
+            .when( '/project/:id/notes/:idNote/show', {
                 templateUrl: 'build/views/project-note/show.html',
                 controller: 'ProjectNoteShowController'
-            })
-            .when('/project/:id/notes/:idNote/edit', {
+            } )
+            .when( '/project/:id/notes/:idNote/edit', {
                 templateUrl: 'build/views/project-note/edit.html',
                 controller: 'ProjectNoteEditController'
-            })
-            .when('/project/:id/notes/:idNote/remove', {
+            } )
+            .when( '/project/:id/notes/:idNote/remove', {
                 templateUrl: 'build/views/project-note/remove.html',
                 controller: 'ProjectNoteRemoveController'
-            });
+            } );
 
         OAuthProvider.configure( {
             baseUrl: appConfigProvider.config.baseUrl,

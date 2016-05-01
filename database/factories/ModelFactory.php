@@ -31,6 +31,11 @@ $factory->define( LACC\Entities\Client::class, function ( Faker\Generator $faker
 		];
 } );
 
+//Status
+//0 = Não iniciado
+//1 = Iniciado (em adamento)
+//2 = Finalizado
+//3 = Cancelado
 $factory->define( LACC\Entities\Project::class, function ( Faker\Generator $faker ) {
 		return [
 				'owner_id'    => $faker->numberBetween( 1, 3 ),
@@ -38,7 +43,7 @@ $factory->define( LACC\Entities\Project::class, function ( Faker\Generator $fake
 				'name'        => $faker->word,
 				'description' => $faker->paragraph(),
 				'progress'    => $faker->numberBetween( 0, 100 ),
-				'status'      => $faker->numberBetween( 0, 2 ),
+				'status'      => $faker->numberBetween( 0, 3 ),
 				'due_date'    => $faker->dateTimeBetween( 'tomorrow', '+1 year' ),
 		];
 } );
@@ -57,7 +62,7 @@ $factory->define( LACC\Entities\ProjectTask::class, function ( Faker\Generator $
 				'project_id' => $faker->numberBetween( 1, 10 ),
 				'start_date' => $faker->dateTimeBetween( 'Y-m-d', 'now' ),
 				'due_date'   => $faker->dateTimeBetween( 'Y-m-d', '+2 month' ),
-				'status'     => $faker->numberBetween( 0, 1 ),
+				'status'     => $faker->numberBetween( 0, 3 ),
 		];
 } );
 
