@@ -14,7 +14,7 @@ class OAuthClientsTableSeeder extends Seeder
 				factory( 'LACC\Entities\OAuthClients' )->create(
 						[
 								'id'        => 'appid1',
-								'secret'    => bcrypt( '123456' ),
+								'secret'    => 'secret',
 								'name'      => 'AngularApp',
 								'created_at' => date( 'Y-m-d H:i:s' ),
 						]
@@ -23,7 +23,7 @@ class OAuthClientsTableSeeder extends Seeder
 				factory( 'LACC\Entities\OAuthClients' )->create(
 						[
 								'id'        => 'appid2',
-								'secret'    => bcrypt( '1234567' ),
+								'secret'    => 'secret',
 								'name'      => 'LaravelApp',
 								'created_at' => date( 'Y-m-d H:i:s' ),
 						]
@@ -32,7 +32,7 @@ class OAuthClientsTableSeeder extends Seeder
 				factory( 'LACC\Entities\OAuthClients' )->create(
 						[
 								'id'        => 'appid3',
-								'secret'    => bcrypt( '12345678' ),
+								'secret'    => 'secret',
 								'name'      => 'mysqlApp',
 								'created_at' => date( 'Y-m-d H:i:s' ),
 						]
