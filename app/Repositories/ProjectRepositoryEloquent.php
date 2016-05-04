@@ -37,7 +37,6 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 		public function hasMember( $projectId, $memberId )
 		{
 				$project = $this->find( $projectId );
-
 				foreach ( $project[ 'data' ][ 'members' ] as $member ):
 						foreach ( $member as $memberId ):
 								if ( $memberId[ 'member_id' ] == $memberId ):

@@ -68,6 +68,21 @@ class ProjectService extends BaseService
 				] )->all() );
 		}
 
+		public function searchById( $id )
+		{
+				try {
+						return response()->json(
+								$this->repository->with( [ 'owner', 'client' ] )
+										->find( $id )
+						);
+				} catch ( \Exception $e ) {
+						return [
+								'success' => false,
+								'data'    => "Dado com ID: {$id} não localizado na base de dados",
+						];
+				}
+		}
+
 		/*********************************************************
 		 *     M E M B R O S  D O  P R O J E T O                 *
 		 *********************************************************/
@@ -207,18 +222,21 @@ class ProjectService extends BaseService
 		}
 
 
-		public function checkProjectOwner( $projectId )
+		/*********************************************************
+		 *     PERMISSÕES DE ACESSO AO PROJETO POR USER          *
+		 *********************************************************/
+
+		private function checkProjectOwner( $projectId )
 		{
-				$userId = Authorizer::getResourceOwnerId();
-
+				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
+				$userId = \Authorizer::getResourceOwnerId();
 				return $this->repository->isOwner( $projectId, $userId );
-
 		}
 
-		public function checkProjectMember( $projectId )
+		private function checkProjectMember( $projectId )
 		{
-				$userId = Authorizer::getResourceOwnerId();
-
+				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
+				$userId = \Authorizer::getResourceOwnerId();
 				return $this->repository->hasMember( $projectId, $userId );
 		}
 

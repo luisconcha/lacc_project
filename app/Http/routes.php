@@ -25,7 +25,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 		//Rota lista projetos
 		Route::get( '/projects', [ 'as' => 'projects.show', 'uses' => 'ProjectController@index' ] );
 
-		Route::group( [ 'prefix' => 'project' ], function () {
+		Route::group( [ 'prefix' => 'projects' ], function () {
 				//Rota para os projetos
 				Route::post( '/', [ 'as' => 'project.create', 'uses' => 'ProjectController@store' ] );
 				Route::get( '/{id}', [ 'as' => 'project.show', 'uses' => 'ProjectController@show' ] );

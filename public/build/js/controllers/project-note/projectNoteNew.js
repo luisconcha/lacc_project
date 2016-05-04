@@ -10,7 +10,7 @@ angular.module( 'app.controllers' )
                 if ( $scope.form.$valid ) {
                     $scope.projectNote.$save( { id: $routeParams.id } ).then( function () {
                         swal( "Cadastro!", "A nota para o projeto foi cadastrada com sucesso!.", "success" );
-                        $location.path( '/project/' + $routeParams.id + '/notes' );
+                        $location.path( '/projects/' + $routeParams.id + '/notes' );
                     } );
                 }
             };

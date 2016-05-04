@@ -33,6 +33,17 @@ class ProjectNoteService extends BaseService
 				$this->validator  = $validator;
 		}
 
+		public function all( $id )
+		{
+				//Retorna a consulta utilizando presenter
+				return response()->json( $this->repository->with( [ 'project' ] )
+						->findWhere( [ 'project_id' => $id ] ) );
+
+				//skipPresenter faz a consulta não utilizando o presenter
+				//return response()->json( $this->repository->skipPresenter()
+				//		->with( [ 'project' ] )
+				//		->findWhere( [ 'project_id' => $id ] ) );
+		}
 
 		public function update( array $data, $id )
 		{

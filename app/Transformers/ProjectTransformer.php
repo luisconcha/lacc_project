@@ -18,9 +18,7 @@ use League\Fractal\TransformerAbstract;
 
 class ProjectTransformer extends TransformerAbstract
 {
-		protected $availableIncludes = [
-				'owner',
-				'client',
+		protected $defaultIncludes = [
 				'members'
 		];
 
@@ -47,9 +45,4 @@ class ProjectTransformer extends TransformerAbstract
 		{
 				return $this->collection( $project->members, new ProjectMemberTransformer() );
 		}
-
-		// public function includeClients( Project $project )
-		// {
-		// 		return $this->collection( $project->client, new ClientTransformer() );
-		// }
 }

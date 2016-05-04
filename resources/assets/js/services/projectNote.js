@@ -1,28 +1,32 @@
 angular.module( 'app.services' )
-    .service( 'ProjectNote', [ '$resource', 'appConfig', function ( $resource, appConfig ) {
+    .service( 'ProjectNote', [ '$resource', '$httpParamSerializer', 'appConfig', function ( $resource, $httpParamSerializer, appConfig ) {
 
-        return $resource( appConfig.baseUrl + '/project/:id/notes/:idNote', { id: '@id', idNote: '@idNote' }, {
+        return $resource( appConfig.baseUrl + '/projects/:id/notes/:idNote', { id: '@id', idNote: '@idNote' }, {
             //Este metodo é chamando na listagem, para não dar conflito com o metodo GET ao fazer a edição
             getProjectNote: {
                 method: 'GET',
-                isArray: false
             },
             get: {
                 method: 'GET',
-                url: '/project/notes/:idNote',
+                url: '/projects/notes/:idNote',
             },
             save: {
-                method: 'POST',
-                url: '/project/notes/:id',
+              method: 'POST',
+                url: '/projects/notes/:id',
+                transformRequest: function ( data ) {
+                    return $httpParamSerializer( data );
+                }
             },
             update: {
                 method: 'PUT',
-                url: '/project/notes/:id/notes/:idNote',
-                //isArray: true
+                url: '/projects/notes/:id/notes/:idNote',
+                transformRequest: function ( data ) {
+                    return $httpParamSerializer( data );
+                }
             },
             remove: {
                 method: 'DELETE',
-                url: '/project/notes/:id/notes/:idNote',
+                url: '/projects/notes/:id/notes/:idNote',
             }
         } );
 

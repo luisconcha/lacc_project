@@ -20,7 +20,7 @@ angular.module( 'app.controllers' )
                         idNote: $routeParams.idNote 
                     }, $scope.projectNote, function () {
                         swal( "Alterado!", "A nota foi alterada com sucesso!.", "success" );
-                        $location.path( '/project/' + $scope.projectNote.project_id + '/notes' );
+                        $location.path( '/projects/' + $scope.projectNote.project_id + '/notes' );
                     } );
                 }
             };

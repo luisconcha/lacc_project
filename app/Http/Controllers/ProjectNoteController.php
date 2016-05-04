@@ -48,6 +48,17 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
+		// public function index( $id, Request $request )
+		// {
+		// 		$projectId = $request->projectId;
+
+		// 		if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
+		// 				return [ 'error' => 'Access Forbidden' ];
+		// 		endif;
+				
+		// 		return $this->repository->findWhere( [ 'project_id' => $id ] );
+			
+		// }
 		public function index( $id, Request $request )
 		{
 				$projectId = $request->projectId;
@@ -56,8 +67,7 @@ class ProjectNoteController extends Controller
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
 				
-				return $this->repository->findWhere( [ 'project_id' => $id ] );
-			
+				return $this->service->all( $id );
 		}
 
 		/**

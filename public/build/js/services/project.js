@@ -12,7 +12,6 @@ angular.module( 'app.services' )
                 method: 'POST',
                 url: '/project',
                 transformRequest: function ( data ) {
-                    console.log( 'Dados', data );
                     if ( angular.isObject( data ) && data.hasOwnProperty( 'due_date' ) ) {
                         data.due_date = $filter( 'date' )( data.due_date, 'yyyy-MM-dd' );
                         console.log( 'Dara serializada: ', data.due_date );

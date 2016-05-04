@@ -92,7 +92,7 @@ app.config( [
             } )
 
         /********* Rota Projects Notes *********/
-            .when( '/project/:id/notes', {
+            .when( '/projects/:id/notes', {
                 templateUrl: 'build/views/project-note/list.html',
                 controller: 'ProjectNoteListController'
             } )
