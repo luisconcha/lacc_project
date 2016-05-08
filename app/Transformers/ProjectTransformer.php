@@ -36,7 +36,7 @@ class ProjectTransformer extends TransformerAbstract
 						'client_email'       => $project->client->email,
 						'client_phone'       => $project->client->phone,
 						'description'        => $project->description,
-						'progress'           => $project->progress,
+						'progress'           => (int)$project->progress,
 						'status'             => $project->status,
 						'due_date'           => $project->due_date,
 				];

@@ -6,12 +6,20 @@ angular.module( 'app.controllers' )
             $scope.project = new Project();
             $scope.status  = appConfig.project.status;
 
+            /**
+             * Oculta o calendario ao setar a página
+             * @type {{status: {opened: boolean}}}
+             */
             $scope.due_date = {
                 status: {
                     opened: false
                 }
             };
 
+            /**
+             * habilita o calendario ao clicar no btn data
+             * @param event
+             */
             $scope.open = function ( event ) {
                 $scope.due_date.status.opened = true
             };

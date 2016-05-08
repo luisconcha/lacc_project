@@ -6,6 +6,24 @@ angular.module( 'app.controllers' )
             $scope.status = appConfig.project.status;
 
             /**
+             * Oculta o calendario ao setar a página
+             * @type {{status: {opened: boolean}}}
+             */
+            $scope.due_date = {
+                status: {
+                    opened: false
+                }
+            };
+
+            /**
+             * habilita o calendario ao clicar no btn data
+             * @param event
+             */
+            $scope.open = function ( event ) {
+                $scope.due_date.status.opened = true
+            };
+
+            /**
              * Função que retorna o objeto a ser editado
              * :id do resource (service/project.js)
              * $routeParams.id da rota (app.js)
