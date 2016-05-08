@@ -35,14 +35,14 @@
                             <td>{{p.progress}}</td>
                             <td>
                                 <span ng-if="p.status == 0" class="label label-default">Não iniciado</span>
-                                <span ng-if="p.status == 1" class="label label-info">Em andamento</span>
+                                <span ng-if="p.status == 1" class="label label-info">Iniciado</span>
                                 <span ng-if="p.status == 2" class="label label-success">Finalizado</span>
                                 <span ng-if="p.status == 3" class="label label-danger">Cancelado</span>
                             </td>
                             <td>{{p.due_date | dataBr}}</td>
                             <td>
-                                <a ng-href="#/project/{{p.project_id}}/edit">Edit</a> |
-                                <a ng-href="#/project/{{p.project_id}}/remove">Remove</a>
+                                <a ng-href="#/projects/{{p.project_id}}/edit">Edit</a> |
+                                <a ng-href="#/projects/{{p.project_id}}/remove">Remove</a>
                             </td>
                         </tr>
                         <tr class="tr-result-search">

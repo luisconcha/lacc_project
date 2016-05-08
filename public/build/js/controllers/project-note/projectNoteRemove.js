@@ -29,7 +29,7 @@ angular.module( 'app.controllers' )
                                 id: $routeParams.id,
                                 idNote: $scope.projectNote.id
                             }, $scope.projectNote, function () {
-                                $location.path( '/project/' + $scope.projectNote.project_id + '/notes' );
+                                $location.path( '/projects/' + $scope.projectNote.project_id + '/notes' );
                             } );
                             swal( "Deletado!", "A nota foi deletada com sucesso!.", "success" );
                         } else {

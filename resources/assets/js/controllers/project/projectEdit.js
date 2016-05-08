@@ -1,23 +1,30 @@
 angular.module( 'app.controllers' )
-    .controller( 'ProjectNoteEditController',
-    [ '$scope', '$location', '$routeParams', 'ProjectNote',
-        function ( $scope, $location, $routeParams, ProjectNote ) {
+    .controller( 'ProjectEditController',
+    [ '$scope', '$location', '$cookies', '$routeParams', 'Project', 'Client', 'appConfig',
+        function ( $scope, $location, $cookies, $routeParams, Project, Client, appConfig ) {
+
+            $scope.status = appConfig.project.status;
+
+            Client.getClient( {}, function ( data ) {
+                $scope.clients = data.data;
+            } );
 
             /**
-             * :id do resource (service/projectNote.js)
+             * :id do resource (service/project.js)
              * $routeParams.id da rota (app.js)
-             * @type {projectNote.get}
+             * @type {Project.get}
              */
-            ProjectNote.get( { id: $routeParams.id, idNote: $routeParams.idNote }, function ( data ) {
-                $scope.projectNote = data;
+            Project.get( { id: $routeParams.id }, function ( data ) {
+                $scope.project = data;
             } );
 
             $scope.save = function () {
                 if ( $scope.form.$valid ) {
-
-                    ProjectNote.update( { idNote: $scope.projectNote.id }, $scope.projectNote, function () {
-                        swal( "Alterado!", "A nota foi alterada com sucesso!.", "success" );
-                        $location.path( '/project/' + $scope.projectNote.project_id + '/notes' );
+                    $scope.project.owner_id = $cookies.getObject( 'user' ).user_id;
+                    Project.update( { id: $scope.project.project_id }, $scope.project, function ( data ) {
+                        console.log('RES', data);
+                        swal( "Alterado!", "O projeto foi alterado com sucesso!.", "success" );
+                        $location.path( '/projects' );
                     } );
                 }
             };

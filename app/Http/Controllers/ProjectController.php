@@ -75,7 +75,7 @@ class ProjectController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				if ( !$this->service->checkProjectPermissions( $id ) == false ):
+				if ( !$this->service->checkProjectPermissions( $id ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
 
@@ -91,7 +91,7 @@ class ProjectController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				if ( !$this->service->checkProjectPermissions( $id ) == false ):
+				if ( !$this->service->checkProjectPermissions( $id ) ):
 						return [ 'error' => 'Access Forbidden' ];
 				endif;
 
@@ -102,7 +102,7 @@ class ProjectController extends Controller
 								$this->repository->delete( $id );
 
 								return response()->json( [
-										'message' => 'Projeto deletado com sucesso!',
+										'message' => 'Projeto deletado com sucesso..!',
 								] );
 						}
 				} catch ( \Exception $e ) {

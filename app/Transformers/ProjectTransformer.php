@@ -19,7 +19,7 @@ use League\Fractal\TransformerAbstract;
 class ProjectTransformer extends TransformerAbstract
 {
 		protected $defaultIncludes = [
-				'members'
+				'members',
 		];
 
 		public function transform( Project $project )
@@ -30,6 +30,7 @@ class ProjectTransformer extends TransformerAbstract
 						'owner_id'           => $project->owner_id,
 						'owner_name'         => $project->owner->name,
 						'owner_email'        => $project->owner->email,
+						'client_id'          => $project->client->id,
 						'client_name'        => $project->client->name,
 						'client_responsible' => $project->client->responsible,
 						'client_email'       => $project->client->email,

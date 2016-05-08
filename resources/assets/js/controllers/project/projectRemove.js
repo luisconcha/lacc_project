@@ -1,21 +1,21 @@
 angular.module( 'app.controllers' )
-    .controller( 'ProjectNoteRemoveController',
-    [ '$scope', '$location', '$routeParams', 'ProjectNote',
-        function ( $scope, $location, $routeParams, ProjectNote ) {
+    .controller( 'ProjectRemoveController',
+    [ '$scope', '$location', '$routeParams', 'Project',
+        function ( $scope, $location, $routeParams, Project ) {
 
             /**
-             * :id do resource (service/projectNote.js)
+             * :id do resource (service/project.js)
              * $routeParams.id da rota (app.js)
-             * @type {ProjectNote.get}
+             * @type {Project.get}
              */
-            ProjectNote.get( { idNote: $routeParams.idNote }, function ( data ) {
-                $scope.projectNote = data;
+            Project.get( { id: $routeParams.id }, function ( data ) {
+                $scope.project = data;
             } );
 
             $scope.remove = function () {
                 swal( {
                         title: "Remover?",
-                        text: "Deseja deletar a nota do projeto? \n '"+ $scope.projectNote.title + "'",
+                        text: "Deseja deletar o  projeto? \n '" + $scope.project.name_project + "'",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonClass: "btn-danger",
@@ -26,13 +26,13 @@ angular.module( 'app.controllers' )
                     },
                     function ( isConfirm ) {
                         if ( isConfirm ) {
-                            ProjectNote.remove( {
-                                id: $routeParams.id,
-                                idNote: $scope.projectNote.id
-                            }, $scope.projectNote, function () {
-                                $location.path( '/project/' + $scope.projectNote.project_id + '/notes' );
+                            Project.remove( {
+                                id: $routeParams.id
+                            }, $scope.project, function ( data ) {
+                                swal( "Deletado!", data.message , "success" );
+                                $location.path( '/projects' );
                             } );
-                            swal( "Deletado!", "A nota foi deletada com sucesso!.", "success" );
+
                         } else {
                             swal( "Ups!!", "Quase faço #$%@!@ :)", "error" );
                         }

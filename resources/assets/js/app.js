@@ -21,6 +21,24 @@ app.provider( 'appConfig', function () {
                 { value: '2', label: 'Finalizado' },
                 { value: '3', label: 'Cancelado' }
             ]
+        },
+        utils: {
+            //Funçõe Global que poderam ser acessíveis tanto configprovideros, serviços, controller
+            transformResponse: function ( data, headers ) {
+                var headersGetter = headers();
+                if ( headersGetter[ 'content-type' ] == 'application/json' ||
+                    headersGetter[ 'content-type' ] == 'text/json' ) {
+
+                    var dataJson = JSON.parse( data );
+                    if ( dataJson.hasOwnProperty( 'data' ) ) {
+
+                        dataJson = dataJson.data;
+                    }
+                    return dataJson;
+                }
+
+                return data;
+            }
         }
     };
 
@@ -38,6 +56,8 @@ app.config( [
 
         $httpProvider.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.headers.put[ 'Content-Type' ]  = 'application/x-www-form-urlencoded;charset=utf-8';
+
+        $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformResponse;
 
         $routeProvider
         /********* Rota Login *********/
@@ -88,7 +108,7 @@ app.config( [
             } )
             .when( '/projects/:id/remove', {
                 templateUrl: 'build/views/project/remove.html',
-                controller: 'ProjectNoteController'
+                controller: 'ProjectRemoveController'
             } )
 
         /********* Rota Projects Notes *********/

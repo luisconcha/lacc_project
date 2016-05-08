@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Excluir Projeto</div>
+                <div class="panel-body">
+                    <p>
+                        <span class="label label-danger">Deseja excluir este projeto?</span>
+                    </p>
+                    <ul>
+                        <li><strong>Name: </strong>{{project.name_project}}</li>
+                        <li><strong>Responsivel: </strong>{{project.client_responsible}}</li>
+                        <li><strong>Owner: </strong>{{project.owner_name}}</li>
+                    </ul>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="button" class="btn btn-danger" ng-click="remove()">Excluir project</button>
+                            <a class="btn btn-warning" ng-href="#/projects">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
