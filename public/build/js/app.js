@@ -11,7 +11,7 @@ angular.module( 'app.services', [ 'ngResource' ] );
 /**
  * Serviço que fornece a URL do projeto
  */
-app.provider( 'appConfig', function () {
+app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpParamSerializerProvider ) {
     var config = {
         baseUrl: 'http://project.dev',
         project: {
@@ -23,7 +23,7 @@ app.provider( 'appConfig', function () {
             ]
         },
         utils: {
-            //Funçõe Global que poderam ser acessíveis tanto configprovideros, serviços, controller
+            //Funções Globals que poderam ser acessíveis tanto configprovideros, serviços, controller
             transformResponse: function ( data, headers ) {
                 var headersGetter = headers();
                 if ( headersGetter[ 'content-type' ] == 'application/json' ||
@@ -38,6 +38,12 @@ app.provider( 'appConfig', function () {
                 }
 
                 return data;
+            },
+            transformRequest: function ( data ) {
+                if ( angular.isObject( data ) ) {
+                    return $httpParamSerializerProvider.$get()( data );
+                }
+                return data;
             }
         }
     };
@@ -48,7 +54,7 @@ app.provider( 'appConfig', function () {
             return config;
         }
     }
-} );
+} ] );
 
 app.config( [
     '$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
@@ -57,7 +63,8 @@ app.config( [
         $httpProvider.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.headers.put[ 'Content-Type' ]  = 'application/x-www-form-urlencoded;charset=utf-8';
 
-        $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformResponse;
+        $httpProvider.defaults.transformRequest  = appConfigProvider.config.utils.transformRequest;
+        $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
 
         $routeProvider
         /********* Rota Login *********/

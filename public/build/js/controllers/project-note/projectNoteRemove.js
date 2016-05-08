@@ -8,13 +8,13 @@ angular.module( 'app.controllers' )
              * @type {ProjectNote.get}
              */
             ProjectNote.get( { id: $routeParams.id, idNote: $routeParams.idNote }, function ( data ) {
-                $scope.projectNote = data.data;
+                $scope.projectNote = data;
             } );
 
             $scope.remove = function () {
                 swal( {
                         title: "Remover?",
-                        text: "Deseja deletar a nota do projeto? \n '"+ $scope.projectNote.title + "'",
+                        text: "Deseja deletar a nota do projeto? \n '" + $scope.projectNote.title + "'",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonClass: "btn-danger",
@@ -28,8 +28,13 @@ angular.module( 'app.controllers' )
                             ProjectNote.remove( {
                                 id: $routeParams.id,
                                 idNote: $scope.projectNote.id
-                            }, $scope.projectNote, function () {
-                                $location.path( '/projects/' + $scope.projectNote.project_id + '/notes' );
+                            }, $scope.projectNote, function ( data ) {
+                                if ( data.success ) {
+                                    $location.path( '/projects/' + $scope.projectNote.project_id + '/notes' );
+                                    swal( "Deletado!", data.success, "success" );
+                                } else {
+                                    swal( "Ups!", data.message, "error" );
+                                }
                             } );
                             swal( "Deletado!", "A nota foi deletada com sucesso!.", "success" );
                         } else {

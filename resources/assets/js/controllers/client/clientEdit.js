@@ -9,7 +9,7 @@ angular.module( 'app.controllers' )
              * @type {Client.get}
              */
             Client.get( { id: $routeParams.id }, function ( data ) {
-                $scope.client = data.data;
+                $scope.client = data;
             } );
 
 

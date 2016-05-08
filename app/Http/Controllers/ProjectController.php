@@ -99,11 +99,9 @@ class ProjectController extends Controller
 						$dataProject = $this->service->searchById( $id );
 
 						if ( $dataProject ) {
-								$this->repository->delete( $id );
-
-								return response()->json( [
-										'message' => 'Projeto deletado com sucesso..!',
-								] );
+								if ( $this->repository->delete( $id ) ) {
+										return response()->json( [ 'success' => 'O Projeto foi deletado com sucesso!' ] );
+								}
 						}
 				} catch ( \Exception $e ) {
 						return response()->json( [
@@ -137,5 +135,4 @@ class ProjectController extends Controller
 		{
 				return $this->service->isMember( $idProject, $userId );
 		}
-
 }

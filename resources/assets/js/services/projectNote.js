@@ -5,13 +5,14 @@ angular.module( 'app.services' )
             //Este metodo é chamando na listagem, para não dar conflito com o metodo GET ao fazer a edição
             getProjectNote: {
                 method: 'GET',
+                isArray: true
             },
             get: {
                 method: 'GET',
                 url: '/projects/notes/:idNote',
             },
             save: {
-              method: 'POST',
+                method: 'POST',
                 url: '/projects/notes/:id',
                 transformRequest: function ( data ) {
                     return $httpParamSerializer( data );

@@ -141,11 +141,10 @@ class ProjectNoteController extends Controller
 						$dataProject = $this->service->searchNoteById( $idProjetc );
 
 						if ( $dataProject ) {
-								$this->repository->delete( $idNote );
 
-								return response()->json( [
-										'message' => 'Nota deletada com sucesso!',
-								] );
+								if ( $this->repository->delete( $idNote ) ) {
+										return response()->json( [ 'success' => 'A nota do projeto foi deletada com sucesso!' ] );
+								}
 						}
 				} catch ( \Exception $e ) {
 						return response()->json( [

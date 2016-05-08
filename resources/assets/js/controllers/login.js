@@ -17,7 +17,7 @@ angular.module( 'app.controllers' )
                     OAuth.getAccessToken( $scope.user ).then( function () {
 
                         User.authenticated( {}, {}, function ( data ) {
-                            $cookies.putObject( 'user', data.data );
+                            $cookies.putObject( 'user', data );
                             $location.path( 'home' );
                         } );
 

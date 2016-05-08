@@ -8,20 +8,13 @@ angular.module( 'app.controllers' )
              * @type {Client.get}
              */
             Client.get( { id: $routeParams.id }, function ( data ) {
-                $scope.client = data.data;
+                $scope.client = data;
             } );
 
             $scope.remove = function () {
-                //$scope.client.$delete().then( function () {
-                //    $location.path( '/clients' );
-                //} );
-
-                // Client.remove({}, $scope.client, function () {
-                //     $location.path( '/clients' );
-                // } );
-                swal({
+                swal( {
                         title: "Remover?",
-                        text: "Deseja remover o(a) cliente?",
+                        text: "Deseja remover o(a) cliente? \n" + $scope.client.name,
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonClass: "btn-danger",
@@ -30,16 +23,21 @@ angular.module( 'app.controllers' )
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            swal("Deletado!", "O cliente foi deletado com sucesso!.", "success");
-                            Client.remove( {}, $scope.client, function () {
-                                $location.path( '/clients' );
+                    function ( isConfirm ) {
+                        if ( isConfirm ) {
+                            Client.remove( {}, $scope.client, function ( data ) {
+
+                                if ( data.success ) {
+                                    $location.path( '/clients' );
+                                    swal( "Deletado!", data.success, "success" );
+                                } else {
+                                    swal( "Ups!", data.message, "error" );
+                                }
                             } )
                         } else {
-                            swal("Ups!!", "Quase faço #$%@!@ :)", "error");
+                            swal( "Ups!!", "Quase faço #$%@!@ :)", "error" );
                         }
-                    });
+                    } );
             };
         }
     ] );

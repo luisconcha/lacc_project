@@ -9,7 +9,7 @@ angular.module( 'app.services' )
                     //Fazemos a cópia do objeto para não dar erro na data
                     var dataCopy      = angular.copy( data );
                     dataCopy.due_date = $filter( 'date' )( data.due_date, 'yyyy-MM-dd' );
-                    return $httpParamSerializer( dataCopy );
+                    return appConfig.utils.transformRequest( dataCopy );
                 }
                 return data;
             }
@@ -33,7 +33,8 @@ angular.module( 'app.services' )
                 //Este metodo é chamando na listagem, para não dar conflito com o metodo GET ao fazer a edição
                 getProject: {
                     method: 'GET',
-                    url: '/projects'
+                    url: '/projects',
+                    isArray: true
                 },
 
                 save: {

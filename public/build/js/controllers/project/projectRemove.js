@@ -29,8 +29,14 @@ angular.module( 'app.controllers' )
                             Project.remove( {
                                 id: $routeParams.id
                             }, $scope.project, function ( data ) {
-                                swal( "Deletado!", data.message , "success" );
-                                $location.path( '/projects' );
+
+                                if ( data.success ) {
+                                    $location.path( '/projects' );
+                                    swal( "Deletado!", data.success, "success" );
+                                } else {
+                                    swal( "Ups!", data.message, "error" );
+                                }
+
                             } );
 
                         } else {

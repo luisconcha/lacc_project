@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>
                         <!-- <tr ng-repeat="o in clients.data"> -->
-                        <tr ng-repeat="c in clientsFilter = ( clients.data | filter:filtro )" class="painel-search-animado">
+                        <tr ng-repeat="c in clientsFilter = ( clients | filter:filtro )" class="painel-search-animado">
                              <td>{{c.name}}</td>
                             <td>{{c.responsible}}</td>
                             <td>{{c.email}}</td>

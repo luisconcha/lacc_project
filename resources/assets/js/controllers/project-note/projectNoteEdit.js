@@ -9,7 +9,7 @@ angular.module( 'app.controllers' )
              * @type {projectNote.get}
              */
             ProjectNote.get( { id: $routeParams.id, idNote: $routeParams.idNote }, function ( data ) {
-                $scope.projectNote = data.data;
+                $scope.projectNote = data;
             } );
 
 

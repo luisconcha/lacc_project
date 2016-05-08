@@ -6,7 +6,7 @@ angular.module( 'app.controllers' )
             $scope.status = appConfig.project.status;
 
             Client.getClient( {}, function ( data ) {
-                $scope.clients = data.data;
+                $scope.clients = data;
             } );
 
             /**

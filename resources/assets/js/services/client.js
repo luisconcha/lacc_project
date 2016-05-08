@@ -4,7 +4,8 @@ angular.module( 'app.services' )
             //Este metodo é chamando na listagem, para não dar conflito com o metodo GET ao fazer a edição
             getClient: {
                 method: 'GET',
-                url: '/clients'
+                url: '/clients',
+                isArray: true
             },
 
             update: {
