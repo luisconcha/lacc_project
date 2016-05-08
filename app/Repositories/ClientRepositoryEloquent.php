@@ -18,6 +18,11 @@ use Prettus\Repository\Eloquent\BaseRepository;
 
 class ClientRepositoryEloquent extends BaseRepository implements ClientRepository
 {
+		//@seed: https://github.com/andersao/l5-repository#create-a-criteria
+		protected $fieldSearchable = [
+				'name'
+		];
+
 		public function model()
 		{
 				return Client::class;
@@ -26,5 +31,14 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
 		public function presenter()
 		{
 				return ClientPresenter::class;
+		}
+
+		/**
+		 * Metodo para fazer pesquisa por algum campo especifico, see: protected $fieldSearchable
+		 * @seed: https://github.com/andersao/l5-repository#create-a-criteria
+		 */
+		public function boot()
+		{
+				$this->pushCriteria( app( 'Prettus\Repository\Criteria\RequestCriteria' ) );
 		}
 }

@@ -24,7 +24,9 @@
                             <label class="col-md-4 control-label">Descrição</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" name="description" ng-model="project.description" required></textarea>
+                                <textarea class="form-control" name="description" ng-model="project.description"
+                                          required></textarea>
+
                                 <div ng-messages="form.description.$error"
                                      ng-show="form.description.$touched"
                                      class="help-block">
@@ -34,11 +36,13 @@
 
                         </div>
 
-                        <div class="form-group" ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
+                        <div class="form-group"
+                             ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
                             <label class="col-md-4 control-label">Data vencimento</label>
 
                             <div class="col-md-6">
-                                <input type="date" class="form-control" name="due_date" ng-model="project.due_date" required>
+                                <input type="date" class="form-control" name="due_date" ng-model="project.due_date"
+                                       required>
 
                                 <div ng-messages="form.due_date.$error"
                                      ng-show="form.due_date.$touched"
@@ -49,11 +53,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group" ng-class="{'has-error': !form.progress.$valid && form.progress.$touched}">
+                        <div class="form-group"
+                             ng-class="{'has-error': !form.progress.$valid && form.progress.$touched}">
                             <label class="col-md-4 control-label">Progress</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="progress" ng-model="project.progress" required>
+                                <input type="text" class="form-control" name="progress" ng-model="project.progress"
+                                       required>
 
                                 <div ng-messages="form.progress.$error"
                                      ng-show="form.progress.$touched"
@@ -65,11 +71,12 @@
 
                         <div class="form-group" ng-class="{'has-error': !form.status.$valid && form.status.$touched}">
                             <label class="col-md-4 control-label">Status</label>
+
                             <div class="col-md-6">
                                 <select name="status" class="form-control"
                                         ng-model="project.status"
                                         ng-options="e.value as e.label for e in status"
-                                        required >
+                                        required>
                                     <option value="">--Selecione um status--</option>
                                 </select>
 
@@ -81,31 +88,40 @@
                             </div>
                         </div>
 
-                        <div class="form-group" ng-class="{'has-error': !form.client_id.$valid && form.client_id.$touched}">
+                        <div class="form-group"
+                             ng-class="{'has-error': !form.client_id.$valid && form.client_id.$touched}">
                             <label class="col-md-4 control-label">Cliente</label>
+
                             <div class="col-md-6">
-                                <select name="client_id" class="form-control"
-                                        ng-model="project.client_id"
-                                        ng-options="c.id as c.name for c in clients"
-                                        required >
-                                        <option value="">--Selecione um cliente--</option>
-                                </select>
+                                <input type="text" class="form-control" name="client_id"
+                                       ng-model="clientSelected"
+                                       typeahead-input-formatter="formatName($model)"
+                                       typeahead-on-select="selectClient($item)"
+                                       typeahead-editable="false"
+                                       uib-typeahead="c as c.name for c in getClients($viewValue) | limitTo:5"
+                                       required/>
 
                                 <div ng-messages="form.client_id.$error"
                                      ng-show="form.client_id.$touched"
                                      class="help-block">
                                     <div ng-message="required">Campo obrigatório</div>
+
+                                    <div ng-messages="form.client_id.$error"
+                                         ng-show="form.client_id.$touched"
+                                         class="help-block">
+                                        <div ng-message="editable">Não existe um cliente com os dados informados<br/>(O campo é autocomplete, é só digitar as primeiras letras)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Salvar
-                                </button>
-                                <a class="btn btn-warning" ng-href="#/projects">Voltar</a>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Salvar
+                                    </button>
+                                    <a class="btn btn-warning" ng-href="#/projects">Voltar</a>
+                                </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
