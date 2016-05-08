@@ -43,23 +43,7 @@ angular.module( 'app.services' )
                 update: {
                     method: 'PUT',
                     url: '/projects/:id',
-                    //transformRequest: trasformData
-
-                    transformResponse: function ( data, headers ) {
-                        var headersGetter = headers();
-                        if ( headersGetter[ 'content-type' ] == 'application/json' ||
-                            headersGetter[ 'content-type' ] == 'text/json' ) {
-
-                            var dataJson = JSON.parse( data );
-                            if ( dataJson.hasOwnProperty( 'data' ) ) {
-
-                                dataJson = dataJson.data;
-                            }
-                            return dataJson;
-                        }
-
-                        return data;
-                    }
+                    transformRequest: trasformData
                 },
 
                 remove: {
