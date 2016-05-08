@@ -44,10 +44,21 @@ angular.module( 'app.services' )
                     method: 'PUT',
                     url: '/projects/:id',
                     //transformRequest: trasformData
-                    transformRequest: function ( data ) {
-                        var d         = new Date( data.due_date );
-                        data.due_date = new Date( data.due_date );
-                        return $httpParamSerializer( data );
+
+                    transformResponse: function ( data, headers ) {
+                        var headersGetter = headers();
+                        if ( headersGetter[ 'content-type' ] == 'application/json' ||
+                            headersGetter[ 'content-type' ] == 'text/json' ) {
+
+                            var dataJson = JSON.parse( data );
+                            if ( dataJson.hasOwnProperty( 'data' ) ) {
+
+                                dataJson = dataJson.data;
+                            }
+                            return dataJson;
+                        }
+
+                        return data;
                     }
                 },
 

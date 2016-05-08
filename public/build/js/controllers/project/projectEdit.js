@@ -22,7 +22,6 @@ angular.module( 'app.controllers' )
                 if ( $scope.form.$valid ) {
                     $scope.project.owner_id = $cookies.getObject( 'user' ).user_id;
                     Project.update( { id: $scope.project.project_id }, $scope.project, function ( data ) {
-                        console.log('RES', data);
                         swal( "Alterado!", "O projeto foi alterado com sucesso!.", "success" );
                         $location.path( '/projects' );
                     } );
