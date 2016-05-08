@@ -6,6 +6,16 @@ angular.module( 'app.controllers' )
             $scope.project = new Project();
             $scope.status  = appConfig.project.status;
 
+            $scope.due_date = {
+                status: {
+                    opened: false
+                }
+            };
+
+            $scope.open = function ( event ) {
+                $scope.due_date.status.opened = true
+            };
+
             /**
              * Função que retorna o NOME do campo Clients do autocomplete para mostrar na label e não seu ID
              * @param id
