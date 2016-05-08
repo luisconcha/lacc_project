@@ -15,7 +15,7 @@ angular.module( 'app.controllers' )
             $scope.remove = function () {
                 swal( {
                         title: "Remover?",
-                        text: "Deseja deletar o  projeto? \n '" + $scope.project.name_project + "'",
+                        text: "Deseja deletar o  projeto? \n '" + $scope.project.name + "'",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonClass: "btn-danger",

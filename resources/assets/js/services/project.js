@@ -6,10 +6,11 @@ angular.module( 'app.services' )
             //Faz um parse na data para o formatdo do BD
             function trasformData( data ) {
                 if ( angular.isObject( data ) && data.hasOwnProperty( 'due_date' ) ) {
-                    data.due_date = $filter( 'date' )( data.due_date, 'yyyy-MM-dd' );
-                    return $httpParamSerializer( data );
+                    //Fazemos a cópia do objeto para não dar erro na data
+                    var dataCopy      = angular.copy( data );
+                    dataCopy.due_date = $filter( 'date' )( data.due_date, 'yyyy-MM-dd' );
+                    return $httpParamSerializer( dataCopy );
                 }
-                console.log( 'Fil: ', data.due_date );
                 return data;
             }
 
@@ -20,8 +21,9 @@ angular.module( 'app.services' )
                         var o = appConfig.utils.transformResponse( data, headers );
                         //Esta transformação da data é por que se esta utilizando html5 e campo do tipo date
                         if ( angular.isObject( o ) && o.hasOwnProperty( 'due_date' ) ) {
-                            var arrDate = o.due_date.split( '-' );
-                            o.due_date  = new Date( arrDate[ 0 ], arrDate[ 1 ], arrDate[ 2 ] );
+                            var arrDate = o.due_date.split( '-' ),
+                                month   = parseInt( arrDate[ 1 ] ) - 1;
+                            o.due_date  = new Date( arrDate[ 0 ], month, arrDate[ 2 ] );
 
                         }
                         return o;

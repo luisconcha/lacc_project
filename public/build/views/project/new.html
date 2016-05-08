@@ -50,15 +50,17 @@
                         </div>
 
                         <div class="form-group" ng-class="{'has-error': !form.progress.$valid && form.progress.$touched}">
-                            <label class="col-md-4 control-label">Progress</label>
+                            <label class="col-md-4 control-label">Progress (%)</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="progress" ng-model="project.progress" required>
+                                <input type="number" class="form-control" name="progress" min="0" max="100" ng-model="project.progress" required>
 
                                 <div ng-messages="form.progress.$error"
                                      ng-show="form.progress.$touched"
                                      class="help-block">
                                     <div ng-message="required">Campo obrigatório</div>
+                                    <div ng-message="min">Valor mínimo aceitável é 0</div>
+                                    <div ng-message="max">Valor máximo aceitável é 100</div>
                                 </div>
                             </div>
                         </div>
