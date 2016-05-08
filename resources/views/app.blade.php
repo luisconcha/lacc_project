@@ -9,6 +9,7 @@
     @if(Config::get('app.debug'))
         <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap.min.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap-theme.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/components.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/vendor/sweet-alert.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/style.css')}}"/>
     @else
