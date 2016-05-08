@@ -8,6 +8,11 @@ var config = {
     build_path: "./public/build"
 };
 
+/**************************************************
+ *                                                *
+ *    Configurações para os scripts JS da APP     *
+ *                                                *
+ **************************************************/
 config.bower_path           = config.assets_path + '/../bower_components';
 config.build_path_js        = config.build_path + '/js';
 config.build_vendor_path_js = config.build_path_js + '/vendor';
@@ -28,6 +33,11 @@ config.vendor_path_js = [
     config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.min.js'
 ];
 
+/**************************************************
+ *                                                *
+ *    Configurações para os stylos CSS da APP     *
+ *                                                *
+ **************************************************/
 config.build_path_css        = config.build_path + '/css';
 config.build_vendor_path_css = config.build_path_css + '/vendor';
 config.build_style_path_css  = config.build_path_css + '/style';
@@ -42,6 +52,30 @@ config.style_path_css       = [
     config.build_path_css + '/style.css',
 ];
 
+
+/**************************************************
+ *                                                *
+ *    Configurações para as FONTS da APP          *
+ *                                                *
+ **************************************************/
+
+config.build_path_fonts        = config.build_path + '/fonts';
+config.build_style_path_fonts  = config.build_path_fonts + '/fonts';
+
+gulp.task( 'copy-fonts', function () {
+    gulp.src( [
+        config.assets_path + '/fonts/*.*'
+    ] )
+        .pipe( gulp.dest( config.build_path_fonts ) )
+        .pipe( liveReload() );
+} );
+
+
+/***********************************************************
+ *                                                         *
+ *    TAREFAS para copiar html, css, js, fonts da app      *
+ *                                                         *
+ ***********************************************************/
 config.build_path_html = config.build_path + '/views';
 
 gulp.task( 'copy-html', function () {
@@ -80,9 +114,22 @@ gulp.task( 'copy-scripts', function () {
         .pipe( liveReload() );
 } );
 
+/***********************************************************
+ *                                                         *
+ *    Limpa a pasta build                                  *
+ *                                                         *
+ *********************************************************/
+
 gulp.task( 'clear-build-folder', function () {
     clean.sync( config.build_path );
 } );
+
+
+/***********************************************************
+ *                                                         *
+ *    Executa as tarefas pre-definidas                     *
+ *                                                         *
+ ***********************************************************/
 
 gulp.task( 'default', [ 'clear-build-folder' ], function () {
     gulp.start( 'copy-html' );
@@ -95,6 +142,6 @@ gulp.task( 'default', [ 'clear-build-folder' ], function () {
 
 gulp.task( 'watch-dev', [ 'clear-build-folder' ], function () {
     liveReload.listen();
-    gulp.start( 'copy-styles', 'copy-scripts', 'copy-html' );
-    gulp.watch( config.assets_path + '/**', [ 'copy-styles', 'copy-scripts', 'copy-html' ] );
+    gulp.start( 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts' );
+    gulp.watch( config.assets_path + '/**', [ 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts' ] );
 } );
