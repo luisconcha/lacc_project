@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Listagem de clientes</div>
+                <div class="panel-heading">List of clients</div>
                 <div class="panel-body">
 
                     <form class="frm-search">
@@ -35,8 +35,12 @@
                             <td>{{c.email}}</td>
                             <td>{{c.phone}}</td>
                             <td>
-                                <a ng-href="#/clients/{{c.id}}/edit">Edit</a> |
-                                <a ng-href="#/clients/{{c.id}}/remove">Remove</a>
+                                <a ng-href="#/clients/{{c.id}}/edit" title="Editar o cliente: {{c.name}}">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                                <a ng-href="#/clients/{{c.id}}/remove" title="Deletar projeto: {{c.name}}">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
                             </td>
                         </tr>
                         <tr class="tr-result-search">
