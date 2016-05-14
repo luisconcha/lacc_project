@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">List of project files:
+                    <span class="label label-info name-project-in-note">{{project.name}}</span>
+                </div>
+                <div class="panel-body">
+                    <form class="frm-search">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <a ng-href="#/projects/{{project.project_id}}/files/new" class="btn btn-primary">New File</a>
+                            </span>
+                            <input ng-model="filtro"
+                                   ng-model-options="{debounce: 300}"
+                                   type="text" class="form-control"
+                                   placeholder="O que você deseja pesquisar...">
+                            <span class="input-group-btn">
+                                <a ng-href="#/projects" class="btn btn-warning">Back to list of projects</a>
+                            </span>
+                        </div>
+                    </form>
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Link</th>
+                            <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="p in projectFilesFilter = ( projectFiles | filter:filtro )"
+                            class="painel-search-animado">
+                            <td>{{p.name}}</td>
+                            <td>{{p.description}}</td>
+                            <td>
+                                <project-file-download id-file="{{p.id}}"></project-file-download>
+                            </td>
+                            <td>
+                                <a ng-href="#/projects/{{p.project_id}}/files/{{p.id}}/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a ng-href="#/projects/{{p.project_id}}/files/{{p.id}}/remove"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="tr-result-search">
+                            <td colspan="5">
+                                Foram encontrados
+                                <span class="label label-pill label-success">{{projectFilesFilter.length}}</span> de
+                                <span class="label label-pill label-primary">{{projectFiles.length}}</span> registros.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

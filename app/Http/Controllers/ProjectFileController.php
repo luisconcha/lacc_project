@@ -3,19 +3,19 @@
 namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
-use LACC\Repositories\ProjectRepository;
-use LACC\Services\ProjectService;
+use LACC\Repositories\ProjectFileRepository;
+use LACC\Services\ProjectFileService;
 use LACC\Validators\ProjectFileValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectFileController extends Controller
 {
 		/**
-		 * @var ProjectRepository
+		 * @var ProjectFileRepository
 		 */
 		protected $repository;
 		/**
-		 * @var ProjectService
+		 * @var ProjectFileService
 		 */
 		protected $service;
 		/**
@@ -23,7 +23,7 @@ class ProjectFileController extends Controller
 		 */
 		protected $fileValidator;
 
-		public function __construct( ProjectRepository $repository, ProjectService $service, ProjectFileValidator $fileValidator )
+		public function __construct( ProjectFileRepository $repository, ProjectFileService $service, ProjectFileValidator $fileValidator )
 		{
 				$this->repository    = $repository;
 				$this->service       = $service;
@@ -31,13 +31,13 @@ class ProjectFileController extends Controller
 		}
 
 		/**
-		 * Display a listing of the resource.
+		 * @param $id
 		 *
-		 * @return \Illuminate\Http\Response
+		 * @return mixed
 		 */
-		public function index()
+		public function index( $id )
 		{
-
+				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
@@ -72,8 +72,6 @@ class ProjectFileController extends Controller
 				];
 
 				try {
-						$this->fileValidator->with( $data )->passesOrFail();
-
 						return $this->service->createFile( $data );
 				} catch ( ValidatorException $e ) {
 						return response()->json( [
@@ -84,15 +82,39 @@ class ProjectFileController extends Controller
 		}
 
 		/**
-		 * Display the specified resource.
-		 *
 		 * @param  int $id
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
+		public function showFile( $id )
+		{
+				if ( $this->service->checkProjectPermissions( $id ) == false ) {
+						return [ 'error' => 'Access Forbidden' ];
+				}
+
+				$filePath    = $this->service->getFilePath( $id );
+				$fileContent = file_get_contents( $filePath );
+				$file64      = base64_encode( $fileContent );
+
+				return [
+						'file' => $file64,
+						'size' => filesize( $filePath ),
+						'name' => $this->service->getFileName( $id ),
+				];
+		}
+
+		/**
+		 * @param $id
+		 *
+		 * @return array|mixed
+		 */
 		public function show( $id )
 		{
+				if ( $this->service->checkProjectPermissions( $id ) == false ) {
+						return [ 'error' => 'Access Forbidden' ];
+				}
 
+				return $this->repository->find( $id );
 		}
 
 		/**
@@ -105,17 +127,24 @@ class ProjectFileController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
+//				if ( $this->service->checkProjectOwner( $id ) ) {
+//						return [ 'error' => 'Access Forbidden' ];
+//				}
+
+				return $this->service->update( $request->all(), $id );
 		}
 
 		/**
-		 * Remove the specified resource from storage.
+		 * @param $id
 		 *
-		 * @param  int $projectId $idFile
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array
 		 */
-		public function destroy( $projectId, $idFile )
+		public function destroy( $id )
 		{
-				return $this->service->deleteFile( $projectId, $idFile );
+				if ( $this->service->checkProjectOwner( $id ) == false ) {
+						return [ 'error' => 'Access Forbidden' ];
+				}
+
+				$this->service->delete( $id );
 		}
 }

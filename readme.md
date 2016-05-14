@@ -11,5 +11,5 @@ LARAVEL 5.1 - PROJECT
 
 ###Trocando namespace padrão
     - php artisan app:name LACC
-   
+                                 
    

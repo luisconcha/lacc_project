@@ -59,8 +59,12 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				} );
 
 				//Rota para arquivos
+				Route::get( '{id}/file', [ 'as' => 'project.file.list', 'uses' => 'ProjectFileController@index' ] );
+				Route::get( 'file/{fileId}', [ 'as' => 'project.file.show', 'uses' => 'ProjectFileController@show' ] );
+				Route::get( 'file/{fileId}/download', [ 'as' => 'project.file.download', 'uses' => 'ProjectFileController@showFile' ] );
 				Route::post( '{id}/file', [ 'as' => 'project.file.add', 'uses' => 'ProjectFileController@store' ] );
-				Route::delete( '{id}/file/{idFile}', [ 'as' => 'project.file.delete', 'uses' => 'ProjectFileController@destroy' ] );
+				Route::put( 'file/{fileId}', [ 'as' => 'project.file.edit', 'uses' => 'ProjectFileController@update' ] );
+				Route::delete( 'file/{fileId}', [ 'as' => 'project.file.delete', 'uses' => 'ProjectFileController@destroy' ] );
 		} );
 
 } );

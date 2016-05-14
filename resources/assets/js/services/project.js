@@ -37,6 +37,11 @@ angular.module( 'app.services' )
                     isArray: true
                 },
 
+                getProjectById:{
+                    method: 'GET',
+                    url: '/projects/:id'
+                },
+
                 save: {
                     method: 'POST',
                     url: '/projects',

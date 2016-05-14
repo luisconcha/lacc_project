@@ -1,8 +1,9 @@
 var app = angular.module( 'app',
-    [ 'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters','ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls' ] );
+    [ 'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives', 'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ngFileUpload' ] );
 
-angular.module( 'app.controllers', [ 'ngMessages', 'angular-oauth2', 'ngAnimate' ] );
+angular.module( 'app.controllers', [ 'ngMessages', 'ngAnimate' ] );
 angular.module( 'app.filters', [] );
+angular.module( 'app.directives', [] );
 
 /**
  * Modulo para serviços RestFull
@@ -22,6 +23,9 @@ app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpPar
                 { value: '2', label: 'Finalizado' },
                 { value: '3', label: 'Cancelado' }
             ]
+        },
+        urls: {
+            projectFile: '/projects/{{id}}/file/{{idFile}}'
         },
         utils: {
             //Funções Globals que poderam ser acessíveis tanto configprovideros, serviços, controller
@@ -139,6 +143,24 @@ app.config( [
             .when( '/project/:id/notes/:idNote/remove', {
                 templateUrl: 'build/views/project-note/remove.html',
                 controller: 'ProjectNoteRemoveController'
+            } )
+
+        /********* Rota Projects File *********/
+            .when( '/projects/:id/files', {
+                templateUrl: 'build/views/project-file/list.html',
+                controller: 'ProjectFileListController'
+            } )
+            .when( '/projects/:id/files/new', {
+                templateUrl: 'build/views/project-file/new.html',
+                controller: 'ProjectFileNewController'
+            } )
+            .when( '/projects/:id/files/:idFile/edit', {
+                templateUrl: 'build/views/project-file/edit.html',
+                controller: 'ProjectFileEditController'
+            } )
+            .when( '/projects/:id/files/:idFile/remove', {
+                templateUrl: 'build/views/project-file/remove.html',
+                controller: 'ProjectFileRemoveController'
             } );
 
         OAuthProvider.configure( {
@@ -151,7 +173,7 @@ app.config( [
         OAuthTokenProvider.configure( {
             name: 'token',
             options: {
-                secure: false
+                secure: false //caso o servidor estiver com https trocar para TRUE
             }
         } );
     } ] );

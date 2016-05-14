@@ -17,7 +17,7 @@
         @endif
 
                 <!-- Fonts -->
-        <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+        {{--<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>--}}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,6 +81,7 @@
     <script src="{{asset('build/js/vendor/query-string.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-oauth2.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/sweet-alert.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/ng-file-upload.min.js')}}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
@@ -104,13 +105,24 @@
     <script src="{{asset('build/js/controllers/project-note/projectNoteRemove.js')}}"></script> 
     <script src="{{asset('build/js/controllers/project-note/projectNoteShow.js')}}"></script>
 
+    <script src="{{asset('build/js/controllers/project-file/projectFileList.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-file/projectFileNew.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-file/projectFileEdit.js')}}"></script>
+    <script src="{{asset('build/js/controllers/project-file/projectFileRemove.js')}}"></script>
+    {{--<script src="{{asset('build/js/controllers/project-file/projectFileShow.js')}}"></script>--}}
+
+    <!--DIRECTIVES -->
+    <script src="{{asset('build/js/directives/projectFileDownload.js')}}"></script>
+
     <!--FILTERS -->
     <script src="{{asset('build/js/filters/date-br.js')}}"></script>
    
     <!--SERVICES -->
+    <script src="{{asset('build/js/services/url.js')}}"></script>
     <script src="{{asset('build/js/services/client.js')}}"></script>
     <script src="{{asset('build/js/services/project.js')}}"></script>
     <script src="{{asset('build/js/services/projectNote.js')}}"></script>
+    <script src="{{asset('build/js/services/projectFile.js')}}"></script>
     <script src="{{asset('build/js/services/user.js')}}"></script>
 @else
     <script src="{{elixir('js/all.js')}}"></script>

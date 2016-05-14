@@ -32,3 +32,17 @@
     margin-right: 20px;
 }
 /* END Estilos para as Notas do projeto*/
+
+/*Estilos para os arquivos do projeto*/
+.name-project-in-file{
+    font-size: 15px;
+}
+.span-detail-file{
+    margin-right: 20px;
+}
+/* END Estilos para as Notas do projeto*/
+
+/*Estilos para imagens*/
+.preview-image img{
+    height: 70px; width: 70px;
+}

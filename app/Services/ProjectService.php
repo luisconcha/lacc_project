@@ -14,15 +14,12 @@ namespace LACC\Services;
 
 use LACC\Repositories\ProjectRepository;
 use LACC\Validators\ProjectValidator;
-use LACC\Validators\ProjectFileValidator;
-
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\Filesystem\Factory as Storage;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 
 class ProjectService extends BaseService
 {
+
 		/**
 		 * @var ProjectRepository
 		 */
@@ -31,30 +28,12 @@ class ProjectService extends BaseService
 		 * @var ProjectValidator
 		 */
 		protected $validator;
-		/**
-		 * @var ProjectFileValidator
-		 */
-		protected $validatorFiles;
-		/**
-		 * @var Filesystem
-		 */
-		protected $filesystem;
-		/**
-		 * @var Storage
-		 */
-		protected $storage;
 
 		public function __construct( ProjectRepository $repository,
-		                             ProjectValidator $validator,
-		                             Filesystem $filesystem,
-		                             Storage $storage,
-		                             ProjectFileValidator $projectFileValidator )
+		                             ProjectValidator $validator )
 		{
-				$this->repository     = $repository;
-				$this->validator      = $validator;
-				$this->filesystem     = $filesystem;
-				$this->storage        = $storage;
-				$this->validatorFiles = $projectFileValidator;
+				$this->repository = $repository;
+				$this->validator  = $validator;
 		}
 
 		/**
@@ -167,60 +146,6 @@ class ProjectService extends BaseService
 								'message' => 'Error: ' . $e->getMessage() ] );
 				}
 		}
-
-		/*********************************************************
-		 *     F I L E S  D O  P R O J E T O                 *
-		 *********************************************************/
-
-		public function createFile( array $data )
-		{
-				try {
-						$project     = $this->repository->skipPresenter()->find( $data[ 'project_id' ] );
-						$projectFile = $project->files()->create( $data );
-
-						$this->storage->put(
-								$projectFile->id . '.' . $data[ 'extension' ],
-								$this->filesystem->get( $data[ 'file' ] )
-						);
-
-						return response()->json( [
-								'success' => true,
-								'message' => 'Arquivo anexado com sucesso!',
-						] );
-
-				} catch ( \Exception $e ) {
-						return [
-								'success' => false,
-								'message' => 'Error: ' . $e->getMessage(),
-						];
-				}
-		}
-
-		public function deleteFile( $projectId, $idFile )
-		{
-				$files           = $this->repository->skipPresenter()->find( $projectId )->files;
-				$removeFilePasta = array();
-
-				foreach ( $files as $k => $file ):
-						$path = $file->id . '.' . $file->extension;
-
-						if ( $file->id == $idFile ):
-								$file->delete( $file->id );
-								$removeFilePasta[] = $path;
-						endif;
-
-				endforeach;
-
-				if ( count( $removeFilePasta ) ):
-						if ( $this->storage->delete( $removeFilePasta ) ):
-								return response()->json( [
-										'success' => true,
-										'message' => 'Arquivo deletado com sucesso no repositorio de arquivos e no BD',
-								] );
-						endif;
-				endif;
-		}
-
 
 		/*********************************************************
 		 *     PERMISSÕES DE ACESSO AO PROJETO POR USER          *

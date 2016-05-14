@@ -31,7 +31,7 @@ angular.module( 'app.controllers' )
              */
             Project.get( { id: $routeParams.id }, function ( data ) {
                 $scope.project = data;
-                console.log(data.client);
+
                 //Obtem o client do projeto
                 Client.get( { id: data.client_id }, function ( data ) {
                     $scope.clientSelected = data;
