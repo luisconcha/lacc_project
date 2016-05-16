@@ -1,5 +1,6 @@
 <div class="container-fluid">
     <div class="row">
+        {{projectFiles}}
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">List of project files:
@@ -35,7 +36,7 @@
                             <td>{{p.name}}</td>
                             <td>{{p.description}}</td>
                             <td>
-                                <project-file-download id-file="{{p.id}}"></project-file-download>
+                                <project-file-download id-project="{{p.project_id}}" id-file="{{p.id}}"></project-file-download>
                             </td>
                             <td>
                                 <a ng-href="#/projects/{{p.project_id}}/files/{{p.id}}/edit"><i class="glyphicon glyphicon-edit"></i></a>

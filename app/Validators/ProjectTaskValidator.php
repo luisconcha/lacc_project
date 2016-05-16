@@ -20,7 +20,6 @@ class ProjectTaskValidator extends LaravelValidator
 		protected $rules = [
 				ValidatorInterface::RULE_CREATE => [
 						'name'       => 'required',
-						'project_id' => 'required|integer',
 						'start_date' => 'required|date|after:now',
 						'due_date'   => 'required|date|after:start_date',
 						'status'     => 'required|integer|max:1',
@@ -28,7 +27,6 @@ class ProjectTaskValidator extends LaravelValidator
 
 				ValidatorInterface::RULE_UPDATE => [
 						'name'        => 'sometimes|required',
-						'project_id ' => 'sometimes|required|integer',
 						'start_date'  => 'sometimes|required|date',
 						'due_date'    => 'sometimes|required|date|after:start_date',
 						'status'      => 'sometimes|required|max:1',

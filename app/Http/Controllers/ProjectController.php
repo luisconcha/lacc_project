@@ -23,6 +23,9 @@ class ProjectController extends Controller
 		{
 				$this->repository = $repository;
 				$this->service    = $service;
+
+				$this->middleware( 'check.project.owner', [ 'except' => [ 'index', 'store', 'show' ] ] );
+				$this->middleware( 'check.project.permission', [ 'except' => [ 'index', 'store', 'update', 'destroy' ] ] );
 		}
 
 		/**
@@ -32,17 +35,16 @@ class ProjectController extends Controller
 		 */
 		public function index()
 		{
-				$ownerId = Authorizer::getResourceOwnerId();
+				//Id do usuário autenticado
+				$userId = Authorizer::getResourceOwnerId();
 
-				return $this->repository->findWhere( [ 'owner_id' => $ownerId ] );
+				return $this->repository->findWithOwnerAndMember( $userId );
 		}
 
 		/**
-		 * Store a newly created resource in storage.
+		 * @param Request $request
 		 *
-		 * @param  \Illuminate\Http\Request $request
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array
 		 */
 		public function store( Request $request )
 		{
@@ -58,9 +60,9 @@ class ProjectController extends Controller
 		 */
 		public function show( $id )
 		{
-				if ( !$this->service->checkProjectPermissions( $id ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
+//				if ( !$this->service->checkProjectPermissions( $id ) ):
+//						return [ 'error' => 'Access Forbidden' ];
+//				endif;
 
 				return $this->service->searchById( $id );
 		}
@@ -75,9 +77,9 @@ class ProjectController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				if ( !$this->service->checkProjectPermissions( $id ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
+//				if ( !$this->service->checkProjectPermissions( $id ) ):
+//						return [ 'error' => 'Access Forbidden' ];
+//				endif;
 
 				return $this->service->update( $request->all(), $id );
 		}
@@ -91,9 +93,9 @@ class ProjectController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				if ( !$this->service->checkProjectPermissions( $id ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
+//				if ( !$this->service->checkProjectPermissions( $id ) ):
+//						return [ 'error' => 'Access Forbidden' ];
+//				endif;
 
 				try {
 						$dataProject = $this->service->searchById( $id );
@@ -114,25 +116,24 @@ class ProjectController extends Controller
 		 *     M E M B R O S  D O  P R O J E T O                 *
 		 *********************************************************/
 
-
-		public function showMembers( $idProject )
+		public function showMembers( $projectId )
 		{
-				return $this->service->showMembers( $idProject );
+				return $this->service->showMembers( $projectId );
 		}
 
-		public function addMember( $idProject, Request $request )
+		public function addMember( $projectId, Request $request )
 		{
 				$userId = $request->get( 'user_id' );
-				return $this->service->addMember( $idProject, $userId );
+				return $this->service->addMember( $projectId, $userId );
 		}
 
-		public function removeMember( $idProject, $userId )
+		public function removeMember( $projectId, $userId )
 		{
-				return $this->service->removeMember( $idProject, $userId );
+				return $this->service->removeMember( $projectId, $userId );
 		}
 
-		public function isMember( $idProject, $userId )
+		public function isMember( $projectId, $userId )
 		{
-				return $this->service->isMember( $idProject, $userId );
+				return $this->service->isMember( $projectId, $userId );
 		}
 }

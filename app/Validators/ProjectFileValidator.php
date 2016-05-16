@@ -12,14 +12,12 @@ class ProjectFileValidator extends LaravelValidator
 						'file'       => 'required|mimes:doc,docx,jpg,jpeg,pdf,gif,pdf,zip',
 						'name'       => 'required',
 						'extension'  => 'required',
-						'project_id' => 'required',
 				],
 
 				ValidatorInterface::RULE_UPDATE => [
 						'file'       => 'sometimes|required|mimes:doc,docx,jpg,jpeg,pdf,gif,pdf,zip',
 						'name'       => 'sometimes|required',
 						'extension'  => 'sometimes|required',
-						'project_id' => 'sometimes|required',
 				],
 		];
 }

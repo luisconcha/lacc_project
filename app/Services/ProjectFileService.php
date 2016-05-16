@@ -129,34 +129,4 @@ class ProjectFileService
 								return $this->storage->getDriver()->getAdapter()->getPathPrefix() . '/' . $projectFile->getFileName();
 				}
 		}
-
-		/*********************************************************
-		 *     PERMISSÕES DE ACESSO AO PROJETO                   *
-		 *********************************************************/
-
-		public function checkProjectOwner( $projectFileId )
-		{
-				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
-				$userId    = \Authorizer::getResourceOwnerId();
-				$projectId = $this->repository->skipPresenter()->find( $projectFileId )->project_id;
-
-				return $this->projectRepository->isOwner( $projectId, $userId );
-		}
-
-		public function checkProjectMember( $projectFileId )
-		{
-				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
-				$userId    = \Authorizer::getResourceOwnerId();
-				$projectId = $this->repository->skipPresenter()->find( $projectFileId )->project_id;
-				return $this->projectRepository->hasMember( $projectId, $userId );
-		}
-
-		public function checkProjectPermissions( $projectFileId )
-		{
-				if ( $this->checkProjectOwner( $projectFileId ) or $this->checkProjectMember( $projectFileId ) ) :
-						return true;
-				endif;
-
-				return false;
-		}
 }

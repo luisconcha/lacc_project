@@ -147,27 +147,26 @@ class ProjectService extends BaseService
 				}
 		}
 
-		/*********************************************************
-		 *     PERMISSÕES DE ACESSO AO PROJETO POR USER          *
-		 *********************************************************/
+		/*****************************************************************************************
+		 *                    PERMISSÕES DE ACESSO AO PROJETO POR USER                           *
+		 * @seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme *
+		 *****************************************************************************************/
 
-		private function checkProjectOwner( $projectId )
+		public function checkProjectOwner( $projectId )
 		{
-				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
 				$userId = \Authorizer::getResourceOwnerId();
 				return $this->repository->isOwner( $projectId, $userId );
 		}
 
-		private function checkProjectMember( $projectId )
+		public function checkProjectMember( $projectId )
 		{
-				//@seed: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
 				$userId = \Authorizer::getResourceOwnerId();
 				return $this->repository->hasMember( $projectId, $userId );
 		}
 
 		public function checkProjectPermissions( $projectId )
 		{
-				if ( $this->checkProjectOwner( $projectId ) || $this->checkProjectMember( $projectId ) ) :
+				if ( $this->checkProjectOwner( $projectId ) or $this->checkProjectMember( $projectId ) ) :
 						return true;
 				endif;
 

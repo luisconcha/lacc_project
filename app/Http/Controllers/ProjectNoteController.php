@@ -44,101 +44,73 @@ class ProjectNoteController extends Controller
 		}
 
 		/**
-		 * Display a listing of the resource.
+		 * @param $projectId
 		 *
-		 * @return \Illuminate\Http\Response
+		 * @return \Illuminate\Http\JsonResponse
 		 */
-		// public function index( $id, Request $request )
-		// {
-		// 		$projectId = $request->projectId;
-
-		// 		if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-		// 				return [ 'error' => 'Access Forbidden' ];
-		// 		endif;
-				
-		// 		return $this->repository->findWhere( [ 'project_id' => $id ] );
-			
-		// }
-		public function index( $id, Request $request )
+		public function index( $projectId )
 		{
-				$projectId = $request->projectId;
-
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-				
-				return $this->service->all( $id );
+//				return $this->repository->findWhere( [ 'project_id' => $projectId ] );
+				return $this->service->all( $projectId );
 		}
 
 		/**
-		 * Store a newly created resource in storage.
+		 * @param Request $request
+		 * @param $projectId
 		 *
-		 * @param  \Illuminate\Http\Request $request
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array
 		 */
-		public function store( Request $request )
+		public function store( Request $request, $projectId )
 		{
-				$projectId = $request->projectId;
+				$data                 = $request->all();
+				$data[ 'project_id' ] = $projectId;
 
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
-				return $this->service->create( $request->all() );
+				return $this->service->create( $data );
 		}
 
 		/**
-		 * Display the specified resource.
+		 * @param $projectId
+		 * @param $noteId
 		 *
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array|mixed
 		 */
-		public function show( $noteId, Request $request )
+		public function show( $projectId, $noteId )
 		{
-				$projectId = $request->id;
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
+				$result = $this->repository->findWhere( [ 'project_id' => $projectId, 'id' => $noteId ] );
+				if ( isset( $result[ 'data' ] ) && count( $result[ 'data' ] ) == 1 ):
+						$result = [
+								'data' => $result[ 'data' ][ 0 ],
+						];
 				endif;
 
-				return $this->service->searchNoteById( $noteId );
+				return $result;
 		}
 
 		/**
-		 * Update the specified resource in storage.
+		 * @param Request $request
+		 * @param $projectId
+		 * @param $noteId
 		 *
-		 * @param  \Illuminate\Http\Request $request
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return \Illuminate\Http\JsonResponse|mixed
 		 */
-		public function update( Request $request, $idProjetc, $noteId )
+		public function update( Request $request, $projectId, $noteId )
 		{
-				if ( !$this->projectService->checkProjectPermissions( $idProjetc ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
+				$data                 = $request->all();
+				$data[ 'project_id' ] = $projectId;
 
-
-				return $this->service->update( $request->all(), $noteId );
+				return $this->service->update( $data, $noteId );
 		}
 
 		/**
-		 * Remove the specified resource from storage.
+		 * @param $projectId
+		 * @param $idNote
 		 *
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return \Illuminate\Http\JsonResponse
 		 */
-		public function destroy( Request $request, $idProjetc, $idNote )
+		public function destroy( $projectId, $idNote )
 		{
-				if ( !$this->projectService->checkProjectPermissions( $idProjetc ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
-
 				try {
-						$dataProject = $this->service->searchNoteById( $idProjetc );
+						$dataProject = $this->service->searchNoteById( $projectId );
 
 						if ( $dataProject ) {
 

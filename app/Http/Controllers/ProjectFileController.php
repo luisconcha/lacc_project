@@ -38,6 +38,7 @@ class ProjectFileController extends Controller
 		public function index( $id )
 		{
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
+//				return $this->repository->skipPresenter()->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
@@ -110,10 +111,9 @@ class ProjectFileController extends Controller
 		 */
 		public function show( $id )
 		{
-				if ( $this->service->checkProjectPermissions( $id ) == false ) {
-						return [ 'error' => 'Access Forbidden' ];
-				}
-
+//				if ( $this->service->checkProjectPermissions( $id ) == false ) {
+//						return [ 'error' => 'Access Forbidden' ];
+//				}
 				return $this->repository->find( $id );
 		}
 

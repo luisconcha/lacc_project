@@ -4,27 +4,30 @@ angular.module( 'app.services' )
 
             var url = appConfig.baseUrl + Url.getUrlResource( appConfig.urls.projectFile );
             console.log('ObjUrl: ',url );
-            //http://project.dev/projects/:id/file/:idFile
-            return $resource( url, { id: '@id', idFile: '@idFile' }, {
+            //http://project.dev/projects/:id/file/:fileId
+            return $resource( url, { id: '@id', fileId: '@fileId' }, {
 
+                //Listagem dos files por projeto
                 getProjectFile: {
                     method: 'GET',
+                    url: '/projects/:id/file',
                     isArray: true
                 },
 
                 update: {
                     method: 'PUT',
-                    url: '/projects/file/:idFile'
+                    url: '/projects/:id/file/:fileId'
                 },
 
                 download: {
                     url: url + '/download',
+                    //url: '/projects/:id/file/:fileId/download',
                     method: 'GET'
                 },
 
                 remove: {
                     method: 'DELETE',
-                    url: '/projects/file/:idFile'
+                    url: '/projects/:id/file/:fileId'
                 }
             } );
 

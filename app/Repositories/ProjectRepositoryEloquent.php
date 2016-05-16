@@ -25,9 +25,7 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 
 		public function isOwner( $projectId, $userId )
 		{
-				$data = $this->findWhere( [ 'id' => $projectId, 'owner_id' => $userId ] );
-
-				if ( count( $data[ 'data' ] ) ):
+				if ( count( $this->skipPresenter()->findWhere( [ 'id' => $projectId, 'owner_id' => $userId ] ) ) ):
 						return true;
 				endif;
 
@@ -36,22 +34,28 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 
 		public function hasMember( $projectId, $memberId )
 		{
-				$project = $this->find( $projectId );
-				foreach ( $project[ 'data' ][ 'members' ] as $member ):
-						foreach ( $member as $memberId ):
-								if ( $memberId[ 'member_id' ] == $memberId ):
-									 return true;
-								endif;
-						endforeach;
+				$project = $this->skipPresenter()->find( $projectId );
+				foreach ( $project->members as $member ):
+						if ( $member->id == $memberId ):
+								return true;
+						endif;
 				endforeach;
 
-//				foreach ( $project->members as $member ) :
-//						if ( $member->id == $memberId ):
-//								return true;
-//						endif;
-//				endforeach;
-
 				return false;
+		}
+
+		public function findWithOwnerAndMember( $userId )
+		{
+				/**
+				 * Consulta via queryBuilder(scopeQuery) do Prettus
+				 * @see https://github.com/andersao/l5-repository
+				 */
+				return $this->scopeQuery( function ( $query ) use ( $userId ) {
+						return $query->select( 'projects.*' )
+								->leftJoin( 'project_members', 'project_members.user_id', '=', 'projects.owner_id' )
+								->where( 'project_members.user_id', '=', $userId )
+								->union( $this->model->query()->getQuery()->where( 'owner_id', '=', $userId ) );
+				} )->all();
 		}
 
 		public function presenter()

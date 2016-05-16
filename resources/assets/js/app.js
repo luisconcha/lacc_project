@@ -25,7 +25,7 @@ app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpPar
             ]
         },
         urls: {
-            projectFile: '/projects/{{id}}/file/{{idFile}}'
+            projectFile: '/projects/{{id}}/file/{{fileId}}'
         },
         utils: {
             //Funções Globals que poderam ser acessíveis tanto configprovideros, serviços, controller
@@ -154,11 +154,11 @@ app.config( [
                 templateUrl: 'build/views/project-file/new.html',
                 controller: 'ProjectFileNewController'
             } )
-            .when( '/projects/:id/files/:idFile/edit', {
+            .when( '/projects/:id/files/:fileId/edit', {
                 templateUrl: 'build/views/project-file/edit.html',
                 controller: 'ProjectFileEditController'
             } )
-            .when( '/projects/:id/files/:idFile/remove', {
+            .when( '/projects/:id/files/:fileId/remove', {
                 templateUrl: 'build/views/project-file/remove.html',
                 controller: 'ProjectFileRemoveController'
             } );

@@ -34,6 +34,7 @@ angular.module( 'app.controllers' )
 
                 //Obtem o client do projeto
                 Client.get( { id: data.client_id }, function ( data ) {
+                    console.info('Obj: ',data );
                     $scope.clientSelected = data;
                 } );
             } );
