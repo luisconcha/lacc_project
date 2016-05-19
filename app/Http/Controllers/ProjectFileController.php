@@ -38,7 +38,7 @@ class ProjectFileController extends Controller
 		public function index( $id )
 		{
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
-//				return $this->repository->skipPresenter()->findWhere( [ 'project_id' => $id ] );
+				return $this->repository->skipPresenter()->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
@@ -87,20 +87,20 @@ class ProjectFileController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function showFile( $id )
+		public function showFile( $id, $fileId )
 		{
-				if ( $this->service->checkProjectPermissions( $id ) == false ) {
-						return [ 'error' => 'Access Forbidden' ];
-				}
+//				if ( $this->service->checkProjectPermissions( $id ) == false ) {
+//						return [ 'error' => 'Access Forbidden' ];
+//				}
 
-				$filePath    = $this->service->getFilePath( $id );
+				$filePath    = $this->service->getFilePath( $fileId );
 				$fileContent = file_get_contents( $filePath );
 				$file64      = base64_encode( $fileContent );
 
 				return [
 						'file' => $file64,
 						'size' => filesize( $filePath ),
-						'name' => $this->service->getFileName( $id ),
+						'name' => $this->service->getFileName( $fileId ),
 				];
 		}
 
@@ -109,12 +109,12 @@ class ProjectFileController extends Controller
 		 *
 		 * @return array|mixed
 		 */
-		public function show( $id )
+		public function show( $id, $fileId )
 		{
 //				if ( $this->service->checkProjectPermissions( $id ) == false ) {
 //						return [ 'error' => 'Access Forbidden' ];
 //				}
-				return $this->repository->find( $id );
+				return $this->repository->find( $fileId );
 		}
 
 		/**
@@ -125,13 +125,13 @@ class ProjectFileController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update( Request $request, $id )
+		public function update( Request $request, $id, $fileId )
 		{
 //				if ( $this->service->checkProjectOwner( $id ) ) {
 //						return [ 'error' => 'Access Forbidden' ];
 //				}
 
-				return $this->service->update( $request->all(), $id );
+				return $this->service->update( $request->all(), $fileId );
 		}
 
 		/**
@@ -139,12 +139,12 @@ class ProjectFileController extends Controller
 		 *
 		 * @return array
 		 */
-		public function destroy( $id )
+		public function destroy( $id, $fileId )
 		{
-				if ( $this->service->checkProjectOwner( $id ) == false ) {
-						return [ 'error' => 'Access Forbidden' ];
-				}
+//				if ( $this->service->checkProjectOwner( $id ) == false ) {
+//						return [ 'error' => 'Access Forbidden' ];
+//				}
 
-				$this->service->delete( $id );
+				$this->service->delete( $fileId );
 		}
 }

@@ -1,5 +1,4 @@
 <div class="container-fluid">
-    {{projectFile}}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -31,9 +30,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Deseja baixar o arquivo? </label>
+                            <label class="col-md-4 control-label">Deseja baixar o arquivo?? </label>
                             <div class="col-md-6">
-                                <project-file-download id-file="{{projectFile.id}}"></project-file-download>
+                                <project-file-download project-id="{{projectFile.project_id}}" file-id="{{projectFile.id}}"></project-file-download>
                             </div>
                         </div>
                         <div class="form-group">

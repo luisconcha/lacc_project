@@ -7,27 +7,30 @@ angular.module( 'app.services' )
                 method: 'GET',
                 isArray: true
             },
+
             get: {
                 method: 'GET',
-                url: '/projects/notes/:idNote',
+                url: '/projects/:id/note/:idNote',
             },
+
             save: {
                 method: 'POST',
-                url: '/projects/notes/:id',
+                url: '/projects/:id/note',
                 transformRequest: function ( data ) {
                     return $httpParamSerializer( data );
                 }
             },
+
             update: {
                 method: 'PUT',
-                url: '/projects/notes/:id/notes/:idNote',
+                url: '/projects/:id/note/:idNote',
                 transformRequest: function ( data ) {
                     return $httpParamSerializer( data );
                 }
             },
             remove: {
                 method: 'DELETE',
-                url: '/projects/notes/:id/notes/:idNote',
+                url: '/projects/:id/note/:idNote',
             }
         } );
 

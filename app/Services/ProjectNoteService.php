@@ -45,13 +45,13 @@ class ProjectNoteService extends BaseService
 				//		->findWhere( [ 'project_id' => $id ] ) );
 		}
 
-		public function update( array $data, $id )
+		public function update( array $data, $noteId )
 		{
 				try {
 
-						$this->validator->with( $data )->setId( $id )->passesOrFail( ValidatorInterface::RULE_UPDATE );
+						$this->validator->with( $data )->setId( $noteId )->passesOrFail( ValidatorInterface::RULE_UPDATE );
 
-						return $this->repository->update( $data, $id );
+						return $this->repository->update( $data, $noteId );
 						
 				} catch ( ValidationException $e ) {
 						return response()->json( [

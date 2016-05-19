@@ -36,8 +36,7 @@ angular.module( 'app.directives' )
 
                 $scope.downloadFile = function () {
                     $scope.$emit( 'trata-btn-download' );
-
-                    ProjectFile.download( { id: null, idFile: $attrs.idFile }, function ( data ) {
+                    ProjectFile.download( { id: $attrs.projectId, fileId: $attrs.fileId }, function ( data ) {
                         $scope.$emit( 'salvar-arquivo', data );
                     } );
                 };

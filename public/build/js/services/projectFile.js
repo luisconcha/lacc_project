@@ -3,31 +3,29 @@ angular.module( 'app.services' )
         function ( $resource, $httpParamSerializer, appConfig, Url ) {
 
             var url = appConfig.baseUrl + Url.getUrlResource( appConfig.urls.projectFile );
-            console.log('ObjUrl: ',url );
             //http://project.dev/projects/:id/file/:fileId
             return $resource( url, { id: '@id', fileId: '@fileId' }, {
 
                 //Listagem dos files por projeto
                 getProjectFile: {
                     method: 'GET',
-                    url: '/projects/:id/file',
+                    url: url,
                     isArray: true
                 },
 
                 update: {
                     method: 'PUT',
-                    url: '/projects/:id/file/:fileId'
+                    url: url
                 },
 
                 download: {
-                    url: url + '/download',
-                    //url: '/projects/:id/file/:fileId/download',
-                    method: 'GET'
+                    method: 'GET',
+                    url: url + '/download'
                 },
 
                 remove: {
                     method: 'DELETE',
-                    url: '/projects/:id/file/:fileId'
+                    url: url
                 }
             } );
 

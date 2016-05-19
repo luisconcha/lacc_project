@@ -7,7 +7,7 @@ angular.module( 'app.controllers' )
              * $routeParams.id da rota (app.js)
              * @type {ProjectFile.get}
              */
-            ProjectFile.get( { id: null, idFile: $routeParams.idFile }, function ( data ) {
+            ProjectFile.get( { id: $routeParams.id, fileId: $routeParams.fileId }, function ( data ) {
                 $scope.projectFile = data;
             } );
 
@@ -26,18 +26,17 @@ angular.module( 'app.controllers' )
                     function ( isConfirm ) {
                         if ( isConfirm ) {
                             ProjectFile.remove( {
-                                id: null,
-                                idFile: $scope.projectFile.id
+                                id: $routeParams.id,
+                                fileId: $routeParams.fileId
                             }, $scope.projectFile, function ( data ) {
 
                                 if ( data ) {
-                                    $location.path( '/projects/'+$scope.projectFile.project_id+'/files'  );
-                                    swal( "Deletado!", data.success, "success" );
+                                    $location.path( '/projects/' + $scope.projectFile.project_id + '/files' );
+                                    swal( "Deletado!", 'Documento: ' + data.name + ' foi deletado com sucesso!', "success" );
                                 } else {
                                     swal( "Ups!", data.message, "error" );
                                 }
                             } );
-                            swal( "Deletado!", "O arquivo foi deletado com sucesso!.", "success" );
                         } else {
                             swal( "Ups!!", "Quase faço #$%@!@ :)", "error" );
                         }

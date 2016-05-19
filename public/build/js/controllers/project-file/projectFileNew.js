@@ -3,7 +3,7 @@ angular.module( 'app.controllers' )
     [ '$scope', '$location', '$routeParams', 'appConfig', 'Url', 'Upload', 'Project',
         function ( $scope, $location, $routeParams, appConfig, Url, Upload, Project ) {
 
-            Project.getProjectById( { id: $routeParams.id, idFile: null }, function ( data ) {
+            Project.getProjectById( { id: $routeParams.id, fileId: null }, function ( data ) {
                 $scope.project = data;
             } );
 
@@ -12,7 +12,7 @@ angular.module( 'app.controllers' )
 
                     var url = appConfig.baseUrl + Url.getUrlFromUrlSymbol( appConfig.urls.projectFile, {
                             id: $routeParams.id,
-                            idFile: ''
+                            fileId: ''
                         } );
 
                     Upload.upload( {
