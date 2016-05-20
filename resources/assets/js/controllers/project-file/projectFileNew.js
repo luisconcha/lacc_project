@@ -24,8 +24,12 @@ angular.module( 'app.controllers' )
                             project_id: $routeParams.id
                         }
                     } ).then( function ( resp ) {
-                        swal( "Cadastro!", "O Arquivo "+resp.config.data.file.name+" foi cadastrado com sucesso!.", "success" );
-                        $location.path( '/projects/' + $routeParams.id + '/files' );
+                         if( resp.data.error ){
+                            swal( "Ups!", "Error: "+resp.data.message.file+ ".", "error" );
+                        }else{
+                            swal( "Cadastro!", "O Arquivo "+resp.config.data.file.name+" foi cadastrado com sucesso!.", "success" );
+                            $location.path( '/projects/' + $routeParams.id + '/files' );
+                        }
                     }, function ( resp ) {
                         swal( "Ups!", "Error: "+resp.status+ ".", "error" );
                     }, function ( evt ) {
