@@ -46,3 +46,11 @@
 .preview-image img{
     height: 70px; width: 70px;
 }
+
+/*Estilos para frm de tarefas*/
+.frm-cad-task{
+    background: #FAFAFA;
+}
+.frm-cad-task h4, form {
+    margin: 20px 20px;
+}

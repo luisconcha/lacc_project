@@ -12,7 +12,7 @@ use LACC\Entities\ProjectTask;
  */
 class ProjectTaskTransformer extends TransformerAbstract
 {
-		protected $defaultIncludes = [];
+		protected $defaultIncludes = [ ];
 
 		/**
 		 * Transform the \ProjectTask entity
@@ -24,11 +24,13 @@ class ProjectTaskTransformer extends TransformerAbstract
 		public function transform( ProjectTask $data )
 		{
 				return [
-						'id'         => (int)$data->id,
-						'name'       => $data->name,
-						'project'    => $data->project_id,
-						'start_data' => $data->start_date,
-						'due_data'   => $data->due_date,
+						'id'           => (int)$data->id,
+						'name'         => $data->name,
+						'project'      => $data->project_id,
+						'project_name' => $data->name,
+						'start_date'   => $data->start_date,
+						'due_date'     => $data->due_date,
+						'status'       => $data->status,
 				];
 		}
 

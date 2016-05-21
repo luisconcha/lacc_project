@@ -29,88 +29,63 @@ class ProjectTaskController extends Controller
 		 * @var ProjectTaskService
 		 */
 		protected $service;
-		/**
-		 * @var ProjectService
-		 */
-		protected $projectService;
 
 		public function __construct( ProjectTaskRepository $taskRepository,
-		                             ProjectTaskService $service,
-		                             ProjectService $projectService )
+		                             ProjectTaskService $service )
 		{
-				$this->repository     = $taskRepository;
-				$this->service        = $service;
-				$this->projectService = $projectService;
+				$this->repository = $taskRepository;
+				$this->service    = $service;
 		}
 
 		/**
-		 * Display a listing of the resource.
+		 * @param $id
 		 *
-		 * @return \Illuminate\Http\Response
+		 * @return mixed
 		 */
 		public function index( $id )
 		{
-//				return $this->service->all();
-				if ( !$this->projectService->checkProjectPermissions( $id ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
 				return $this->repository->findWhere( [ 'project_id' => $id ] );
 		}
 
 		/**
-		 * Store a newly created resource in storage.
+		 * @param Request $request
+		 * @param $id
 		 *
-		 * @param  \Illuminate\Http\Request $request
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array
 		 */
-		public function store( Request $request )
+		public function store( Request $request, $id )
 		{
-				$projectId = $request->projectId;
+				$data                 = $request->all();
+				$data[ 'project_id' ] = $id;
 
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
-				return $this->service->create( $request->all() );
+				return $this->service->create( $data );
 		}
 
 		/**
-		 * Display the specified resource.
+		 * @param $id
+		 * @param $idTask
 		 *
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return mixed
 		 */
-		public function show( $id, Request $request )
+		public function show( $id, $idTask )
 		{
-				$projectId = $request->projectId;
-
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
-				return $this->service->searchById( $id );
+				//return $this->service->searchById( $idTask );
+				return $this->repository->find( $idTask );
 		}
 
 		/**
-		 * Update the specified resource in storage.
+		 * @param Request $request
+		 * @param $id
+		 * @param $idTask
 		 *
-		 * @param  \Illuminate\Http\Request $request
-		 * @param  int $id
-		 *
-		 * @return \Illuminate\Http\Response
+		 * @return array|\Illuminate\Http\JsonResponse|mixed
 		 */
-		public function update( Request $request, $taskId )
+		public function update( Request $request, $id, $idTask )
 		{
-				$projectId = $request->projectId;
+				$data                 = $request->all();
+				$data[ 'project_id' ] = $id;
 
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
-				return $this->service->update( $request->all(), $taskId );
+				return $this->service->update( $data, $idTask );
 		}
 
 		/**
@@ -120,26 +95,22 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function destroy( $id, Request $request )
+		public function destroy( $id, $idTask )
 		{
-				$projectId = $request->projectId;
-
-				if ( !$this->projectService->checkProjectPermissions( $projectId ) ):
-						return [ 'error' => 'Access Forbidden' ];
-				endif;
-
 				try {
-						$dataTask = $this->service->searchById( $id );
+						$dataTask = $this->service->searchById( $idTask );
 
 						if ( $dataTask ) {
-								$this->repository->delete( $id );
+								$this->service->delete( $idTask );
 								return response()->json( [
+										'success' => true,
 										'message' => 'Tarefa deletada com sucesso!',
 								] );
 
 						}
 				} catch ( \Exception $e ) {
 						return response()->json( [
+								'success ' => false,
 								'message' => $e->getMessage(),
 						] );
 				}

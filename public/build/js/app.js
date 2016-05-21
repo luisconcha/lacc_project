@@ -24,6 +24,12 @@ app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpPar
                 { value: '3', label: 'Cancelado' }
             ]
         },
+        projectTask: {
+            status: [
+                { value: '0', label: 'Incompleta' },
+                { value: '1', label: 'Completa' }
+            ]
+        },
         urls: {
             projectFile: '/projects/{{id}}/file/{{fileId}}'
         },
@@ -143,6 +149,24 @@ app.config( [
             .when( '/project/:id/notes/:idNote/remove', {
                 templateUrl: 'build/views/project-note/remove.html',
                 controller: 'ProjectNoteRemoveController'
+            } )
+
+        /********* Rota Projects Tasks *********/
+            .when( '/project/:id/tasks', {
+                templateUrl: 'build/views/project-task/list.html',
+                controller: 'ProjectTaskListController'
+            } )
+            .when( '/project/:id/task/new', {
+                templateUrl: 'build/views/project-task/new.html',
+                controller: 'ProjectTaskNewController'
+            } )
+            .when( '/project/:id/task/:idTask/edit', {
+                templateUrl: 'build/views/project-task/edit.html',
+                controller: 'ProjectTaskEditController'
+            } )
+            .when( '/project/:id/task/:idTask/remove', {
+                templateUrl: 'build/views/project-task/remove.html',
+                controller: 'ProjectTaskRemoveController'
             } )
 
         /********* Rota Projects File *********/

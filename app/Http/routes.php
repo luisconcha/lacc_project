@@ -51,13 +51,11 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 						Route::delete( '/{id}/note/{noteId}', [ 'as' => 'project.note.delete', 'uses' => 'ProjectNoteController@destroy' ] );
 
 						//Rotas para a tasks
-						Route::get( '{projectId}/tasks', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
-						Route::group( [ 'prefix' => 'task' ], function () {
-								Route::get( '{id}/task/{taskId}', [ 'as' => 'project.task.show', 'uses' => 'ProjectTaskController@show' ] );
-								Route::post( '{id}/task', [ 'as' => 'project.task.create', 'uses' => 'ProjectTaskController@store' ] );
-								Route::put( '{id}/task/{taskId}', [ 'as' => 'project.task.update', 'uses' => 'ProjectTaskController@update' ] );
-								Route::delete( '{id}/task/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
-						} );
+						Route::get( '{id}/task', [ 'as' => 'project.tasks.show', 'uses' => 'ProjectTaskController@index' ] );
+						Route::get( '{id}/task/{taskId}', [ 'as' => 'project.task.show', 'uses' => 'ProjectTaskController@show' ] );
+						Route::post( '{id}/task', [ 'as' => 'project.task.create', 'uses' => 'ProjectTaskController@store' ] );
+						Route::put( '{id}/task/{taskId}', [ 'as' => 'project.task.update', 'uses' => 'ProjectTaskController@update' ] );
+						Route::delete( '{id}/task/{taskId}', [ 'as' => 'project.task.delete', 'uses' => 'ProjectTaskController@destroy' ] );
 
 						//Rota para arquivos
 						Route::get( '{id}/file', [ 'as' => 'project.file.list', 'uses' => 'ProjectFileController@index' ] );
