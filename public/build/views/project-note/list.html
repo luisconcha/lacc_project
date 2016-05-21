@@ -9,12 +9,15 @@
                     <form class="frm-search">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <a ng-href="#/project/{{projectNotes[0].project_id}}/notes/new" class="btn btn-primary">New Note</a>
+                                <a ng-href="#/project/{{projectId}}/notes/new" class="btn btn-primary">New Note</a>
                             </span>
                             <input ng-model="filtro"
                                    ng-model-options="{debounce: 300}"
                                    type="text" class="form-control"
                                    placeholder="O que você deseja pesquisar...">
+                                   <span class="input-group-btn">
+                            <a ng-href="#/projects" class="btn btn-warning">Back to list of projects</a>
+                            </span>
                         </div>
                     </form>
 
