@@ -12,6 +12,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 
 		//Rota para os usuarios
 		Route::get( '/user/authenticated', [ 'as' => 'user.authenticated', 'uses' => 'UserController@authenticated' ] );
+		Route::resource( 'user', 'UserController', [ 'except' => [ 'create', 'edit' ] ] );
 
 		//Rota para os clientes
 		Route::get( '/clients', [ 'as' => 'clients.show', 'uses' => 'ClientController@index' ] );
@@ -34,12 +35,15 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 
 				//Rotas para members
-				Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
-				Route::group( [ 'prefix' => 'member' ], function () {
-						Route::post( 'project/{id}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
-						Route::delete( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
-						Route::get( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
-				} );
+//				Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
+//				Route::group( [ 'prefix' => 'member' ], function () {
+//						Route::post( 'project/{id}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
+//						Route::delete( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
+//						Route::get( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
+//				} );
+				Route::get( '/{id}/member', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
+				Route::post( '/{id}/member', [ 'as' => 'project.member.create', 'uses' => 'ProjectController@addMember' ] );
+				Route::delete( '/{id}/member/{userId}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
 
 				//Route::group( [ 'middleware' => 'check.project.permission', 'prefix' => 'projects' ], function () {
 				Route::group( [ 'middleware' => 'check.project.permission' ], function () {

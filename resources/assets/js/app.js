@@ -169,6 +169,16 @@ app.config( [
                 controller: 'ProjectTaskRemoveController'
             } )
 
+        /********* Rota Projects Members *********/
+            .when( '/project/:id/members', {
+                templateUrl: 'build/views/project-member/list.html',
+                controller: 'ProjectMemberListController'
+            } )
+            .when( '/project/:id/member/:idProjectMmeber/remove', {
+                templateUrl: 'build/views/project-member/remove.html',
+                controller: 'ProjectMemberRemoveController'
+            } )
+
         /********* Rota Projects File *********/
             .when( '/projects/:id/files', {
                 templateUrl: 'build/views/project-file/list.html',

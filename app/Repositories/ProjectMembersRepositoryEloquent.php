@@ -13,21 +13,26 @@ use LACC\Entities\ProjectMembers;
  */
 class ProjectMembersRepositoryEloquent extends BaseRepository implements ProjectMembersRepository
 {
-    /**
-     * Specify Model class name
-     *
-     * @return string
-     */
-    public function model()
-    {
-        return ProjectMembers::class;
-    }
+		//@seed: https://github.com/andersao/l5-repository#create-a-criteria
+		protected $fieldSearchable = [
+				'name',
+		];
 
-    /**
-     * Boot up the repository, pushing criteria
-     */
-    public function boot()
-    {
-        $this->pushCriteria(app(RequestCriteria::class));
-    }
+		/**
+		 * Specify Model class name
+		 *
+		 * @return string
+		 */
+		public function model()
+		{
+				return ProjectMembers::class;
+		}
+
+		/**
+		 * Boot up the repository, pushing criteria
+		 */
+		public function boot()
+		{
+				$this->pushCriteria( app( RequestCriteria::class ) );
+		}
 }

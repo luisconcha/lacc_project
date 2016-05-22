@@ -71,18 +71,18 @@ class ProjectService extends BaseService
 		 *
 		 * @return array|\Illuminate\Http\JsonResponse
 		 */
-		public function addMember( $idProject, $idUser )
+		public function addMember( array $data )
 		{
 				try {
-						$this->repository->find( $idProject )->members()->attach( $idUser );
+						$this->repository->skipPresenter()->find( $data['project_id'] )->members()->attach( $data );
 						return response()->json( [
 								'success' => true,
-								'message' => "O membrom com ID {$idUser} foi add com sucesso!",
+								'message' => "O membrom com ID {$data['user_id']} foi add com sucesso!",
 						] );
 				} catch ( \Exception $e ) {
 						return [
 								'success' => false,
-								'data'    => "Membro com ID: {$idUser} não localizado na base de dados",
+								'data'    => "Membro com ID: {$data['user_id']} não localizado na base de dados",
 						];
 				}
 		}
@@ -96,7 +96,7 @@ class ProjectService extends BaseService
 		{
 				try {
 						return response()->json( [
-								$this->repository->find( $idProject )->members->all(),
+								$this->repository->skipPresenter()->find( $idProject )->members->all(),
 						] );
 				} catch ( \Exception $e ) {
 						return response()->json( [
@@ -111,11 +111,11 @@ class ProjectService extends BaseService
 		 *
 		 * @return \Illuminate\Http\JsonResponse
 		 */
-		public function removeMember( $idProject, $userId )
+		public function removeMember( array $data )
 		{
 				try {
 						return response()->json( [
-								$this->repository->find( $idProject )->members()->detach( $userId ),
+								$this->repository->skipPresenter()->find( $data['project_id'] )->members()->detach( $data ),
 						] );
 				} catch ( \Exception $e ) {
 						return response()->json( [

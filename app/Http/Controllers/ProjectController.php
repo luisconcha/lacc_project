@@ -124,12 +124,21 @@ class ProjectController extends Controller
 		public function addMember( $projectId, Request $request )
 		{
 				$userId = $request->get( 'user_id' );
-				return $this->service->addMember( $projectId, $userId );
+				$data   = [
+						'project_id' => $projectId,
+						'user_id'    => $userId,
+				];
+
+				return $this->service->addMember( $data );
 		}
 
 		public function removeMember( $projectId, $userId )
 		{
-				return $this->service->removeMember( $projectId, $userId );
+				$data   = [
+						'project_id' => $projectId,
+						'user_id'    => $userId,
+				];
+				return $this->service->removeMember( $data );
 		}
 
 		public function isMember( $projectId, $userId )

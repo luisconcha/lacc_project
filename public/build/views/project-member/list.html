@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Membros do projeto:
+                    <span class="label label-info name-project-in-note">{{project.name}}</span>
+                </div>
+                {{getMembers}}
+                <div class="panel-body">
+                    <form class="frm-search">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="showFrmMember = !showFrmMember">New member
+                                </button>
+                            </span>
+                            <input ng-model="filtro"
+                                   ng-model-options="{debounce: 300}"
+                                   type="text" class="form-control"
+                                   placeholder="O que você deseja pesquisar...">
+                                   <span class="input-group-btn">
+                            <a ng-href="#/projects" class="btn btn-warning">Back to list of projects</a>
+                            </span>
+                        </div>
+                    </form>
+
+                    <div class="frm-cad-task" ng-show="showFrmMember">
+                        <h4>Member Register</h4>
+
+                        <form class="form-inline" name="formMember" role="form" method="POST" ng-submit="save()">
+                            <div class="form-group"
+                                 ng-class="{'has-error': !form.user_id.$valid && form.user_id.$touched}">
+                                <label class="col-md-4 control-label">Membros</label>
+
+                                <div class="col-md-6">
+
+                                    <input type="text" class="form-control" name="user_id"
+                                           ng-model="memberSelected"
+                                           typeahead-input-formatter="formatName($model)"
+                                           typeahead-on-select="selectMember($item)"
+                                           typeahead-editable="false"
+                                           uib-typeahead="m as m.name for m in getMembers($viewValue) | limitTo:5"
+                                           required />
+
+                                    <div ng-messages="form.user_id.$error"
+                                         ng-show="form.user_id.$touched"
+                                         class="help-block">
+                                        <div ng-message="editable">Não existe um cliente com os dados informados
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--<div class="form-group"-->
+                                 <!--ng-class="{'has-error': !form.client_id.$valid && form.client_id.$touched}">-->
+                                <!--<label class="col-md-4 control-label">Cliente</label>-->
+
+                                <!--<div class="col-md-6">-->
+
+                                    <!--<input type="text" class="form-control" name="client_id"-->
+                                           <!--ng-model="clientSelected"-->
+                                           <!--typeahead-input-formatter="formatName($model)"-->
+                                           <!--typeahead-on-select="selectClient($item)"-->
+                                           <!--typeahead-editable="false"-->
+                                           <!--uib-typeahead="c as c.name for c in getClients($viewValue) | limitTo:5"-->
+                                           <!--required />-->
+
+                                    <!--<div ng-messages="form.client_id.$error"-->
+                                         <!--ng-show="form.client_id.$touched"-->
+                                         <!--class="help-block">-->
+                                        <!--<div ng-message="required">Campo obrigatório</div>-->
+                                    <!--</div>-->
+                                    <!--<div ng-messages="form.client_id.$error"-->
+                                         <!--ng-show="form.client_id.$touched"-->
+                                         <!--class="help-block">-->
+                                        <!--<div ng-message="editable">Não existe um cliente com os dados informados<br/>(O campo é autocomplete, é só digitar as primeiras letras)-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+
+
+                            <button type="submit" class="btn btn-primary" ng-disabled="formMember.$invalid">Save member
+                            </button>
+                        </form>
+                    </div>
+
+                    MM: {{projectMembers}}
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="m in projectMembersFilter = ( projectMembers | filter:filtro )"
+                            class="painel-search-animado">
+                            <td>NOME: {{m[0].name}} - {{m.id}}</td>
+                            <td>
+                                <a ng-href="#/project/{{m.project_id}}/member/{{m.user.data.member_id}}/remove">
+                                    <i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="tr-result-search">
+                            <td colspan="5">
+                                Foram encontrados
+                                <span class="label label-pill label-success">{{projectMembersFilter.length}}</span> de
+                                <span class="label label-pill label-primary">{{projectMembers.length}}</span> registros.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
