@@ -1,7 +1,7 @@
 angular.module( 'app.controllers' )
     .controller( 'ProjectMemberListController', [
-        '$scope', '$routeParams', 'ProjectMember', 'User', '$timeout','Client',
-        function ( $scope, $routeParams, ProjectMember, User, $timeout,Client ) {
+        '$scope', '$routeParams', 'ProjectMember', 'User', '$timeout',
+        function ( $scope, $routeParams, ProjectMember, User, $timeout ) {
 
             $scope.showFrmMember = false;
             $scope.projectMember = new ProjectMember();
@@ -30,20 +30,17 @@ angular.module( 'app.controllers' )
                 } ).$promise;
             };
 
-
             /**
              * Função que seta o cliente do projeto no input
              * @param item
              */
             $scope.selectMember = function ( item ) {
-                console.log('item: ',item );
                 $scope.projectMember.user_id = item.id;
             };
 
             $scope.save = function () {
                 if ( $scope.formMember.$valid ) {
-                    $scope.projectMember.$save( { id: $routeParams.id } ).then( function (e) {
-                        console.info('EE: ',e );
+                    $scope.projectMember.$save( { id: $routeParams.id } ).then( function ( e ) {
                         $timeout( function () {
                             $scope.formMember = false;
                         }, 2000 );
@@ -70,6 +67,37 @@ angular.module( 'app.controllers' )
 
             $scope.loadMember();
 
-
-
+            $scope.removeMember = function (idProject, idMember) {
+                console.info('idProject: ', idProject);
+                console.log('idMember: ',idMember );
+                swal( {
+                        title: "Remover?",
+                        text: "Deseja deletar o membro do projeto?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Sim, deletar!",
+                        cancelButtonText: "Ups, não...!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function ( isConfirm ) {
+                        if ( isConfirm ) {
+                            ProjectMember.remove( {
+                                id: idProject,
+                                idUser: idMember
+                            }, function ( data ) {
+                                console.log('data: ',data );
+                                if ( data.success == "true" ) {
+                                    swal( "Deletado!",data.message, "success" );
+                                    $scope.loadMember();
+                                } else {
+                                    swal( "Ups!", data.message, "error" );
+                                }
+                            } );
+                        } else {
+                            swal( "Ups!!", "Quase faço #$%@!@ :)", "error" );
+                        }
+                    } );
+            }
         } ] );

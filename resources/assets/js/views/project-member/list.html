@@ -50,43 +50,11 @@
                                 </div>
                             </div>
 
-
-                            <!--<div class="form-group"-->
-                                 <!--ng-class="{'has-error': !form.client_id.$valid && form.client_id.$touched}">-->
-                                <!--<label class="col-md-4 control-label">Cliente</label>-->
-
-                                <!--<div class="col-md-6">-->
-
-                                    <!--<input type="text" class="form-control" name="client_id"-->
-                                           <!--ng-model="clientSelected"-->
-                                           <!--typeahead-input-formatter="formatName($model)"-->
-                                           <!--typeahead-on-select="selectClient($item)"-->
-                                           <!--typeahead-editable="false"-->
-                                           <!--uib-typeahead="c as c.name for c in getClients($viewValue) | limitTo:5"-->
-                                           <!--required />-->
-
-                                    <!--<div ng-messages="form.client_id.$error"-->
-                                         <!--ng-show="form.client_id.$touched"-->
-                                         <!--class="help-block">-->
-                                        <!--<div ng-message="required">Campo obrigatório</div>-->
-                                    <!--</div>-->
-                                    <!--<div ng-messages="form.client_id.$error"-->
-                                         <!--ng-show="form.client_id.$touched"-->
-                                         <!--class="help-block">-->
-                                        <!--<div ng-message="editable">Não existe um cliente com os dados informados<br/>(O campo é autocomplete, é só digitar as primeiras letras)-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-
-
-
                             <button type="submit" class="btn btn-primary" ng-disabled="formMember.$invalid">Save member
                             </button>
                         </form>
                     </div>
 
-                    MM: {{projectMembers}}
                     <table class="table table-responsive table-hover">
                         <thead>
                         <tr>
@@ -95,11 +63,12 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <tr ng-repeat="m in projectMembersFilter = ( projectMembers | filter:filtro )"
                             class="painel-search-animado">
-                            <td>NOME: {{m[0].name}} - {{m.id}}</td>
+                            <td>{{m.name}}</td>
                             <td>
-                                <a ng-href="#/project/{{m.project_id}}/member/{{m.user.data.member_id}}/remove">
+                                <a ng-click="removeMember(m.pivot.project_id, m.id)">
                                     <i class="glyphicon glyphicon-trash"></i></a>
                             </td>
                         </tr>

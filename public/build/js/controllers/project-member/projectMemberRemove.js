@@ -1,15 +1,10 @@
 angular.module( 'app.controllers' )
-    .controller( 'ProjectTaskRemoveController',
+    .controller( 'ProjectMemberRemoveController',
     [ '$scope', '$location', '$routeParams', 'ProjectTask',
         function ( $scope, $location, $routeParams, ProjectTask ) {
 
-            ProjectTask.get( {
-                id: $routeParams.id,
-                idTask: $routeParams.idTask
-            }, function ( data ) {
-                $scope.projectTask = data;
-            } );
-           console.info('$routeParams::: ',$routeParams.id );
+
+           console.info('$routeParams::: ',$routeParams);
             $scope.remove = function () {
                 swal( {
                         title: "Remover?",
@@ -23,14 +18,18 @@ angular.module( 'app.controllers' )
                         closeOnCancel: false
                     },
                     function ( isConfirm ) {
+                        console.info('isConfirm: ',isConfirm );
                         if ( isConfirm ) {
+                            console.info('Obj: ','ssssssssssssssss' );
                             ProjectTask.remove( {
                                 id: $routeParams.id,
                                 idTask: $routeParams.idTask
-                            }, $scope.projectTask, function ( data ) {
-                                if ( data.success ) {
+                            }, function ( data ) {
+                                console.info('Obj: ',data.success );
+                                if ( data.success == "true" ) {
+                                    console.log('Obj: ','asdasasd' );
                                     swal( "Deletado!",data.message, "success" );
-                                    $location.path( '/project/' + $routeParams.id + '/tasks' );
+                                    $location.path( '/project/' + $routeParams.id + '/members' );
                                 } else {
                                     swal( "Ups!", data.message, "error" );
                                 }

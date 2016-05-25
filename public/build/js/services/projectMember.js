@@ -21,7 +21,8 @@ angular.module( 'app.services' )
                 },
 
                 remove: {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    //isArray: true
                 }
 
             } );

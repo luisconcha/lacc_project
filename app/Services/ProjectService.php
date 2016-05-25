@@ -19,7 +19,6 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectService extends BaseService
 {
-
 		/**
 		 * @var ProjectRepository
 		 */
@@ -74,7 +73,7 @@ class ProjectService extends BaseService
 		public function addMember( array $data )
 		{
 				try {
-						$this->repository->skipPresenter()->find( $data['project_id'] )->members()->attach( $data );
+						$this->repository->skipPresenter()->find( $data[ 'project_id' ] )->members()->attach( $data[ 'user_id' ] );
 						return response()->json( [
 								'success' => true,
 								'message' => "O membrom com ID {$data['user_id']} foi add com sucesso!",
@@ -95,9 +94,9 @@ class ProjectService extends BaseService
 		public function showMembers( $idProject )
 		{
 				try {
-						return response()->json( [
-								$this->repository->skipPresenter()->find( $idProject )->members->all(),
-						] );
+
+						return $this->repository->skipPresenter()->find( $idProject )->members->all();
+
 				} catch ( \Exception $e ) {
 						return response()->json( [
 								'success' => false,
@@ -114,8 +113,11 @@ class ProjectService extends BaseService
 		public function removeMember( array $data )
 		{
 				try {
+						$this->repository->skipPresenter()->find( $data[ 'project_id' ] )->members()->detach( $data );
+
 						return response()->json( [
-								$this->repository->skipPresenter()->find( $data['project_id'] )->members()->detach( $data ),
+								'success' => 'true',
+								'message' => 'Membro deletado com sucesso !',
 						] );
 				} catch ( \Exception $e ) {
 						return response()->json( [

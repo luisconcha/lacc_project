@@ -116,7 +116,6 @@
     <script src="{{asset('build/js/controllers/project-task/projectTaskRemove.js')}}"></script>
 
     <script src="{{asset('build/js/controllers/project-member/projectMemberList.js')}}"></script>
-    <script src="{{asset('build/js/controllers/project-member/projectMemberRemove.js')}}"></script>
 
     <!--DIRECTIVES -->
     <script src="{{asset('build/js/directives/projectFileDownload.js')}}"></script>

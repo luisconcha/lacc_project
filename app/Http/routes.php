@@ -43,7 +43,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 //				} );
 				Route::get( '/{id}/member', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
 				Route::post( '/{id}/member', [ 'as' => 'project.member.create', 'uses' => 'ProjectController@addMember' ] );
-				Route::delete( '/{id}/member/{userId}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
+				Route::delete( '/{id}/member/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
 
 				//Route::group( [ 'middleware' => 'check.project.permission', 'prefix' => 'projects' ], function () {
 				Route::group( [ 'middleware' => 'check.project.permission' ], function () {
