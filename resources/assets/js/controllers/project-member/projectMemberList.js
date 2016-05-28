@@ -42,10 +42,11 @@ angular.module( 'app.controllers' )
                 if ( $scope.formMember.$valid ) {
                     $scope.projectMember.$save( { id: $routeParams.id } ).then( function ( e ) {
                         $timeout( function () {
-                            $scope.formMember = false;
+                            $scope.showFrmMember = false;
                         }, 2000 );
 
-                        $scope.projectMember = new ProjectMember();
+                        $scope.projectMember  = new ProjectMember();
+                        $scope.memberSelected = "";
                         $scope.loadMember();
                     } )
                 }

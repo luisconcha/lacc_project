@@ -34,10 +34,10 @@ angular.module( 'app.controllers' )
 
                 //Obtem o client do projeto
                 Client.get( { id: data.client_id }, function ( data ) {
-                    console.info('Obj: ',data );
                     $scope.clientSelected = data;
                 } );
             } );
+
 
             /**
              * Função que retorna o NOME do campo Clients do autocomplete para mostrar na label e não seu ID

@@ -1,5 +1,9 @@
 var app = angular.module( 'app',
-    [ 'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives', 'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ngFileUpload' ] );
+    [
+        'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
+        'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
+        'ngFileUpload', 'http-auth-interceptor'
+    ] );
 
 angular.module( 'app.controllers', [ 'ngMessages', 'ngAnimate' ] );
 angular.module( 'app.filters', [] );
@@ -76,12 +80,25 @@ app.config( [
 
         $httpProvider.defaults.transformRequest  = appConfigProvider.config.utils.transformRequest;
         $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+        //Removendo os interceptors para ficar só com: oauthFixInterceptor
+        $httpProvider.interceptors.splice( 0, 1 );
+        $httpProvider.interceptors.splice( 0, 1 );
+        $httpProvider.interceptors.push( 'oauthFixInterceptor' );
 
         $routeProvider
         /********* Rota Login *********/
             .when( '/login', {
                 templateUrl: 'build/views/login.html',
                 controller: 'LoginController'
+            } )
+        /********* Rota Logout *********/
+            .when( '/logout', {
+                resolve: {
+                    logout: [ '$location', 'OAuthToken', function ( $location, OAuthToken ) {
+                        OAuthToken.removeToken();
+                        return $location.path( '/login' );
+                    } ]
+                }
             } )
         /********* Rota Home *********/
             .when( '/home', {
@@ -204,6 +221,10 @@ app.config( [
             grantPath: 'oauth/access_token'
         } );
 
+        /**
+         * Remover este trecho de código quando for para produção
+         * Caso o server não tiver https
+         */
         OAuthTokenProvider.configure( {
             name: 'token',
             options: {
@@ -212,19 +233,43 @@ app.config( [
         } );
     } ] );
 
-app.run( [ '$rootScope', '$window', 'OAuth', function ( $rootScope, $window, OAuth ) {
-    $rootScope.$on( 'oauth:error', function ( event, rejection ) {
-        // Ignore `invalid_grant` error - should be catched on `LoginController`.
-        if ( 'invalid_grant' === rejection.data.error ) {
-            return;
-        }
+app.run( [ '$rootScope', '$location', '$http', '$uibModal', 'httpBuffer', 'OAuth',
+    function ( $rootScope, $location, $http, $uibModal, httpBuffer, OAuth ) {
 
-        // Refresh token when a `invalid_token` error occurs.
-        if ( 'invalid_token' === rejection.data.error ) {
-            return OAuth.getRefreshToken();
-        }
+        //Verifica o camportamento das rotas da app
+        $rootScope.$on( '$routeChangeStart', function ( event, next, current ) {
+            if ( next.$$route.originalPath != '/login' ) {
+                //Verifica nos cookies do angular se existe o token
+                if ( !OAuth.isAuthenticated() ) {
+                    $location.path( '/login' );
+                }
+            }
+        } );
 
-        // Redirect to `/login` with the `error_reason`.
-        return $window.location.href = '/login?error_reason=' + rejection.data.error;
-    } );
-} ] );
+        $rootScope.$on( 'oauth:error', function ( event, data ) {
+            // Ignore `invalid_grant` error - should be catched on `LoginController`.
+            if ( 'invalid_grant' === data.rejection.data.error ) {
+                return;
+            }
+
+            // Refresh token when a `invalid_token` error occurs.
+            if ( 'access_denied' === data.rejection.data.error ) {
+
+                //Captura cadas reqquisição de acces_denied para acressentar para o cantainer
+                //do httpBuffer da biblioteca angular-http-auth
+                httpBuffer.append( data.rejection.config, data.deferred );
+
+                if ( !$rootScope.loginModalOpened ) {
+                    var modalInstance = $uibModal.open( {
+                        templateUrl: 'build/views/templates/loginModal.html',
+                        controller: 'LoginModalController'
+                    } );
+
+                    $rootScope.loginModalOpened = true;
+                }
+                return;
+            }
+
+            return $location.path( 'login' );
+        } );
+    } ] );
