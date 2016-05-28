@@ -32,7 +32,8 @@ config.vendor_path_js = [
     config.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
     config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.min.js',
     config.bower_path + '/ng-file-upload/ng-file-upload.min.js',
-    config.bower_path + '/angular-http-auth/src/http-auth-interceptor.js'
+    config.bower_path + '/angular-http-auth/src/http-auth-interceptor.js',
+    config.bower_path + '/angularUtils-pagination/dirPagination.js'
 ];
 
 /**************************************************
@@ -44,16 +45,15 @@ config.build_path_css        = config.build_path + '/css';
 config.build_vendor_path_css = config.build_path_css + '/vendor';
 config.build_style_path_css  = config.build_path_css + '/style';
 
-config.vendor_path_css       = [
+config.vendor_path_css = [
     config.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
     config.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
     config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.css',
 ];
 
-config.style_path_css       = [
+config.style_path_css = [
     config.build_path_css + '/style.css',
 ];
-
 
 /**************************************************
  *                                                *
@@ -61,8 +61,8 @@ config.style_path_css       = [
  *                                                *
  **************************************************/
 
-config.build_path_fonts        = config.build_path + '/fonts';
-config.build_style_path_fonts  = config.build_path_fonts + '/fonts';
+config.build_path_fonts       = config.build_path + '/fonts';
+config.build_style_path_fonts = config.build_path_fonts + '/fonts';
 
 gulp.task( 'copy-fonts', function () {
     gulp.src( [
@@ -71,7 +71,6 @@ gulp.task( 'copy-fonts', function () {
         .pipe( gulp.dest( config.build_path_fonts ) )
         .pipe( liveReload() );
 } );
-
 
 /***********************************************************
  *                                                         *
@@ -100,8 +99,8 @@ gulp.task( 'copy-styles', function () {
         .pipe( liveReload() );
 
     gulp.src( config.style_path_css )
-       .pipe( gulp.dest( config.build_style_path_css ) )
-       .pipe( liveReload() );
+        .pipe( gulp.dest( config.build_style_path_css ) )
+        .pipe( liveReload() );
 } );
 
 gulp.task( 'copy-scripts', function () {
@@ -125,7 +124,6 @@ gulp.task( 'copy-scripts', function () {
 gulp.task( 'clear-build-folder', function () {
     clean.sync( config.build_path );
 } );
-
 
 /***********************************************************
  *                                                         *

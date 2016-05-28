@@ -34,7 +34,7 @@ angular.module( 'app.services' )
                 getProject: {
                     method: 'GET',
                     url: '/projects',
-                    isArray: true
+                    isArray: false
                 },
 
                 getProjectById:{

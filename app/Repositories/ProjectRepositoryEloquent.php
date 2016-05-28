@@ -58,6 +58,18 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 				} )->all();
 		}
 
+		public function findOwner( $userId, $limit = null, $columns = array() )
+		{
+				/**
+				 * Consulta via queryBuilder(scopeQuery) do Prettus
+				 * @see https://github.com/andersao/l5-repository
+				 */
+				return $this->scopeQuery( function ( $query ) use ( $userId ) {
+						return $query->select( 'projects.*' )
+								->where( 'projects.owner_id', '=', $userId );
+				} )->paginate( $limit, $columns );
+		}
+
 		public function presenter()
 		{
 				return ProjectPresenter::class;

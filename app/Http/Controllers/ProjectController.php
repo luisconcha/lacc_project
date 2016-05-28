@@ -33,11 +33,14 @@ class ProjectController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index()
+		public function index( Request $request )
 		{
 				//Id do usuário autenticado
 				$userId = Authorizer::getResourceOwnerId();
-				return $this->repository->findWithOwnerAndMember( $userId );
+
+				$limit = $request->query->get( 'limit' );
+
+				return $this->repository->findOwner( $userId, $limit );
 		}
 
 		/**
@@ -121,7 +124,7 @@ class ProjectController extends Controller
 
 		public function removeMember( $projectId, $userId )
 		{
-				$data   = [
+				$data = [
 						'project_id' => $projectId,
 						'user_id'    => $userId,
 				];
