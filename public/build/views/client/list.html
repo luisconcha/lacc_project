@@ -1,4 +1,4 @@
- <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -13,7 +13,7 @@
                             <input ng-model="filtro"
                                    ng-model-options="{debounce: 300}"
                                    type="text" class="form-control"
-                                   placeholder="O que você deseja pesquisar...">
+                                   placeholder="O que você deseja pesquisar? Lembra que só pesquiso por página :)">
                         </div>
                     </form>
 
@@ -28,9 +28,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- <tr ng-repeat="o in clients.data"> -->
-                        <tr ng-repeat="c in clientsFilter = ( clients | filter:filtro )" class="painel-search-animado">
-                             <td>{{c.name}}</td>
+                        <!--<tr ng-repeat="c in clientsFilter = ( clients | filter:filtro )" class="painel-search-animado">-->
+                        <tr dir-paginate="c in clientsFilter = ( clients | filter:filtro ) | itemsPerPage: clientsPerPage"
+                            total-items="totalClients"
+                            current-page="pagination.current"
+                            class="painel-search-animado">
+
+                            <td>{{c.name}}</td>
                             <td>{{c.responsible}}</td>
                             <td>{{c.email}}</td>
                             <td>{{c.phone}}</td>
@@ -43,15 +47,18 @@
                                 </a>
                             </td>
                         </tr>
-                        <tr class="tr-result-search">
-                            <td colspan="5">
-                               Foram encontrados
-                                <span class="label label-pill label-success">{{clientsFilter.length}}</span> de
-                                <span class="label label-pill label-primary">{{clients.data.length}}</span>  registros.
-                            </td>
-                        </tr>
+                        <!--<tr class="tr-result-search">-->
+                            <!--<td colspan="5">-->
+                                <!--Foram encontrados-->
+                                <!--<span class="label label-pill label-success">{{clientsFilter.length}}</span> de-->
+                                <!--<span class="label label-pill label-primary">{{clients.data.length}}</span> registros.-->
+                            <!--</td>-->
+                        <!--</tr>-->
                         </tbody>
                     </table>
+                    <div class="text-center">
+                        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>

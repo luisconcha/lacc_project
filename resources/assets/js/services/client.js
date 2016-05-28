@@ -5,7 +5,7 @@ angular.module( 'app.services' )
             getClient: {
                 method: 'GET',
                 url: '/clients',
-                isArray: true
+                isArray: false
             },
 
             update: {

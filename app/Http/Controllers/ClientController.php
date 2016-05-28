@@ -41,9 +41,10 @@ class ClientController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index()
+		public function index( Request $request )
 		{
-				return $this->repository->all();
+				$limit = $request->query->get( 'limit' );
+				return $this->repository->paginate( $limit );
 		}
 
 		/**
@@ -80,7 +81,7 @@ class ClientController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-				return $this->service->update( $request->all(), $id);
+				return $this->service->update( $request->all(), $id );
 		}
 
 		/**
@@ -92,14 +93,14 @@ class ClientController extends Controller
 		 */
 		public function destroy( $id )
 		{
-				try{
-						$dataClient = $this->service->searchById($id);
-						if( $dataClient ) {
-								if( $this->repository->delete( $id ) ) {
+				try {
+						$dataClient = $this->service->searchById( $id );
+						if ( $dataClient ) {
+								if ( $this->repository->delete( $id ) ) {
 										return response()->json( [ 'success' => 'O Cliente foi deletado com sucesso!' ] );
 								}
 						}
-				}catch (\Exception $e){
+				} catch ( \Exception $e ) {
 						return response()->json( [ 'message' => $e->getMessage() ] );
 				}
 		}

@@ -28,7 +28,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr dir-paginate="p in projectFilter = ( projects | filter:filtro ) | itemsPerPage: projectsPerPage" total-items="totalProjects" current-page="pagination.current">
+                        <tr dir-paginate="p in projectFilter = ( projects | filter:filtro ) | itemsPerPage: projectsPerPage"
+                            total-items="totalProjects"
+                            current-page="pagination.current"
+                            class="painel-search-animado">
                             <td>{{p.name}}</td>
                             <td>{{p.owner_name}}</td>
                             <td>{{p.client_name}}</td>
