@@ -36,4 +36,22 @@ class ProjectNoteRepositoryEloquent extends BaseRepository implements ProjectNot
 		{
 				return ProjectNotePresenter::class;
 		}
+
+
+		public function findNoteByProject( $projectId, $limit = null, $columns = array() )
+		{
+				/**
+				 * Consulta via queryBuilder(scopeQuery) do Prettus
+				 * @see https://github.com/andersao/l5-repository
+				 */
+				return $this->scopeQuery( function ( $query ) use ( $projectId ) {
+						return $query->select( 'project_notes.*' )
+								->where( 'project_notes.project_id', '=', $projectId );
+				} )->paginate( $limit, $columns );
+		}
+
+		/**
+		 * return response()->json( $this->repository->with( [ 'project' ] )->paginate(1)
+		->where( [ 'project_id' => $id ] ) );
+		 */
 }

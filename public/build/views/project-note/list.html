@@ -30,7 +30,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="p in projectNotesFilter = ( projectNotes | filter:filtro )"
+                        <tr dir-paginate="p in projectNotesFilter = ( projectNotes | filter:filtro ) | itemsPerPage: projectsNotesPerPage"
+                            total-items="totalProjectsNotes"
+                            current-page="pagination.current"
                             class="painel-search-animado">
                             <td>{{p.title}}</td>
                             <td>{{p.note}}</td>
@@ -48,6 +50,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="text-center">
+                        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>

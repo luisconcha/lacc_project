@@ -3,7 +3,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de tarefas do projeto:
-                    <span class="label label-info name-project-in-note">{{projectTasks[0].project_name}}</span>
+                    <span class="label label-info name-project-in-note">{{projectTasks.project_name}}</span>
                 </div>
                 <div class="panel-body">
                     <form class="frm-search">
@@ -46,7 +46,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="t in projectTasksFilter = ( projectTasks | filter:filtro )"
+                        <!--<tr ng-repeat="t in projectTasksFilter = ( projectTasks | filter:filtro )"-->
+                            <!--class="painel-search-animado">-->
+                        <tr dir-paginate="t in projectTasksFilter = ( projectTasks | filter:filtro ) | itemsPerPage: projectTasksPerPage"
+                            total-items="totalProjectTasks"
+                            current-page="pagination.current"
                             class="painel-search-animado">
                             <td>{{t.name}}</td>
                             <td>{{t.start_date | dataBr }}</td>
@@ -71,6 +75,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="text-center">
+                        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>

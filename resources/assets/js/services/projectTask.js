@@ -43,6 +43,10 @@ angular.module( 'app.services' )
                     }
                 },
 
+                query: {
+                    isArray: false
+                },
+
                 save: {
                     method: 'POST',
                     transformRequest: trasformData

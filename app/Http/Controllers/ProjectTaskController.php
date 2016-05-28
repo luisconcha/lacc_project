@@ -42,9 +42,11 @@ class ProjectTaskController extends Controller
 		 *
 		 * @return mixed
 		 */
-		public function index( $id )
+		public function index( $projectId, Request $request )
 		{
-				return $this->repository->findWhere( [ 'project_id' => $id ] );
+//				return $this->repository->findWhere( [ 'project_id' => $id ] );
+				$limit = $request->query->get( 'limit' );
+				return $this->repository->findTaskByProject( $projectId, $limit );
 		}
 
 		/**
@@ -111,7 +113,7 @@ class ProjectTaskController extends Controller
 				} catch ( \Exception $e ) {
 						return response()->json( [
 								'success ' => false,
-								'message' => $e->getMessage(),
+								'message'  => $e->getMessage(),
 						] );
 				}
 		}

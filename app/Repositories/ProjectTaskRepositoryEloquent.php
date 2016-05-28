@@ -46,4 +46,17 @@ class ProjectTaskRepositoryEloquent extends BaseRepository implements ProjectTas
 		{
 				return ProjectTaskPresenter::class;
 		}
+
+		public function findTaskByProject( $projectId, $limit = null, $columns = array() )
+		{
+				/**
+				 * Consulta via queryBuilder(scopeQuery) do Prettus
+				 * @see https://github.com/andersao/l5-repository
+				 */
+				return $this->scopeQuery( function ( $query ) use ( $projectId ) {
+						return $query->select( 'project_tasks.*' )
+								->orderBy( 'project_tasks.id', 'DESC' )
+								->where( 'project_tasks.project_id', '=', $projectId );
+				} )->paginate( $limit, $columns );
+		}
 }

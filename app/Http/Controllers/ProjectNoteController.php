@@ -48,10 +48,12 @@ class ProjectNoteController extends Controller
 		 *
 		 * @return \Illuminate\Http\JsonResponse
 		 */
-		public function index( $projectId )
+		public function index( $projectId, Request $request )
 		{
 //				return $this->repository->findWhere( [ 'project_id' => $projectId ] );
-				return $this->service->all( $projectId );
+				$limit = $request->query->get( 'limit' );
+
+				return $this->service->all( $projectId, $limit );
 		}
 
 		/**

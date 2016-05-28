@@ -33,11 +33,13 @@ class ProjectNoteService extends BaseService
 				$this->validator  = $validator;
 		}
 
-		public function all( $id )
+		public function all( $projectId, $limit )
 		{
+				return $this->repository->findNoteByProject( $projectId, $limit );
+
 				//Retorna a consulta utilizando presenter
-				return response()->json( $this->repository->with( [ 'project' ] )
-						->findWhere( [ 'project_id' => $id ] ) );
+				//return response()->json( $this->repository->with( [ 'project' ] )->paginate(1)
+				//			->where( [ 'project_id' => $id ] ) );
 
 				//skipPresenter faz a consulta não utilizando o presenter
 				//return response()->json( $this->repository->skipPresenter()
@@ -52,7 +54,7 @@ class ProjectNoteService extends BaseService
 						$this->validator->with( $data )->setId( $noteId )->passesOrFail( ValidatorInterface::RULE_UPDATE );
 
 						return $this->repository->update( $data, $noteId );
-						
+
 				} catch ( ValidationException $e ) {
 						return response()->json( [
 								'error'   => true,
