@@ -46,9 +46,11 @@ class CheckProjectPermission
 				 */
 				$projectId = $request->route( 'id' ) ? $request->route( 'id' ) : $request->route( 'projects' );
 
-				if ( $this->service->checkProjectPermissions( $projectId ) == false ):
-						return [ 'access' => 'You haven\'t permission to access project' ];
-				endif;
+				if( $projectId ) {
+						if ( $this->service->checkProjectPermissions( $projectId ) == false ):
+								return [ 'access' => 'You haven\'t permission to access project' ];
+						endif;
+				}
 
 				return $next( $request );
 		}

@@ -37,7 +37,6 @@ class ProjectController extends Controller
 		{
 				//Id do usuário autenticado
 				$userId = Authorizer::getResourceOwnerId();
-
 				return $this->repository->findWithOwnerAndMember( $userId );
 		}
 
@@ -60,10 +59,6 @@ class ProjectController extends Controller
 		 */
 		public function show( $id )
 		{
-//				if ( !$this->service->checkProjectPermissions( $id ) ):
-//						return [ 'error' => 'Access Forbidden' ];
-//				endif;
-
 				return $this->service->searchById( $id );
 		}
 
@@ -77,10 +72,6 @@ class ProjectController extends Controller
 		 */
 		public function update( Request $request, $id )
 		{
-//				if ( !$this->service->checkProjectPermissions( $id ) ):
-//						return [ 'error' => 'Access Forbidden' ];
-//				endif;
-
 				return $this->service->update( $request->all(), $id );
 		}
 
@@ -93,10 +84,6 @@ class ProjectController extends Controller
 		 */
 		public function destroy( $id )
 		{
-//				if ( !$this->service->checkProjectPermissions( $id ) ):
-//						return [ 'error' => 'Access Forbidden' ];
-//				endif;
-
 				try {
 						$dataProject = $this->service->searchById( $id );
 

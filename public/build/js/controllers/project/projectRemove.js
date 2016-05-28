@@ -9,7 +9,13 @@ angular.module( 'app.controllers' )
              * @type {Project.get}
              */
             Project.get( { id: $routeParams.id }, function ( data ) {
-                $scope.project = data;
+                //Verifica se não existe msg de acesso negado
+                if ( !data.access ) {
+                    $scope.project = data;
+                } else {
+                    swal( "Aviso!", data.access, "warning" );
+                    $location.path( '/projects' );
+                }
             } );
 
             $scope.remove = function () {

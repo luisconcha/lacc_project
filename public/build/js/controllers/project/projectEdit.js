@@ -30,14 +30,20 @@ angular.module( 'app.controllers' )
              * @type {Project.get}
              */
             Project.get( { id: $routeParams.id }, function ( data ) {
-                $scope.project = data;
+                //Verifica se não existe msg de acesso negado
+                if ( !data.access ) {
+                    $scope.project = data;
 
-                //Obtem o client do projeto
-                Client.get( { id: data.client_id }, function ( data ) {
-                    $scope.clientSelected = data;
-                } );
+                    //Obtem o client do projeto
+                    Client.get( { id: data.client_id }, function ( data ) {
+                        $scope.clientSelected = data;
+                    } );
+                } else {
+                    swal( "Aviso!", data.access, "warning" );
+                    $location.path( '/projects' );
+                }
+
             } );
-
 
             /**
              * Função que retorna o NOME do campo Clients do autocomplete para mostrar na label e não seu ID

@@ -34,19 +34,14 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
 				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 
-				//Rotas para members
-//				Route::get( '/{idProject}/members', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
-//				Route::group( [ 'prefix' => 'member' ], function () {
-//						Route::post( 'project/{id}', [ 'as' => 'project.member.add', 'uses' => 'ProjectController@addMember' ] );
-//						Route::delete( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
-//						Route::get( 'project/{id}/user/{idUser}', [ 'as' => 'project.member.ismember', 'uses' => 'ProjectController@isMember' ] );
-//				} );
-				Route::get( '/{id}/member', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
-				Route::post( '/{id}/member', [ 'as' => 'project.member.create', 'uses' => 'ProjectController@addMember' ] );
-				Route::delete( '/{id}/member/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
-
 				//Route::group( [ 'middleware' => 'check.project.permission', 'prefix' => 'projects' ], function () {
 				Route::group( [ 'middleware' => 'check.project.permission' ], function () {
+
+						//Rotas para members
+						Route::get( '/{id}/member', [ 'as' => 'project.members.show', 'uses' => 'ProjectController@showMembers' ] );
+						Route::post( '/{id}/member', [ 'as' => 'project.member.create', 'uses' => 'ProjectController@addMember' ] );
+						Route::delete( '/{id}/member/{idUser}', [ 'as' => 'project.member.delete', 'uses' => 'ProjectController@removeMember' ] );
+
 						//Rota para as notas
 						Route::get( '{id}/notes', [ 'as' => 'project.notes.show', 'uses' => 'ProjectNoteController@index' ] );
 						Route::get( '{id}/note/{noteId}', [ 'as' => 'project.note.show', 'uses' => 'ProjectNoteController@show' ] );
@@ -72,6 +67,12 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 		} );
 
 } );
+
+//DB::listen(function ($event) {
+//		dump($event->bindings);
+//		dump($event);
+//});
+
 
 
 /*****************************
