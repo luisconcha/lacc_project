@@ -76,3 +76,9 @@ footer {
     width: 100%;
     height: 60px;
 }
+
+/*Estilo para aviso no dashboard*/
+.viewHelp{
+    color: #a08888;
+    margin-top: 6%;
+}

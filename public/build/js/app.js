@@ -3,7 +3,7 @@ var app = angular.module( 'app',
         'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
         'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
         'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-        'mgcrea.ngStrap.navbar', 'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown'
     ] );
 
 angular.module( 'app.controllers', [ 'ngMessages', 'ngAnimate' ] );
@@ -103,75 +103,96 @@ app.config( [
         /********* Rota Home *********/
             .when( '/home', {
                 templateUrl: 'build/views/home.html',
-                controller: 'HomeController'
+                controller: 'HomeController',
+                title: "Dashboard"
             } )
 
         /********* Rota Clients *********/
+            .when( '/clients/dashboard', {
+                templateUrl: 'build/views/client/dashboard.html',
+                controller: 'ClientDashboardController',
+                title: "Dashboard Clients"
+            } )
             .when( '/clients', {
                 templateUrl: 'build/views/client/list.html',
-                controller: 'ClientListController'
+                controller: 'ClientListController',
+                title: "Module Clients"
             } )
             .when( '/clients/new', {
                 templateUrl: 'build/views/client/new.html',
-                controller: 'ClientNewController'
+                controller: 'ClientNewController',
+                title: "New Client"
             } )
             .when( '/clients/:id/show', {
                 templateUrl: 'build/views/client/show.html',
-                controller: 'ClientShowController'
+                controller: 'ClientShowController',
+                title: "View Client"
             } )
             .when( '/clients/:id/edit', {
                 templateUrl: 'build/views/client/edit.html',
-                controller: 'ClientEditController'
+                controller: 'ClientEditController',
+                title: "Edit Client"
             } )
             .when( '/clients/:id/remove', {
                 templateUrl: 'build/views/client/remove.html',
-                controller: 'ClientRemoveController'
+                controller: 'ClientRemoveController',
+                title: "Remove Client"
             } )
 
         /********* Rota Projects *********/
             .when( '/projects', {
                 templateUrl: 'build/views/project/list.html',
-                controller: 'ProjectListController'
+                controller: 'ProjectListController',
+                title: "Module Projects"
             } )
             .when( '/projects/new', {
                 templateUrl: 'build/views/project/new.html',
-                controller: 'ProjectNewController'
+                controller: 'ProjectNewController',
+                title: "New Project"
             } )
             .when( '/projects/:id/edit', {
                 templateUrl: 'build/views/project/edit.html',
-                controller: 'ProjectEditController'
+                controller: 'ProjectEditController',
+                title: "Edit Project"
             } )
             .when( '/projects/:id/remove', {
                 templateUrl: 'build/views/project/remove.html',
-                controller: 'ProjectRemoveController'
+                controller: 'ProjectRemoveController',
+                title: "Remove Project"
             } )
 
         /********* Rota Projects Notes *********/
             .when( '/projects/:id/notes', {
                 templateUrl: 'build/views/project-note/list.html',
-                controller: 'ProjectNoteListController'
+                controller: 'ProjectNoteListController',
+                title: "Module Notes Project"
             } )
             .when( '/project/:id/notes/new', {
                 templateUrl: 'build/views/project-note/new.html',
-                controller: 'ProjectNoteNewController'
+                controller: 'ProjectNoteNewController',
+                title: "New Notes Project"
             } )
             .when( '/project/:id/notes/:idNote/show', {
                 templateUrl: 'build/views/project-note/show.html',
-                controller: 'ProjectNoteShowController'
+                controller: 'ProjectNoteShowController',
+                title: "View Notes Project"
             } )
             .when( '/project/:id/notes/:idNote/edit', {
                 templateUrl: 'build/views/project-note/edit.html',
-                controller: 'ProjectNoteEditController'
+                controller: 'ProjectNoteEditController',
+                title: "Edit Notes Project"
             } )
             .when( '/project/:id/notes/:idNote/remove', {
                 templateUrl: 'build/views/project-note/remove.html',
-                controller: 'ProjectNoteRemoveController'
+                controller: 'ProjectNoteRemoveController',
+                title: "Remove Notes Project"
             } )
 
         /********* Rota Projects Tasks *********/
             .when( '/project/:id/tasks', {
                 templateUrl: 'build/views/project-task/list.html',
-                controller: 'ProjectTaskListController'
+                controller: 'ProjectTaskListController',
+                title: "Module Task Project"
             } )
             .when( '/project/:id/task/new', {
                 templateUrl: 'build/views/project-task/new.html',
@@ -179,17 +200,20 @@ app.config( [
             } )
             .when( '/project/:id/task/:idTask/edit', {
                 templateUrl: 'build/views/project-task/edit.html',
-                controller: 'ProjectTaskEditController'
+                controller: 'ProjectTaskEditController',
+                title: "Edit Task Project"
             } )
             .when( '/project/:id/task/:idTask/remove', {
                 templateUrl: 'build/views/project-task/remove.html',
-                controller: 'ProjectTaskRemoveController'
+                controller: 'ProjectTaskRemoveController',
+                title: "Remove Task Project"
             } )
 
         /********* Rota Projects Members *********/
             .when( '/project/:id/members', {
                 templateUrl: 'build/views/project-member/list.html',
-                controller: 'ProjectMemberListController'
+                controller: 'ProjectMemberListController',
+                title: "Module Members Project"
             } )
             .when( '/project/:id/member/:idProjectMmeber/remove', {
                 templateUrl: 'build/views/project-member/list.html',
@@ -244,6 +268,11 @@ app.run( [ '$rootScope', '$location', '$http', '$uibModal', 'httpBuffer', 'OAuth
                     $location.path( '/login' );
                 }
             }
+        } );
+
+        //Captura a pagina atual, $$ pega variaves configuradas nas rotas
+        $rootScope.$on( '$routeChangeSuccess', function ( event, current, previous ) {
+            $rootScope.pageTitle = current.$$route.title;
         } );
 
         $rootScope.$on( 'oauth:error', function ( event, data ) {

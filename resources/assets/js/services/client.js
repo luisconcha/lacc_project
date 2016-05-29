@@ -8,6 +8,10 @@ angular.module( 'app.services' )
                 isArray: false
             },
 
+            query: {
+                isArray: false
+            },
+
             update: {
                 method: 'PUT',
                 transformRequest: function ( data ) {

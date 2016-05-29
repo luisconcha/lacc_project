@@ -43,7 +43,7 @@ class ClientController extends Controller
 		 */
 		public function index( Request $request )
 		{
-				$limit = $request->query->get( 'limit' );
+				$limit = $request->query->get( 'limit',15 );
 				return $this->repository->paginate( $limit );
 		}
 

@@ -7,9 +7,10 @@
     <title>LACC-Project</title>
 
     @if(Config::get('app.debug'))
-        <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap.min.css')}}"/>
-        <link rel="stylesheet" href="{{asset('build/css/vendor/bootstrap-theme.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/font-awesome.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/flaticon.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/components.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/app.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/vendor/sweet-alert.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/style.css')}}"/>
     @else
@@ -36,6 +37,7 @@
 
 @if(Config::get('app.debug'))
     <script src="{{asset('build/js/vendor/jquery.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/bootstrap.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-route.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-resource.min.js')}}"></script>
@@ -56,7 +58,9 @@
     <script src="{{asset('build/js/controllers/login.js')}}"></script>
     <script src="{{asset('build/js/controllers/loginModal.js')}}"></script>
     <script src="{{asset('build/js/controllers/home.js')}}"></script>
+    <script src="{{asset('build/js/controllers/menu.js')}}"></script>
 
+    <script src="{{asset('build/js/controllers/client/dashboard.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientList.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientNew.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientEdit.js')}}"></script>
@@ -71,7 +75,7 @@
     <script src="{{asset('build/js/controllers/project-note/projectNoteList.js')}}"></script>
     <script src="{{asset('build/js/controllers/project-note/projectNoteNew.js')}}"></script>
     <script src="{{asset('build/js/controllers/project-note/projectNoteEdit.js')}}"></script>
-    <script src="{{asset('build/js/controllers/project-note/projectNoteRemove.js')}}"></script> 
+    <script src="{{asset('build/js/controllers/project-note/projectNoteRemove.js')}}"></script>
     <script src="{{asset('build/js/controllers/project-note/projectNoteShow.js')}}"></script>
 
     <script src="{{asset('build/js/controllers/project-file/projectFileList.js')}}"></script>
@@ -90,10 +94,11 @@
     <script src="{{asset('build/js/directives/projectFileDownload.js')}}"></script>
     <script src="{{asset('build/js/directives/loginForm.js')}}"></script>
     <script src="{{asset('build/js/directives/loadTemplate.js')}}"></script>
+    <script src="{{asset('build/js/directives/menuActivated.js')}}"></script>
 
     <!--FILTERS -->
     <script src="{{asset('build/js/filters/date-br.js')}}"></script>
-   
+
     <!--SERVICES -->
     <script src="{{asset('build/js/services/url.js')}}"></script>
     <script src="{{asset('build/js/services/client.js')}}"></script>

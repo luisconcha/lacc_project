@@ -53,6 +53,9 @@ config.vendor_path_css = [
 
 config.style_path_css = [
     config.build_path_css + '/style.css',
+    config.build_path_css + '/app.css',
+    config.build_path_css + '/font-awesome.css',
+    config.build_path_css + '/flaticon.css'
 ];
 
 /**************************************************
@@ -72,11 +75,26 @@ gulp.task( 'copy-fonts', function () {
         .pipe( liveReload() );
 } );
 
-/***********************************************************
- *                                                         *
- *    TAREFAS para copiar html, css, js, fonts da app      *
- *                                                         *
- ***********************************************************/
+/**************************************************
+ *                                                *
+ *    Configurações para as IMAGES da APP          *
+ *                                                *
+ **************************************************/
+config.build_path_images = config.build_path + '/images';
+
+gulp.task( 'copy-images', function () {
+    gulp.src( [
+        config.assets_path + '/images/**/*.*'
+    ] )
+        .pipe( gulp.dest( config.build_path_images ) )
+        .pipe( liveReload() );
+} );
+
+/*****************************************************
+ *                                                   *
+ *  TAREFAS para copiar html, css, js, fonts da app  *
+ *                                                   *
+ ****************************************************/
 config.build_path_html = config.build_path + '/views';
 
 gulp.task( 'copy-html', function () {
@@ -142,6 +160,6 @@ gulp.task( 'default', [ 'clear-build-folder' ], function () {
 
 gulp.task( 'watch-dev', [ 'clear-build-folder' ], function () {
     liveReload.listen();
-    gulp.start( 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts' );
-    gulp.watch( config.assets_path + '/**', [ 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts' ] );
+    gulp.start( 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts', 'copy-images' );
+    gulp.watch( config.assets_path + '/**', [ 'copy-styles', 'copy-scripts', 'copy-html', 'copy-fonts', 'copy-images' ] );
 } );
