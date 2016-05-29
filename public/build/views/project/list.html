@@ -13,6 +13,9 @@
                                    ng-model-options="{debounce: 300}"
                                    type="text" class="form-control"
                                    placeholder="Qual projeto deseja visualiza? Lembra que só pesquiso por página :)">
+                            <span class="input-group-btn">
+                                <a ng-href="#/projects/dashboard" class="btn btn-warning">Back to Dashboard of projects</a>
+                            </span>
                         </div>
                     </form>
                     <table class="table table-responsive table-hover">
@@ -50,16 +53,20 @@
                                 <a ng-href="#/projects/{{p.project_id}}/remove" title="Deletar projeto: {{p.name}}">
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
-                                <a ng-href="#/projects/{{p.project_id}}/files" title="Enviar arquivos para o proejto: {{p.name}}">
+                                <a ng-href="#/projects/{{p.project_id}}/files"
+                                   title="Enviar arquivos para o proejto: {{p.name}}">
                                     <i class="glyphicon glyphicon-open-file"></i>
                                 </a>
-                                <a ng-href="#/projects/{{p.project_id}}/notes" title="Enviar uma nota para o projeto: {{p.name}}">
+                                <a ng-href="#/projects/{{p.project_id}}/notes"
+                                   title="Enviar uma nota para o projeto: {{p.name}}">
                                     <i class="glyphicon glyphicon-tags"></i>
                                 </a>
-                                <a ng-href="#/project/{{p.project_id}}/tasks" title="Informar tarefas para o projeto: {{p.name}}">
-                                       <i class="glyphicon glyphicon-text-width"></i>
+                                <a ng-href="#/project/{{p.project_id}}/tasks"
+                                   title="Informar tarefas para o projeto: {{p.name}}">
+                                    <i class="glyphicon glyphicon-text-width"></i>
                                 </a>
-                                <a ng-href="#/project/{{p.project_id}}/members" title="Adicionar membros  ao projeto: {{p.name}}">
+                                <a ng-href="#/project/{{p.project_id}}/members"
+                                   title="Adicionar membros  ao projeto: {{p.name}}">
                                     <i class="glyphicon glyphicon-user"></i>
                                 </a>
                             </td>
@@ -68,7 +75,7 @@
                             <td colspan="7">
                                 Foram encontrados
                                 <span class="label label-pill label-success">{{projectFilter.length}}</span> de
-                                <span class="label label-pill label-primary">{{projects.length}}</span>  registros.
+                                <span class="label label-pill label-primary">{{projects.length}}</span> registros.
                             </td>
                         </tr>
                         </tbody>

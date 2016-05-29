@@ -67,6 +67,7 @@
     <script src="{{asset('build/js/controllers/client/clientShow.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientRemove.js')}}"></script>
 
+    <script src="{{asset('build/js/controllers/project/dashboard.js')}}"></script>
     <script src="{{asset('build/js/controllers/project/projectList.js')}}"></script>
     <script src="{{asset('build/js/controllers/project/projectNew.js')}}"></script>
     <script src="{{asset('build/js/controllers/project/projectEdit.js')}}"></script>
@@ -95,6 +96,7 @@
     <script src="{{asset('build/js/directives/loginForm.js')}}"></script>
     <script src="{{asset('build/js/directives/loadTemplate.js')}}"></script>
     <script src="{{asset('build/js/directives/menuActivated.js')}}"></script>
+    <script src="{{asset('build/js/directives/tabProject.js')}}"></script>
 
     <!--FILTERS -->
     <script src="{{asset('build/js/filters/date-br.js')}}"></script>

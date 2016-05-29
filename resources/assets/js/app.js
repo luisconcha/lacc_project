@@ -140,6 +140,11 @@ app.config( [
             } )
 
         /********* Rota Projects *********/
+            .when( '/projects/dashboard', {
+                templateUrl: 'build/views/project/dashboard.html',
+                controller: 'ProjectDashboardController',
+                title: "Dashboard Projects"
+            } )
             .when( '/projects', {
                 templateUrl: 'build/views/project/list.html',
                 controller: 'ProjectListController',
