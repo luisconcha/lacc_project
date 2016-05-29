@@ -11,7 +11,7 @@ angular.module( 'app.directives' )
 
                 $scope.$on( 'trata-btn-download', function () {
                     $( anchor ).addClass( 'disabled' );
-                    $( anchor ).text( 'Loading....123' );
+                    $( anchor ).text( 'Loading...' );
                 } );
 
                 $scope.$on( 'salvar-arquivo', function ( event, data ) {
