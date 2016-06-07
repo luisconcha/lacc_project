@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
 				\Illuminate\Session\Middleware\StartSession::class,
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 				\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
+				\LACC\Http\Middleware\OauthExceptionMiddleware::class,
 		];
 		/**
 		 * The application's route middleware.

@@ -47,8 +47,9 @@ angular.module( 'app.controllers' )
                         } );
 
                     }, function ( data ) {
-                        $scope.error.error   = true;
-                        $scope.error.message = data.data.error_description
+                        $scope.error.error      = true;
+                        $scope.error.titleError = data.data.title_message;
+                        $scope.error.message    = data.data.error_description;
                     } );
                 }
             };
