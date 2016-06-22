@@ -53,6 +53,7 @@
     <script src="{{asset('build/js/vendor/http-auth-interceptor.js')}}"></script>
     <script src="{{asset('build/js/vendor/dirPagination.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-locale_pt-br.js')}}"></script>
+    <script src="{{asset('build/js/vendor/moment.min.js')}}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
