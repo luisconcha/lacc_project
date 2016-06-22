@@ -50,6 +50,7 @@ class ProjectTransformer extends TransformerAbstract
 						'progress'           => (int)$project->progress,
 						'status'             => $project->status,
 						'due_date'           => $project->due_date,
+						'created_at'         => $project->created_at,
 						'is_member'          => $project->owner_id != \Authorizer::getResourceOwnerId(),
 						'tasks_count'        => $project->tasks->count(),
 						'task_opened'        => $this->countTasksOpened( $project ),
@@ -83,6 +84,7 @@ class ProjectTransformer extends TransformerAbstract
 
 		/**
 		 * Função que verifica as tarefas em aberto
+		 *
 		 * @param Project $project
 		 */
 		public function countTasksOpened( Project $project )
@@ -90,7 +92,7 @@ class ProjectTransformer extends TransformerAbstract
 				$count = 0;
 				foreach ( $project->tasks as $t ):
 						if ( $t->status == "1" ):
-							 $count++;
+								$count++;
 						endif;
 				endforeach;
 				return $count;
