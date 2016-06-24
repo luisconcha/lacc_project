@@ -120,5 +120,9 @@
 @else
     <script src="{{elixir('js/all.js')}}"></script>
 @endif
+
+<div id="load-div">
+    <img src="build/images/loader.gif" class="ajax-loader"/>
+</div>
 </body>
 </html>
