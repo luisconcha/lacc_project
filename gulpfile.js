@@ -36,7 +36,10 @@ config.vendor_path_js = [
     config.bower_path + '/angularUtils-pagination/dirPagination.js',
     config.bower_path + '/angular-i18n/angular-locale_pt-br.js',
     config.bower_path + '/angular-i18n/angular-locale_pt-br.js',
-    config.bower_path + '/moment/min/moment.min.js'
+    config.bower_path + '/moment/min/moment.min.js',
+    config.bower_path + '/pusher-websocket-iso/dist/web/pusher.js',
+    config.bower_path + '/pusher-angular/lib/pusher-angular.min.js',
+    config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.js'
 ];
 
 /**************************************************
@@ -52,6 +55,7 @@ config.vendor_path_css = [
     config.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
     config.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
     config.bower_path + '/bootstrap-sweetalert/lib/sweet-alert.css',
+    config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.css'
 ];
 
 config.style_path_css = [

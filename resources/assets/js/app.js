@@ -3,7 +3,7 @@ var app = angular.module( 'app',
         'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
         'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
         'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-        'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown', 'pusher-angular', 'ui-notification'
     ] );
 
 angular.module( 'app.controllers', [ 'ngMessages', 'ngAnimate' ] );
@@ -21,6 +21,7 @@ angular.module( 'app.services', [ 'ngResource' ] );
 app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpParamSerializerProvider ) {
     var config = {
         baseUrl: 'http://project.dev',
+        pusherKey: '50e50f0a2a81ad152d35',
         project: {
             status: [
                 { value: '0', label: 'Não iniciado' },
@@ -262,8 +263,47 @@ app.config( [
         } );
     } ] );
 
-app.run( [ '$rootScope', '$location', '$http', '$uibModal', 'httpBuffer', 'OAuth',
-    function ( $rootScope, $location, $http, $uibModal, httpBuffer, OAuth ) {
+app.run( [
+    '$rootScope', '$location', '$http', '$uibModal', '$cookies', '$pusher', 'httpBuffer', 'OAuth', 'appConfig', 'Notification',
+    function ( $rootScope, $location, $http, $uibModal, $cookies, $pusher, httpBuffer, OAuth, appConfig, Notification ) {
+
+        //Função que verifica eventos do sistema para fazer determinada tarefa
+        $rootScope.$on( 'pusher-build', function ( event, data ) {
+            if ( data.next.$$route.originalPath != '/login' ) {
+                if ( OAuth.isAuthenticated() ) {
+                    if ( !window.client ) {
+                        // Transformando variavel client para  global, para verificar se existe,
+                        // caso contrario chama o serviço do pusher e cria o objeto
+                        window.client = new Pusher( appConfig.pusherKey );
+                        var pusher    = $pusher( window.client );
+                        var channel   = pusher.subscribe( 'user.' + $cookies.getObject( 'user' ).user_id );
+                        channel.bind( 'LACC\\Events\\TaskWasIncluded',
+                            function ( data ) {
+                                var name     = data.task.name;
+                                var createAt = data.task.created_at;
+                                Notification.success( {
+                                    message: 'Tarefa: <b>' + name + '</b> foi incluida em: ' + createAt,
+                                    title: 'LACC-Project',
+                                    positionY: 'bottom',
+                                    positionX: 'right',
+                                    delay: 2000
+                                } );
+                            }
+                        );
+                    }
+                }
+            }
+        } );
+
+        //Função para desconectar e detruir o pusher caso o usuario estiver na pagina de login
+        $rootScope.$on( 'pusher-destroy', function ( event, data ) {
+            if ( data.next.$$route.originalPath == '/login' ) {
+                if ( window.client ) {
+                    window.client.disconnect();
+                    window.client = null;
+                }
+            }
+        } );
 
         //Verifica o camportamento das rotas da app
         $rootScope.$on( '$routeChangeStart', function ( event, next, current ) {
@@ -273,6 +313,9 @@ app.run( [ '$rootScope', '$location', '$http', '$uibModal', 'httpBuffer', 'OAuth
                     $location.path( '/login' );
                 }
             }
+
+            $rootScope.$emit( 'pusher-build', { next: next } );
+            $rootScope.$emit( 'pusher-destroy', { next: next } );
         } );
 
         //Captura a pagina atual, $$ pega variaves configuradas nas rotas

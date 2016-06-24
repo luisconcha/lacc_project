@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{asset('build/css/components.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/app.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/vendor/sweet-alert.css')}}"/>
+        <link rel="stylesheet" href="{{asset('build/css/vendor/angular-ui-notification.min.css')}}"/>
         <link rel="stylesheet" href="{{asset('build/css/style.css')}}"/>
     @else
         <link rel="stylesheet" href="{{elixir('css/all.css')}}"/>
@@ -54,6 +55,9 @@
     <script src="{{asset('build/js/vendor/dirPagination.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-locale_pt-br.js')}}"></script>
     <script src="{{asset('build/js/vendor/moment.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/pusher.js')}}"></script>
+    <script src="{{asset('build/js/vendor/pusher-angular.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/angular-ui-notification.min.js')}}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
