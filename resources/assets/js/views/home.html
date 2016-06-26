@@ -40,7 +40,11 @@
                     </div>
                 </header> <!-- /header-internal -->
                 <div class="row">
-                    <div class="col-sm-4 div-list-project" ng-repeat="p in projects">
+                    <!--<div class="col-sm-4 div-list-project" ng-repeat="p in projects">-->
+                    <div dir-paginate="p in projectFilter =  projects  | itemsPerPage: projectsPerPage"
+                         total-items="totalProjects"
+                         current-page="pagination.current"
+                         class="col-sm-4 div-list-project painel-search-animado">
                         <div class="panel panel-default panel-stacked">
                             <div class="panel-heading bg-white no-border-bottom text-boulder">
                                 <h3 class="h4 text-boulder">Nome do projeto:</h3>
@@ -115,6 +119,9 @@
                             </div> <!-- /panel-footer panel-footer-xs sazerac -->
                         </div> <!-- /panel.panel-default -->
                     </div>
+                </div>
+                <div class="text-center">
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
                 </div>
             </div>
             <div class="col-xs-3">
