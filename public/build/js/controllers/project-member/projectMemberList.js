@@ -2,7 +2,6 @@ angular.module( 'app.controllers' )
     .controller( 'ProjectMemberListController', [
         '$scope', '$routeParams', 'ProjectMember', 'User', '$timeout',
         function ( $scope, $routeParams, ProjectMember, User, $timeout ) {
-
             $scope.showFrmMember = false;
             $scope.projectMember = new ProjectMember();
 
@@ -69,8 +68,6 @@ angular.module( 'app.controllers' )
             $scope.loadMember();
 
             $scope.removeMember = function (idProject, idMember) {
-                console.info('idProject: ', idProject);
-                console.log('idMember: ',idMember );
                 swal( {
                         title: "Remover?",
                         text: "Deseja deletar o membro do projeto?",

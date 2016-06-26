@@ -218,6 +218,10 @@ app.config( [
             } )
 
         /********* Rota Projects Members *********/
+            .when( '/project/:id/members-home', {
+                templateUrl: 'build/views/project-member/home.html',
+                controller: 'ProjectMemberListController',
+            } )
             .when( '/project/:id/members', {
                 templateUrl: 'build/views/project-member/list.html',
                 controller: 'ProjectMemberListController',

@@ -6,23 +6,11 @@
                     <div class="row row-xs">
                         <div class="col-xs-8">
                             <h2 class="h4 page-title line-after">
-                                <span>Projetos</span>
+                                <span>Project Members</span>
                             </h2>
                         </div>
                         <div class="col-xs-4">
                             <div class="tools">
-                                <div>
-                                    <label class="select-styled select-styled-default select-styled-sm">
-                                        <select>
-                                            <option selected="selected">Todos</option>
-                                            <option>Nome do projeto</option>
-                                            <option>Nome do projeto2</option>
-                                            <option>Nome do projeto3</option>
-                                            <option>Nome do projeto4</option>
-                                            <option>Nome do projeto5</option>
-                                        </select>
-                                    </label>
-                                </div>
                                 <div class="btn-group">
                                     <a href="" class="btn btn-default btn-sm" ng-click="alterViewProjects('viewPanel')">
                                         <i class="fa fa-th"></i>
@@ -40,91 +28,23 @@
                     </div>
                 </header> <!-- /header-internal -->
                 <div class="row">
-                    <!--<div class="col-sm-4 div-list-project" ng-repeat="p in projects">-->
-                    <div dir-paginate="p in projectFilter =  projects  | itemsPerPage: projectsPerPage"
-                         total-items="totalProjects"
-                         current-page="pagination.current"
-                         class="col-sm-4 div-list-project painel-search-animado">
+                    <div class="col-sm-4 div-list-project" ng-repeat="p in projectMembers">
                         <div class="panel panel-default panel-stacked">
                             <div class="panel-heading bg-white no-border-bottom text-boulder">
-                                <h3 class="h4 text-boulder">Nome do projeto:</h3>
+                                <h4 class="h4 text-boulder">Nome do membro:</h4>
                                 <small class="text-upper text-silver">{{p.name}}</small>
                             </div> <!-- /panel-heading bg-white -->
                             <div class="panel-body">
                                 <ul class="list-unstyled list-padding text-boulder">
                                     <li class="clearfix">
-                                        Progresso:
-
-                                        <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="{{p.progress}}">
-                                            <div class="circle">
-                                                <div class="mask full">
-                                                    <div class="fill"></div>
-                                                </div>
-                                                <div class="mask half">
-                                                    <div class="fill"></div>
-                                                    <div class="fill fix"></div>
-                                                </div>
-                                                <div class="shadow"></div>
-                                            </div>
-                                            <div class="inset">
-                                                <div class="percentage">
-                                                    <div class="numbers">{{p.progress}}%</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        Progresso esperado:
-
-                                        <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="100">
-                                            <div class="circle">
-                                                <div class="mask full">
-                                                    <div class="fill"></div>
-                                                </div>
-                                                <div class="mask half">
-                                                    <div class="fill"></div>
-                                                    <div class="fill fix"></div>
-                                                </div>
-                                                <div class="shadow"></div>
-                                            </div>
-                                            <div class="inset">
-                                                <div class="percentage">
-                                                    <div class="numbers">100%</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        Prazo: <span class="pull-right text-orange">{{p.due_date | dataBr}}</span>
-                                    </li>
-                                    <li>
-                                        <a ng-href="/#/project/{{p.project_id}}/members-home">Visualizar membros do projeto</a>
+                                        Excluir membro?
+                                        <a ng-click="removeMember(p.pivot.project_id, p.id)">
+                                            <i class="glyphicon glyphicon-trash"></i></a>
                                     </li>
                                 </ul> <!-- /panel-list-unstyled -->
                             </div> <!-- /panel-body -->
-                            <div class="panel-footer panel-footer-xs no-border-top sazerac text-info font-bold">
-                                <p class="text-warning status" ng-if="p.status == 0">
-                                    <i class="fa fa-circle"></i> Não iniciado
-                                    <span class="pull-right">+0</span>
-                                </p>
-                                <p class="text-info status" ng-if="p.status == 1">
-                                    <i class="fa fa-circle"></i> Iniciado
-                                    <span class="pull-right">+0</span>
-                                </p>
-                                <p class="text-success status" ng-if="p.status == 2">
-                                    <i class="fa fa-circle"></i> Finalizado
-                                    <span class="pull-right">+0</span>
-                                </p>
-                                <p class="text-danger status" ng-if="p.status == 3">
-                                    <i class="fa fa-circle"></i> Cancelado
-                                    <span class="pull-right">+0</span>
-                                </p>
-                            </div> <!-- /panel-footer panel-footer-xs sazerac -->
                         </div> <!-- /panel.panel-default -->
                     </div>
-                </div>
-                <div class="text-center">
-                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
                 </div>
             </div>
             <div class="col-xs-3">
