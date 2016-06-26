@@ -2,6 +2,7 @@ angular.module( 'app.controllers' )
     .controller( 'ProjectMemberListController', [
         '$scope', '$routeParams', 'ProjectMember', 'User', '$timeout',
         function ( $scope, $routeParams, ProjectMember, User, $timeout ) {
+            $scope.projectId     = $routeParams.id;
             $scope.showFrmMember = false;
             $scope.projectMember = new ProjectMember();
 
@@ -97,5 +98,13 @@ angular.module( 'app.controllers' )
                             swal( "Ups!!", "Quase faço #$%@!@ :)", "error" );
                         }
                     } );
-            }
+            };
+
+            $scope.alterViewMembersProjects = function ( typeView ) {
+                if ( typeView == 'viewList' ) {
+                    $( '.div-list-project' ).removeClass( 'col-sm-4' ).addClass( 'col-sm-12' );
+                } else if ( typeView == 'viewPanel' ) {
+                    $( '.div-list-project' ).removeClass( 'col-sm-12' ).addClass( 'col-sm-4' );
+                }
+            };
         } ] );
