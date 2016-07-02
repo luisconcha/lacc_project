@@ -288,7 +288,7 @@ app.run( [
                                 var name     = data.task.name;
                                 var createAt = data.task.created_at;
                                 Notification.success( {
-                                    message: 'Tarefa: <b>' + name + '</b> foi incluida em: ' + createAt,
+                                    message: 'Tarefa: <b>' + name + '</b> foi inclida em: ' + createAt,
                                     title: 'LACC-Project',
                                     positionY: 'bottom',
                                     positionX: 'right',

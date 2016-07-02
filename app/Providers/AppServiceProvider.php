@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
 				ProjectTask::created( function ( $task ) {
 						Event::fire( new TaskWasIncluded( $task ) );
 				} );
+
+				ProjectTask::updated( function ( $task ) {
+						Event::fire( new TaskWasIncluded( $task ) );
+				} );
 		}
 
 		/**

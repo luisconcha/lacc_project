@@ -112,6 +112,15 @@ footer {
     animation: fadein 1s;
 }
 
+/*Estilos para as taredas incluidas mostradas no realtime*/
+.date-task-included{
+    color: #006400;
+}
+
+.activeDetails ul li{
+    font-size: 11px;
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

@@ -12,6 +12,7 @@ angular.module( 'app.controllers' )
                 current: 1
             };
 
+
             //Quando usuario clicar em uma páginação
             $scope.pageChanged = function ( newPage ) {
                 getResultsPage( newPage );
@@ -46,9 +47,8 @@ angular.module( 'app.controllers' )
             var channel = pusher.subscribe( 'user.' + $cookies.getObject( 'user' ).user_id );
             channel.bind( 'LACC\\Events\\TaskWasIncluded',
                 function ( data ) {
-                    console.log( 'ObjData: ', data );
+
                     if ( $scope.tasks.length == 6 ) {
-                        console.log( 'IFdata: ', data );
                         $scope.tasks.splice( $scope.tasks.length - 1, 1 );
                     }
                     $timeout( function () {
