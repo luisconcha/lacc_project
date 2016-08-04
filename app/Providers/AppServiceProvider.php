@@ -15,7 +15,15 @@ class AppServiceProvider extends ServiceProvider
 		 * @return void
 		 */
 		public function boot()
-		{
+		{		
+				/**
+				* Verifica se a aplicaçao esta rodando em modo console (para rodar as seeds), 
+				* para evitar executar os eventos
+				*/
+				if ( app()->runningInConsole() ) {
+		           return;
+		        }
+
 				ProjectTask::created( function ( $task ) {
 						Event::fire( new TaskWasIncluded( $task ) );
 				} );
