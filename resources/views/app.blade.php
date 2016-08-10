@@ -61,6 +61,9 @@
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
+    <script src="{{asset('build/js/app.config.js')}}"></script>
+    <script src="{{asset('build/js/app.run.js')}}"></script>
+
     <script src="{{asset('build/js/controllers/login.js')}}"></script>
     <script src="{{asset('build/js/controllers/loginModal.js')}}"></script>
     <script src="{{asset('build/js/controllers/home.js')}}"></script>
