@@ -34,7 +34,7 @@ Route::group( [ 'middleware' => 'oauth' ], function () {
 				Route::put( '/{id}', [ 'as' => 'project.update', 'uses' => 'ProjectController@update' ] );
 				Route::delete( '/{id}', [ 'as' => 'project.delete', 'uses' => 'ProjectController@destroy' ] );
 
-				Route::match(array('GET', 'POST'), '/{id}/detail-pdf', [ 'as' => 'project.detailpdf', 'uses' => 'ProjectController@pdf' ] );
+				Route::get('/{id}/detail-pdf', [ 'as' => 'project.detailpdf', 'uses' => 'ProjectController@pdf' ] );
 
 				//Route::group( [ 'middleware' => 'check.project.permission', 'prefix' => 'projects' ], function () {
 				Route::group( [ 'middleware' => 'check.project.permission' ], function () {
