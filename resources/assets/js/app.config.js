@@ -77,6 +77,11 @@ app.config( [
                 controller: 'ProjectListController',
                 title: "Module Projects"
             } )
+            .when( '/projects/:id/detail-pdf', {
+                templateUrl: 'build/views/project/list.html',
+                controller: 'ProjectListController',
+                title: "Module Projects"
+            } )
             .when( '/projects/new', {
                 templateUrl: 'build/views/project/new.html',
                 controller: 'ProjectNewController',

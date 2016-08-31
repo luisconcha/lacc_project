@@ -14,7 +14,8 @@
     "prettus/laravel-validation": "1.1.*",
     "lucadegasperi/oauth2-server-laravel": "5.0.*",
     "league/fractal": "^0.13.0",
-    "pusher/pusher-php-server": "^2.4"
+    "pusher/pusher-php-server": "^2.4",
+    "barryvdh/laravel-dompdf": "^0.6.1"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

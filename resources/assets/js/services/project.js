@@ -42,6 +42,11 @@ angular.module( 'app.services' )
                     url: '/projects/:id'
                 },
 
+                getDetailPdf:{
+                    method: 'GET',
+                    url: '/projects/:id/detail-pdf'
+                },
+
                 save: {
                     method: 'POST',
                     url: '/projects',

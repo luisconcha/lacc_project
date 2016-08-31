@@ -1,5 +1,5 @@
 angular.module( 'app.controllers' )
-    .controller( 'ProjectListController', [ '$scope', 'Project', function ( $scope, Project ) {
+    .controller( 'ProjectListController', [ '$scope', 'Project','$window', function ( $scope, Project, $window ) {
 
         $scope.projects        = [];
         $scope.totalProjects   = 0;
@@ -28,5 +28,14 @@ angular.module( 'app.controllers' )
 
         //Chama a função na primeira página
         getResultsPage( 1 );
+
+        $scope.printDetailProject = function( project_id ){
+
+            Project.getDetailPdf( { id: project_id } , function ( data ) {
+                console.log('Obj: ', data);
+                $window.open(data,'_blank');
+                return;
+            } );
+        };
 
     } ] );

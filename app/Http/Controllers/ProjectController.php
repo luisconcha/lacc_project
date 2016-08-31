@@ -3,6 +3,8 @@
 namespace LACC\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\App;
+use App;
 use LACC\Http\Requests;
 use LACC\Repositories\ProjectRepository;
 use LACC\Services\ProjectService;
@@ -135,4 +137,16 @@ class ProjectController extends Controller
 		{
 				return $this->service->isMember( $projectId, $userId );
 		}
+
+		public function pdf( Request $request )
+		{
+				$data = $request->all();
+				$view =  \View::make( 'project.detail-project-pdf', compact( 'data' ) );
+				$pdf  = \App::make( 'dompdf.wrapper' );
+				$pdf->loadHTML($view);
+//				return $pdf->download('invoice');
+				return $pdf->stream('invoice');
+//				return 'ok';
+		}
+
 }
