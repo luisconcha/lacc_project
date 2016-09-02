@@ -32,9 +32,10 @@ angular.module( 'app.controllers' )
         $scope.printDetailProject = function( project_id ){
 
             Project.getDetailPdf( { id: project_id } , function ( data ) {
-                console.log('Obj: ', data);
-                $window.open(data,'_blank');
-                return;
+                //console.log('Obj: ', data);
+                //$window.open("data:application/pdf;base64, "+data);
+                window.open("data:application/pdf;base64, " + data);
+               // return;
             } );
         };
 
