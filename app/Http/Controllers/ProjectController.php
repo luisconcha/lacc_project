@@ -138,15 +138,38 @@ class ProjectController extends Controller
 				return $this->service->isMember( $projectId, $userId );
 		}
 
-		public function pdf( Request $request )
+		/**
+		 * @param Request $request
+		 * @param $id
+		 *
+		 * @return array
+		 */
+		public function pdf( Request $request, $id)
 		{
-				$data = $request->all();
-				$view =  \View::make( 'project.detail-project-pdf', compact( 'data' ) );
+				$idProject = $id;
+
+				$view = \View::make( 'project.detail-project-pdf', compact( 'idProject' ) );
 				$pdf  = \App::make( 'dompdf.wrapper' );
-				$pdf->loadHTML($view);
+				$pdf->loadHTML( $view );
 //				return $pdf->download('invoice');
-				return $pdf->stream('invoice');
-//				return 'ok';
+//				return $pdf->stream('invoice');
+				$pdf64 = base64_encode( $pdf->download( 'invoice' ) );
+
+				return [
+						'file64' => $pdf64,
+				];
 		}
 
+//		/**
+//		 * Update the specified resource in storage.
+//		 *
+//		 * @param  \Illuminate\Http\Request $request
+//		 * @param  int $id
+//		 *
+//		 * @return \Illuminate\Http\Response
+//		 */
+//		public function update( Request $request, $id )
+//		{
+//				return $this->service->update( $request->all(), $id );
+//		}
 }

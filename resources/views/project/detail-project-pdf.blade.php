@@ -1,1 +1,1 @@
-<h1>Detalhe do Projeto XXXXXXXXXXXX</h1>
+<h1>Detalhe do Projeto ID: {{$idProject}}</h1>

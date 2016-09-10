@@ -44,7 +44,8 @@ angular.module( 'app.services' )
 
                 getDetailPdf:{
                     method: 'GET',
-                    url: '/projects/:id/detail-pdf'
+                    url: '/projects/:id/detail-pdf',
+                    transformRequest: trasformData
                 },
 
                 save: {
