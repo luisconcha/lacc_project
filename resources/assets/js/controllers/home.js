@@ -23,6 +23,7 @@ angular.module( 'app.controllers' )
                     page: pageNumber,
                     limit: $scope.projectsPerPage
                 }, function ( data ) {
+                    console.log('Obj: ', data);
                     $scope.projects      = data.data;
                     $scope.totalProjects = data.meta.pagination.total;
                 } );
