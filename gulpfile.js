@@ -13,7 +13,7 @@ var config = {
  *    Configurações para os scripts JS da APP     *
  *                                                *
  **************************************************/
-config.bower_path           = config.assets_path + '/../bower_components';
+config.bower_path = config.assets_path + '/../bower_components';
 config.build_path_js        = config.build_path + '/js';
 config.build_vendor_path_js = config.build_path_js + '/vendor';
 
@@ -39,7 +39,10 @@ config.vendor_path_js = [
     config.bower_path + '/moment/min/moment.min.js',
     config.bower_path + '/pusher-websocket-iso/dist/web/pusher.js',
     config.bower_path + '/pusher-angular/lib/pusher-angular.min.js',
-    config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.js'
+    config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.js',
+    config.bower_path + '/highcharts/highcharts.js',
+    config.bower_path + '/highcharts/modules/exporting.js',
+    config.bower_path + '/highcharts-ng/dist/highcharts-ng.min.js'
 ];
 
 /**************************************************
@@ -47,7 +50,7 @@ config.vendor_path_js = [
  *    Configurações para os stylos CSS da APP     *
  *                                                *
  **************************************************/
-config.build_path_css        = config.build_path + '/css';
+config.build_path_css = config.build_path + '/css';
 config.build_vendor_path_css = config.build_path_css + '/vendor';
 config.build_style_path_css  = config.build_path_css + '/style';
 
@@ -71,7 +74,7 @@ config.style_path_css = [
  *                                                *
  **************************************************/
 
-config.build_path_fonts       = config.build_path + '/fonts';
+config.build_path_fonts = config.build_path + '/fonts';
 config.build_style_path_fonts = config.build_path_fonts + '/fonts';
 
 gulp.task( 'copy-fonts', function () {

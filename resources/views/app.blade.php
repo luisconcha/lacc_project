@@ -58,6 +58,9 @@
     <script src="{{asset('build/js/vendor/pusher.js')}}"></script>
     <script src="{{asset('build/js/vendor/pusher-angular.min.js')}}"></script>
     <script src="{{asset('build/js/vendor/angular-ui-notification.min.js')}}"></script>
+    <script src="{{asset('build/js/vendor/highcharts.js')}}"></script>
+    <script src="{{asset('build/js/vendor/exporting.js')}}"></script>
+    <script src="{{asset('build/js/vendor/highcharts-ng.min.js')}}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{asset('build/js/app.js')}}"></script>
@@ -68,6 +71,8 @@
     <script src="{{asset('build/js/controllers/loginModal.js')}}"></script>
     <script src="{{asset('build/js/controllers/home.js')}}"></script>
     <script src="{{asset('build/js/controllers/menu.js')}}"></script>
+
+    <script src="{{asset('build/js/controllers/reports/reports.js')}}"></script>
 
     <script src="{{asset('build/js/controllers/client/dashboard.js')}}"></script>
     <script src="{{asset('build/js/controllers/client/clientList.js')}}"></script>
@@ -106,6 +111,7 @@
     <script src="{{asset('build/js/directives/loadTemplate.js')}}"></script>
     <script src="{{asset('build/js/directives/menuActivated.js')}}"></script>
     <script src="{{asset('build/js/directives/tabProject.js')}}"></script>
+    {{--<script src="{{asset('build/js/directives/highcharts.js')}}"></script>--}}
 
     <!--FILTERS -->
     <script src="{{asset('build/js/filters/date-br.js')}}"></script>
@@ -120,6 +126,7 @@
     <script src="{{asset('build/js/services/projectMember.js')}}"></script>
     <script src="{{asset('build/js/services/user.js')}}"></script>
     <script src="{{asset('build/js/services/oauthFixInterceptor.js')}}"></script>
+    <script src="{{asset('build/js/services/reports.js')}}"></script>
 @else
     <script src="{{elixir('js/all.js')}}"></script>
 @endif

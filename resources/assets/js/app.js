@@ -3,7 +3,7 @@ var app = angular.module( 'app',
         'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
         'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
         'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-        'ui.bootstrap.dropdown', 'pusher-angular', 'ui-notification','ngAnimate'
+        'ui.bootstrap.dropdown', 'pusher-angular', 'ui-notification', 'ngAnimate', 'highcharts-ng'
     ] );
 
 angular.module( 'app.controllers', [ 'ngMessages' ] );
@@ -24,7 +24,6 @@ angular.module( 'app.config', [] );
  * Modulo de inicialização
  */
 angular.module( 'app.run', [] );
-
 
 /**
  * Serviço que fornece a URL do projeto
@@ -53,7 +52,7 @@ app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpPar
         utils: {
             //Funções Globals que poderam ser acessíveis tanto configprovideros, serviços, controller
             transformResponse: function ( data, headers ) {
-                $('#load-div').hide();
+                $( '#load-div' ).hide();
                 var headersGetter = headers();
                 if ( headersGetter[ 'content-type' ] == 'application/json' ||
                     headersGetter[ 'content-type' ] == 'text/json' ) {
@@ -68,7 +67,7 @@ app.provider( 'appConfig', [ '$httpParamSerializerProvider', function ( $httpPar
                 return data;
             },
             transformRequest: function ( data ) {
-                $('#load-div').show();
+                $( '#load-div' ).show();
                 if ( angular.isObject( data ) ) {
                     return $httpParamSerializerProvider.$get()( data );
                 }

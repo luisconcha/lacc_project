@@ -121,6 +121,10 @@ footer {
     font-size: 11px;
 }
 
+hc-pie-chart {
+    width: 80%
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

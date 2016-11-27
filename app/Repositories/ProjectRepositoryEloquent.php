@@ -18,6 +18,8 @@ use Prettus\Repository\Eloquent\BaseRepository;
 
 class ProjectRepositoryEloquent extends BaseRepository implements ProjectRepository
 {
+		protected $skipPresenter = true;
+
 		public function model()
 		{
 				return Project::class;

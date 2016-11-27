@@ -18,7 +18,7 @@ app.config( [
                 templateUrl: 'build/views/login.html',
                 controller: 'LoginController'
             } )
-        /********* Rota Logout *********/
+            /********* Rota Logout *********/
             .when( '/logout', {
                 resolve: {
                     logout: [ '$location', 'OAuthToken', function ( $location, OAuthToken ) {
@@ -27,14 +27,22 @@ app.config( [
                     } ]
                 }
             } )
-        /********* Rota Home *********/
+            /********* Rota Home *********/
             .when( '/home', {
                 templateUrl: 'build/views/home.html',
                 controller: 'HomeController',
                 title: "Dashboard"
             } )
 
-        /********* Rota Clients *********/
+            /********* Rota Relatorios *********/
+            .when( '/reports', {
+                templateUrl: 'build/views/reports/reports.html',
+                controller: 'ReportsController',
+                title: 'Project reports'
+            } )
+
+
+            /********* Rota Clients *********/
             .when( '/clients/dashboard', {
                 templateUrl: 'build/views/client/dashboard.html',
                 controller: 'ClientDashboardController',
@@ -66,7 +74,7 @@ app.config( [
                 title: "Remove Client"
             } )
 
-        /********* Rota Projects *********/
+            /********* Rota Projects *********/
             .when( '/projects/dashboard', {
                 templateUrl: 'build/views/project/dashboard.html',
                 controller: 'ProjectDashboardController',
@@ -98,7 +106,7 @@ app.config( [
                 title: "Remove Project"
             } )
 
-        /********* Rota Projects Notes *********/
+            /********* Rota Projects Notes *********/
             .when( '/projects/:id/notes', {
                 templateUrl: 'build/views/project-note/list.html',
                 controller: 'ProjectNoteListController',
@@ -125,7 +133,7 @@ app.config( [
                 title: "Remove Notes Project"
             } )
 
-        /********* Rota Projects Tasks *********/
+            /********* Rota Projects Tasks *********/
             .when( '/project/:id/tasks', {
                 templateUrl: 'build/views/project-task/list.html',
                 controller: 'ProjectTaskListController',
@@ -146,7 +154,7 @@ app.config( [
                 title: "Remove Task Project"
             } )
 
-        /********* Rota Projects Members *********/
+            /********* Rota Projects Members *********/
             .when( '/project/:id/members-home', {
                 templateUrl: 'build/views/project-member/home.html',
                 controller: 'ProjectMemberListController',
@@ -161,7 +169,7 @@ app.config( [
                 controller: 'ProjectMemberListController'
             } )
 
-        /********* Rota Projects File *********/
+            /********* Rota Projects File *********/
             .when( '/projects/:id/files', {
                 templateUrl: 'build/views/project-file/list.html',
                 controller: 'ProjectFileListController'

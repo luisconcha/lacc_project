@@ -75,6 +75,7 @@ angular.module( 'app.controllers' )
                 } );
                 return deffered.promise;
             };
+
             /**
              * Função que seta o cliente do projeto no input
              * @param item
