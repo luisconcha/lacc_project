@@ -1,11 +1,11 @@
 angular.module( 'app.controllers' )
     .controller( 'ReportsController', [ '$scope', 'Reports', function ( $scope, Reports ) {
 
-        // $scope.projectResultPieResult = [];
+        // $scope.projectResultBarResult = [];
         // $scope.pieData =  Reports.getProjects( {}, function () {} );
         // $scope.pieData.$promise.then(function ( result ) {
         //     angular.forEach( result, function ( value, key ) {
-        //         $scope.projectResultPieResult.push( {
+        //         $scope.projectResultBarResult.push( {
         //             name: value.name,
         //             y: value.progress
         //         } );
@@ -13,8 +13,10 @@ angular.module( 'app.controllers' )
         // });
 
         $scope.chartColumnProjectResult = [];
+        $scope.projectResultBarResult   = [];
         $scope.projectResultPieResult   = [];
         $scope.nameColumnCtegories      = [];
+
         Reports.getProjects( {
             id: {}
         }, function ( data ) {
@@ -22,6 +24,10 @@ angular.module( 'app.controllers' )
              * Percorre os valores para montar o grafico
              */
             angular.forEach( data, function ( value, key ) {
+                $scope.projectResultBarResult.push( {
+                    name: value.name,
+                    y: value.progress
+                } );
                 $scope.projectResultPieResult.push( {
                     name: value.name,
                     y: value.progress
@@ -36,12 +42,54 @@ angular.module( 'app.controllers' )
             } );
         } );
 
+        $scope.chartPieProject = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Report in circle format'
+            },
+            subtitle: {
+                "text": "LACC"
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        },
+                        connectorColor: 'silver'
+                    }
+                }
+            },
+            series: [ {
+                name: 'Percentual avançado %',
+                data: $scope.projectResultPieResult,
+                type: "pie",
+                id: "series-0"
+            } ],
+            credits: {
+                enabled: false
+            },
+            loading: false
+        };
+
         $scope.chartColumnProject = {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Browser market shares. January, 2015 to May, 2015'
+                text: 'Report in column format'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -81,11 +129,11 @@ angular.module( 'app.controllers' )
             series: [
                 {
                     name: 'Modelo 01',
-                    data: $scope.projectResultPieResult
+                    data: $scope.projectResultBarResult
                 },
                 {
                     name: "Modelo 02",
-                    data: $scope.projectResultPieResult,
+                    data: $scope.projectResultBarResult,
                     dashStyle: "ShortDash"
                 }
             ],
@@ -126,7 +174,7 @@ angular.module( 'app.controllers' )
             series: [
                 {
                     name: 'Modelo 01',
-                    data: $scope.projectResultPieResult
+                    data: $scope.projectResultBarResult
                 }
             ],
             title: {
